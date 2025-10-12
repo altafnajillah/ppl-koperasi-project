@@ -12,7 +12,11 @@ class PinjamanController extends Controller
      */
     public function index()
     {
-        //
+        $pinjaman = Pinjaman::where('id_anggota', $anggota->id)
+                            ->select('id', 'jumlah', 'tenor', 'status')
+                            ->get();
+
+        return view('pinjaman.index', compact('pinjaman', 'anggota'));
     }
 
     /**
@@ -20,7 +24,8 @@ class PinjamanController extends Controller
      */
     public function create()
     {
-        //
+        $anggota = Biodata::all();
+        return view('pinjaman.create', compact('anggota'));
     }
 
     /**
@@ -28,8 +33,27 @@ class PinjamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_anggota' => 'required|integer|exists:anggotas,id', 
+            'jumlah' => 'required|numeric|min:0',
+            'tenor' => 'required|integer|max:2', // tenor dalam bulan
+        ]);
+
+        Pinjaman::create($validatedData);
+
+        return redirect('/pinjaman')->with('success', 'Pinjaman berhasil diajukan!');
     }
+
+
+// Setujui pinjaman
+    public function approve(Pinjaman $pinjaman)
+    {
+        $pinjaman->status = 'disetujui';
+        $pinjaman->save();
+
+        return redirect()->back()->with('success', 'Pinjaman berhasil disetujui.');
+    }
+
 
     /**
      * Display the specified resource.
