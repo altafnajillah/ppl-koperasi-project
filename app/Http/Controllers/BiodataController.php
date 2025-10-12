@@ -20,7 +20,7 @@ class BiodataController extends Controller
      */
     public function create()
     {
-        //
+        return view('biodata.create');
     }
 
     /**
@@ -28,7 +28,19 @@ class BiodataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         // Validasi input
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:50',
+            'alamat' => 'required|string|max:150',
+            'no_hp' => 'required|string|max:15',
+            'email' => 'required|email|max:100',
+            'nik' => 'required|string|max:20',
+        ]);
+
+        // Simpan data
+        Biodata::create($validatedData);
+
+        return redirect('/biodata')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +48,7 @@ class BiodataController extends Controller
      */
     public function show(Biodata $biodata)
     {
-        //
+         return view('biodata.show', compact('biodata'));
     }
 
     /**
@@ -44,7 +56,7 @@ class BiodataController extends Controller
      */
     public function edit(Biodata $biodata)
     {
-        //
+         return view('biodata.edit', compact('biodata'));
     }
 
     /**
@@ -52,7 +64,16 @@ class BiodataController extends Controller
      */
     public function update(Request $request, Biodata $biodata)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:50',
+            'alamat' => 'required|string|max:150',
+            'no_hp' => 'required|string|max:15',
+            'email' => 'required|email|max:100',
+            'nik' => 'required|string|max:20',
+        ]);
+
+        $biodata->update($validatedData);
+        return redirect('/biodata')->with('success', 'Data berhasil diperbaharui');
     }
 
     /**
@@ -60,6 +81,7 @@ class BiodataController extends Controller
      */
     public function destroy(Biodata $biodata)
     {
-        //
+        $biodata->delete();
+        return redirect('/biodata')->with('success', 'Data berhasil dihapus');
     }
 }
