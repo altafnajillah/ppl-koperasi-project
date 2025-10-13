@@ -1,51 +1,37 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Pinjaman;
 use Illuminate\Http\Request;
+use App\Models\Pinjaman;
+use App\Models\Biodata;
 
 class PinjamanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $pinjaman = Pinjaman::where('id_anggota', $anggota->id)
-                            ->select('id', 'jumlah', 'tenor', 'status')
-                            ->get();
-
-        return view('pinjaman.index', compact('pinjaman', 'anggota'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Tampilkan form ajukan pinjaman
     public function create()
     {
-        $anggota = Biodata::all();
-        return view('pinjaman.create', compact('anggota'));
+        // Ambil daftar anggota untuk dropdown
+        $biodatas = Biodata::all();
+        return view('pinjaman.create', compact('biodatas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Simpan pinjaman baru
     public function store(Request $request)
     {
+        // Validasi input
         $validatedData = $request->validate([
-            'id_anggota' => 'required|integer|exists:anggotas,id', 
+            'user_id' => 'required|integer|exists:biodatas,id', 
             'jumlah' => 'required|numeric|min:0',
             'tenor' => 'required|integer|max:2', // tenor dalam bulan
         ]);
 
         Pinjaman::create($validatedData);
 
-        return redirect('/pinjaman')->with('success', 'Pinjaman berhasil diajukan!');
+        return redirect()->route('pinjaman.index', ['biodata' => $validatedData['user_id']])
+            ->with('success', 'Pinjaman berhasil diajukan!');
     }
 
-
-// Setujui pinjaman
+    // Setujui pinjaman
     public function approve(Pinjaman $pinjaman)
     {
         $pinjaman->status = 'disetujui';
@@ -54,36 +40,13 @@ class PinjamanController extends Controller
         return redirect()->back()->with('success', 'Pinjaman berhasil disetujui.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pinjaman $pinjaman)
+    // Lihat pinjaman berdasarkan anggota biodata
+    public function index(Biodata $biodata)
     {
-        //
-    }
+        $pinjaman = Pinjaman::where('user_id', $biodata->id)
+                            ->select('id', 'jumlah', 'tenor', 'status')
+                            ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pinjaman $pinjaman)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pinjaman $pinjaman)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pinjaman $pinjaman)
-    {
-        //
+        return view('pinjaman.index', compact('pinjaman', 'biodata'));
     }
 }
