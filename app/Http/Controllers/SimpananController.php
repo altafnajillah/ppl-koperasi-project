@@ -1,77 +1,50 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Simpanan;
 use Illuminate\Http\Request;
+use App\Models\Simpanan;
+use App\Models\Biodata;
 
 class SimpananController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Biodata $anggota)
-    {
-        // Ambil semua simpanan milik anggota
-        $simpanan = Simpanan::where('id_anggota', $anggota->id)->get();
-
-        return view('simpanan.index', compact('simpanan', 'anggota'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Tampilkan form tambah simpanan
     public function create()
     {
-         $anggota = Biodata::all(); 
-        return view('simpanan.create', compact('anggota'));
+        // Ambil daftar anggota (biodata) untuk dropdown
+        $biodatas = Biodata::all();
+        return view('simpanan.create', compact('biodatas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Simpan simpanan baru
     public function store(Request $request)
     {
+        // Validasi input
         $validatedData = $request->validate([
-            'id_anggota' => 'required|integer|exists:anggotas,id',
+            'user_id' => 'required|integer|exists:biodatas,id',
             'jenis_simpanan' => 'required|in:pokok,wajib,sukarela',
             'jumlah' => 'required|numeric|min:0',
         ]);
 
         Simpanan::create($validatedData);
-        return redirect('/simpanan')->with('success', 'Data simpanan berhasil ditambahkan!');
+
+        return redirect()->route('simpanan.index', ['biodata' => $validatedData['user_id']])
+            ->with('success', 'Data simpanan berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Simpanan $simpanan)
+    // Tampilkan daftar simpanan milik anggota tertentu
+    public function index(Biodata $biodata)
     {
-        //
+        $simpanan = Simpanan::where('user_id', $biodata->id)->get();
+        return view('simpanan.index', compact('simpanan', 'biodata'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Simpanan $simpanan)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Simpanan $simpanan)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Hapus simpanan
     public function destroy(Simpanan $simpanan)
     {
         $simpanan->delete();
-        return redirect('/simpanan')->with('success', 'Data simpanan berhasil dihapus!');
+        
+        // Redirect ke halaman daftar simpanan anggota yang sama
+        return redirect()->route('simpanan.index', ['biodata' => $simpanan->user_id])
+            ->with('success', 'Data simpanan berhasil dihapus!');
     }
 }
