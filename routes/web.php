@@ -5,6 +5,9 @@ use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\SimpananController;
 use App\Http\Controllers\PinjamanController;
 
+// Temporary route
+Route::get('/', function () { return view('login');});
+Route::get('/temp-register', function () { return view('register');});
 
 //BiodataController
 Route::get('/biodata/create', [BiodataController::class, 'create'])->name('biodata.create');
@@ -25,8 +28,3 @@ Route::get('/pinjaman/create', [PinjamanController::class, 'create'])->name('pin
 Route::post('/pinjaman', [PinjamanController::class, 'store'])->name('pinjaman.store');
 Route::get('/pinjaman/{biodata}', [PinjamanController::class, 'index'])->name('pinjaman.index');
 Route::post('/pinjaman/{pinjaman}/approve', [PinjamanController::class, 'approve'])->name('pinjaman.approve');
-
-
-
-
-
