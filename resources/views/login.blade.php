@@ -1,7 +1,6 @@
 @extends('template-auth')
 @section('isi')
-    <h4 class="mb-2 mt-4">Welcome to Kopersaiku </h4>
-    <p class="mb-4">Please Login to your account</p>
+    <h4 class="mb-2 mt-4 fw-bold text-center fs-3 mb-4">Login</h4>
 
     <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
         <div class="mb-3">
@@ -12,7 +11,7 @@
         <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">
                 <label class="form-label" for="password">Password</label>
-                <a href="auth-forgot-password-basic.html">
+                <a href="\temp-forgot-password">
                     <small>Forgot Password?</small>
                 </a>
             </div>

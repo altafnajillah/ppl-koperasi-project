@@ -8,6 +8,8 @@ use App\Http\Controllers\PinjamanController;
 // Temporary route
 Route::get('/', function () { return view('login');});
 Route::get('/temp-register', function () { return view('register');});
+Route::get('/temp-forgot-password', function () { return view('forgot-password');});
+Route::get('/temp-new-password', function () { return view('new-password');});
 
 //BiodataController
 Route::get('/biodata/create', [BiodataController::class, 'create'])->name('biodata.create');
