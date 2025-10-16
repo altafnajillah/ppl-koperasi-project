@@ -44,43 +44,16 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('templates') }}/assets/js/config.js"></script>
 
-    <style>
-        .bg-primary {
-            background-color: #70D4E5 !important;
-            /* Ungu */
-        }
-
-        .text-primary {
-            color: #70D4E5 !important;
-        }
-
-        /* Override warna btn-primary */
-        .btn-primary {
-            background-color: #70D4E5 !important;
-            border-color: #70D4E5 !important;
-        }
-
-        .btn-primary:hover {
-            background-color: #11B3EE !important;
-            border-color: #11B3EE !important;
-        }
-
-        .btn-primary:active,
-        .btn-primary:focus {
-            background-color: #70D4E5 !important;
-            border-color: #70D4E5 !important;
-            box-shadow: 0 0 0 0.25rem rgba(112, 212, 229, 0.5) !important;
-        }
-    </style>
+    {{-- <link rel="stylesheet" href="{{ asset('templates') }}/assets/css/costum.css" /> --}}
 </head>
 
-<body class=" bg-primary">
+<body class="bg-primary">
     <!-- Content -->
 
     <div class="container-xxl m-5">
         <!-- Logo -->
         <div class="app-brand justify-content-center">
-            <a href="index.html" class="app-brand-link gap-2">
+            <a href="/" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                     <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">

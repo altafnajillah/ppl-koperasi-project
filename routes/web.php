@@ -11,6 +11,10 @@ Route::get('/temp-register', function () { return view('register');});
 Route::get('/temp-forgot-password', function () { return view('forgot-password');});
 Route::get('/temp-new-password', function () { return view('new-password');});
 
+// Admin Temp
+Route::get('/temp-admin-dashboard', function () { return view('admin-dashboard');});
+
+
 //BiodataController
 Route::get('/biodata/create', [BiodataController::class, 'create'])->name('biodata.create');
 Route::post('/biodata', [BiodataController::class, 'store'])->name('biodata.store');
