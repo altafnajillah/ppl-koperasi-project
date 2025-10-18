@@ -32,9 +32,9 @@
                 </div>
 
                 <!--/ Total Revenue -->
-                <div class="col-12 col-md-8 col-lg-12 order-3 order-md-2">
+                <div class="col-12 order-3 order-md-2">
                     <div class="row">
-                        <div class="col-lg-2 col-md-12 col-6 mb-4">
+                        <div class="col-lg-3 col-md-4 col-12 mb-4">
                             <div class="card border-0 border-bottom border-3 border-success">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-12 col-6 mb-4">
+                        <div class="col-lg-4 col-md-8 col-12 mb-4">
                             <div class="card border-0 border-bottom border-3 border-danger">
                                 <div class="card ">
                                     <div class="card-body">
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-12 col-6 mb-4">
+                        <div class="col-lg-5 col-md-12 col-12 mb-4">
                             <div class="card  border-0 border-bottom border-3 border-warning">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
@@ -88,32 +88,6 @@
                 </div>
             </div>
             <!-- / Content -->
-
-            <!-- Footer -->
-            <footer class="content-footer footer bg-footer-theme" style="margin-top: 140px">
-                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                    <div class="mb-2 mb-md-0">
-                        ©
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        , made with ❤️ by
-                        <a href="https://themeselection.com" target="_blank"
-                            class="footer-link fw-bolder">ThemeSelection</a>
-                    </div>
-                    <div>
-                        <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                        <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                        <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                            target="_blank" class="footer-link me-4">Documentation</a>
-
-                        <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                            class="footer-link me-4">Support</a>
-                    </div>
-                </div>
-            </footer>
-            <!-- / Footer -->
 
             <div class="content-backdrop fade"></div>
         </div>

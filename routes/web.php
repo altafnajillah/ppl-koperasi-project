@@ -11,8 +11,15 @@ Route::get('/temp-register', function () { return view('register');});
 Route::get('/temp-forgot-password', function () { return view('forgot-password');});
 Route::get('/temp-new-password', function () { return view('new-password');});
 
+// All Temp
+Route::get('/temp-edit-user', function () { return view('edit-user');});
+
 // Admin Temp
 Route::get('/temp-admin-dashboard', function () { return view('admin-dashboard');});
+Route::get('/temp-admin-user-management', function () { return view('admin-user-management');});
+Route::get('/temp-admin-add-user', function () { return view('admin-add-user');});
+Route::get('/temp-admin-management-koperasi', function () { return view('admin-management-koperasi');});
+Route::get('/temp-admin-laporan-keuangan', function () { return view('admin-laporan-keuangan');});
 
 
 //BiodataController

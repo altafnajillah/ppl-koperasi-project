@@ -146,9 +146,26 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="\temp-admin-dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="\temp-admin-user-management" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">Managemen User</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="\temp-admin-management-koperasi" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-money"></i>
+                <div data-i18n="Analytics">Managemen Koperasi</div>
+              </a>
+            </li><li class="menu-item">
+              <a href="\temp-admin-laporan-keuangan" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-wallet"></i>
+                <div data-i18n="Analytics">Laporan Keuangan</div>
               </a>
             </li>
           </ul>
