@@ -17,7 +17,7 @@
                                         performance
                                         more closely!
                                     </p>
-                                    <a href="\temp-admin-add-user" class="btn btn-primary">Tambah Pengguna</a>
+                                    <a href="\temp-admin-create-user" class="btn btn-primary">Tambah Pengguna</a>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
 
-                {{-- table  --}}
+                {{-- table --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-warning">
                         <h5 class="card-header">Daftar Pengguna</h5>
@@ -93,35 +93,41 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Joe</td>
-                                        <td>Albert Cook</td>
-                                        <td>
-                                            <span class="badge bg-label-info me-1">Anggota</span>
-                                        </td>
-                                        <td>Jl. Merdeka No. 123, Jakarta</td>
-                                        <td>762887181728889182</td>
-                                        <td><span class="badge bg-label-success me-1">Active</span></td>
-                                        <td>
-                                            <a href="/temp-edit-user" class="btn btn-warning py-1">
-                                                <i class=" bx bx-edit-alt me-1"></i>
-                                            </a>
-                                            <a href="" class="btn btn-danger py-1">
-                                                <i class=" bx bx-trash me-1"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($listUsers as $k => $user)
+                                        <form action="{{ route('user.delete', ['id' => $user->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <tr>
+                                                <td>{{ $k + 1 }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>
+                                                    <span class="badge bg-label-info me-1">{{ $user->role }}</span>
+                                                </td>
+                                                <td>Jl. Merdeka No. 123, Jakarta</td>
+                                                <td>762887181728889182</td>
+                                                <td><span class="badge bg-label-success me-1">Active</span></td>
+                                                <td>
+                                                    <a href="/temp-edit-user" class="btn btn-warning py-1">
+                                                        <i class=" bx bx-edit-alt me-1"></i>
+                                                    </a>
+                                                    <button class="btn btn-danger py-1" type="submit">
+                                                        <i class=" bx bx-trash me-1"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {{-- end table  --}}
+                {{-- end table --}}
             </div>
             <!-- / Content -->
 
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

@@ -13,7 +13,7 @@
                                 <div class="card-body">
                                     <h3 class="card-title text-primary">DASHBORAD ADMIN</h3>
                                     <p class="mb-4">
-                                        Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
+                                        Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, let's monitoring your user
                                         performance
                                         more closely!
                                     </p>

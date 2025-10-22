@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+            // 'biodata.completed' => \App\Http\Middleware\BiodataCompleted::class,
+            // 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        ]);
+        // $middleware->append([CheckRole::class, BiodataCompleted::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

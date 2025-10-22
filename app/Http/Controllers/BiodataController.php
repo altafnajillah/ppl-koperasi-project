@@ -3,13 +3,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Biodata;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BiodataController extends Controller
 {
     // Menampilkan form tambah biodata baru
     public function create()
     {
-        return view('biodata.create');
+        if (Auth::user()->biodata()) {
+            return "Dashboard User"; //return redirect()->route('anggota.dashboard');
+        }
+        return "Buat Biodata"; //return view('biodata.create');
     }
 
     // Menyimpan data biodata yang baru dimasukkan
