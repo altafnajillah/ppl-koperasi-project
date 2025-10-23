@@ -1,4 +1,4 @@
-@extends('template-auth')
+@extends('templates.auth')
 @section('isi')
     <h4 class="mb-2">Forgot Password</h4>
     <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>

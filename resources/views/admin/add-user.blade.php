@@ -1,5 +1,8 @@
-@extends('template-dashboard')
-@section('isi')
+@extends('templates.admin')
+
+@section('title', 'Dashboard Admin')
+
+@section('content')
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -11,7 +14,7 @@
                         <div class="d-flex align-items-end row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <h3 class="card-title text-primary">EDIT PENGGUNA</h3>
+                                    <h3 class="card-title text-primary">TAMBAH PENGGUNA</h3>
                                     <p class="mb-4">
                                         Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
                                         performance
@@ -34,22 +37,23 @@
                 {{-- form add user  --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
-                        <h5 class="card-header">Edit Pengguna</h5>
+                        <h5 class="card-header">Tambah Pengguna Baru</h5>
 
-                        <form id="formAuthentication" class="mb-3 mx-4" action="index.html" method="POST">
+                        <form id="formAuthentication" class="mb-3 mx-4" action="{{ route('user.store') }}" method="POST">
+                            @csrf
                             <div class="mb-3">
-                                <label for="username" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter your username" autofocus />
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Enter your name" autofocus />
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
                                     placeholder="Enter your email" />
                             </div>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">NIK</label>
-                                <input type="text" class="form-control" id="username" name="username"
+                            {{-- <div class="mb-3">
+                                <label for="nik" class="form-label">NIK</label>
+                                <input type="text" class="form-control" id="nik" name="nik"
                                     placeholder="Enter your NIK" autofocus />
                             </div>
                             <div class="mb-3">
@@ -61,7 +65,7 @@
                                 <label for="username" class="form-label">Alamat</label>
                                 <input type="text" class="form-control" id="username" name="username"
                                     placeholder="Enter your Alamat" autofocus />
-                            </div>
+                            </div> --}}
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
@@ -72,9 +76,10 @@
                                 </div>
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password">Konfirmasi Password</label>
+                                <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
+                                    <input type="password" id="password_confirmation" class="form-control"
+                                        name="password_confirmation"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
@@ -92,7 +97,7 @@
                             </div>
                             <div class="row gx-3 align-items-center">
                                 <div class="col-12 col-lg-9">
-                                    <button class="btn btn-primary w-100">Edit User</button>
+                                    <button class="btn btn-primary w-100" type="submit">Tambah User</button>
                                 </div>
                                 <div class="col-12 col-lg-3">
                                     <a href="" class="btn btn-secondary w-100">Reset</a>

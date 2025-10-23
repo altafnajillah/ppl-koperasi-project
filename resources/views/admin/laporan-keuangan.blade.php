@@ -1,5 +1,8 @@
-@extends('template-dashboard')
-@section('isi')
+@extends('templates.admin')
+
+@section('title', 'Dashboard Admin')
+
+@section('content')
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -11,7 +14,7 @@
                         <div class="d-flex align-items-end row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <h3 class="card-title text-primary">MANAJEMEN DATA KOPERASI</h3>
+                                    <h3 class="card-title text-primary">LAPORAN KEUANGAN</h3>
                                     <p class="mb-4">
                                         Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
                                         performance
@@ -39,12 +42,12 @@
                                     <div class="card-title d-flex align-items-start">
                                         <div class="avatar">
                                             <span class="avatar-initial rounded bg-label-success">
-                                                <i class="icon-base bx bx-user-check icon-lg"></i>
+                                                <i class="icon-base bi bi-cash-coin icon-lg"></i>
                                             </span>
                                         </div>
                                         <div class="ps-3">
-                                            <span class="fw-semibold d-block mb-1">Total Transaksi</span>
-                                            <h3 class="card-title mb-2">124</h3>
+                                            <span class="fw-semibold d-block mb-1">Total Saldo Bersih</span>
+                                            <h3 class="card-title mb-2">Rp.21.000.000</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +64,7 @@
                                                 </span>
                                             </div>
                                             <div class="ps-3">
-                                                <span class="fw-semibold d-block mb-1">Total Pinjaman</span>
+                                                <span class="fw-semibold d-block mb-1">Total Pemasukan</span>
                                                 <h3 class="card-title text-nowrap mb-2">Rp. 35.000.000</h3>
                                             </div>
                                         </div>
@@ -80,7 +83,7 @@
                                             </span>
                                         </div>
                                         <div class="ps-3">
-                                            <span class="fw-semibold d-block mb-1">Total Simpanan</span>
+                                            <span class="fw-semibold d-block mb-1">Total Pengeluaran</span>
                                             <h3 class="card-title mb-2">RP. 14.000.000</h3>
                                         </div>
                                     </div>
@@ -90,56 +93,75 @@
                     </div>
                 </div>
 
-                {{-- table  --}}
+                {{-- table --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Pengajuan Pinjaman Terbaru</h5>
 
                         <div class="px-4 mb-3">
-                            <div class="row gx-3">
-                                <!-- Search (4 columns) -->
-                                <div class="col-12mt-2 mt-lg-0">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <input type="text" class="form-control h-100" placeholder="Search..." />
+                            <!-- Form filter: single row so columns stay aligned -->
+                            <form method="GET" class="row gx-2 gy-2 align-items-center">
+                                <div class="col-12 col-lg-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text fw-bold">Dari</span>
+                                        <input type="date" class="form-control" />
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-12 col-lg-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text fw-bold">Sampai</span>
+                                        <input type="date" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-2">
+                                    <select id="jenis-laporan" name="jenis-laporan" class="form-select">
+                                        <option value="">-- Pilih jenis laporan --</option>
+                                        <option value="pendapatan">Harian</option>
+                                        <option value="pengeluaran">Bulanan</option>
+                                        <option value="laporan">Tahunan</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-lg-2">
+                                    <button class="btn btn-primary w-100" type="submit">Tampilkan</button>
+                                </div>
+                                <div class="col-6 col-lg-2">
+                                    <a href="#" class="btn btn-success w-100">Cetak CSV</a>
+                                </div>
+                            </form>
                         </div>
 
                         <div class="table-responsive text-nowrap px-4">
                             <table class="table mb-0 align-middle">
                                 <thead class="table-dark">
                                     <tr>
-                                        <td>No</td>
-                                        <td>Nama Anggota</td>
-                                        <td>Jumlah Pinjaman</td>
-                                        <td>Jangka Waktu</td>
-                                        <td>Alasan</td>
-                                        <td>Actions</td>
+                                        <td>Tanggal</td>
+                                        <td>Jenis</td>
+                                        <td>Keterangan</td>
+                                        <td>Pemasukan(Rp)</td>
+                                        <td>Pengeluaran(Rp)</td>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
                                     <tr>
-                                        <td>1</td>
-                                        <td>Joe</td>
-                                        <td>Rp.12.000.000</td>
-                                        <td>12 Bulan</td>
-                                        <td>Untuk Modal Usaha</td>
-                                        <td>
-                                            <a href="" class="btn btn-success py-1">
-                                                Setujui
-                                            </a>
-                                            <a href="" class="btn btn-danger py-1">
-                                                Tolak
-                                            </a>
-                                        </td>
+                                        <td>12/01/2023</td>
+                                        <td>Pemasukan</td>
+                                        <td>Pembayaran Angsuran</td>
+                                        <td>12.000.000</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12/01/2023</td>
+                                        <td>Pembayaran Simpanan</td>
+                                        <td></td>
+                                        <td>0</td>
+                                        <td>12.000.000</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {{-- end table  --}}
+                {{-- end table --}}
             </div>
             <!-- / Content -->
 

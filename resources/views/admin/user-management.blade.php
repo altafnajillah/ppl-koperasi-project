@@ -1,5 +1,8 @@
-@extends('template-dashboard')
-@section('isi')
+@extends('templates.admin')
+
+@section('title', 'Dashboard Admin')
+
+@section('content')
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -17,7 +20,7 @@
                                         performance
                                         more closely!
                                     </p>
-                                    <a href="\temp-admin-create-user" class="btn btn-primary">Tambah Pengguna</a>
+                                    <a href="\admin\create-user" class="btn btn-primary">Tambah Pengguna</a>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -108,7 +111,7 @@
                                                 <td>762887181728889182</td>
                                                 <td><span class="badge bg-label-success me-1">Active</span></td>
                                                 <td>
-                                                    <a href="/temp-edit-user" class="btn btn-warning py-1">
+                                                    <a href="/admin/edit-user" class="btn btn-warning py-1">
                                                         <i class=" bx bx-edit-alt me-1"></i>
                                                     </a>
                                                     <button class="btn btn-danger py-1" type="submit">
@@ -130,4 +133,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-@endsection
+    @endsection

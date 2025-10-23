@@ -1,4 +1,4 @@
-@extends('template-auth')
+@extends('templates.auth')
 @section('isi')
     <h4 class="mb-2 mt-4 fw-bold text-center fs-3 mb-4">Register</h4>
 

@@ -1,4 +1,4 @@
-@extends('template-auth')
+@extends('templates.auth')
 @section('isi')
     <h4 class="mb-2 mt-4 fw-bold text-center fs-3 mb-4">Login</h4>
 
@@ -6,8 +6,8 @@
         @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="text" class="form-control" id="email" name="email"
-                placeholder="Enter your email" autofocus />
+            <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email"
+                autofocus />
         </div>
         <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">

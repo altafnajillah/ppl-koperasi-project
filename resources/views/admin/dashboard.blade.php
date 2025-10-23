@@ -1,5 +1,8 @@
-@extends('template-dashboard')
-@section('isi')
+@extends('templates.admin')
+
+@section('title', 'Dashboard Admin')
+
+@section('content')
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -13,9 +16,8 @@
                                 <div class="card-body">
                                     <h3 class="card-title text-primary">DASHBORAD ADMIN</h3>
                                     <p class="mb-4">
-                                        Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, let's monitoring your user
-                                        performance
-                                        more closely!
+                                        Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, Manage
+                                        operations and keep the cooperative system running smoothly.
                                     </p>
                                 </div>
                             </div>
@@ -31,7 +33,7 @@
                     </div>
                 </div>
 
-                <!--/ Total Revenue -->
+                <!--/ Informasi Singkat -->
                 <div class="col-12 order-3 order-md-2">
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-12 mb-4">
@@ -44,11 +46,12 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <span class="fw-semibold d-block mb-1">Total Anggota</span>
-                                    <h3 class="card-title mb-2">12,628</h3>
+                                    <span class="fw-semibold d-block mb-1">Transaksi Harian</span>
+                                    <h3 class="card-title mb-2">56</h3>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4 col-md-8 col-12 mb-4">
                             <div class="card border-0 border-bottom border-3 border-danger">
                                 <div class="card ">
@@ -66,6 +69,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-5 col-md-12 col-12 mb-4">
                             <div class="card  border-0 border-bottom border-3 border-warning">
                                 <div class="card-body">
@@ -80,9 +84,6 @@
                                     <h3 class="card-title mb-2">RP. 14.000.000.000.000</h3>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-5 col-md-12 col-6 mb-4">
-
                         </div>
                     </div>
                 </div>

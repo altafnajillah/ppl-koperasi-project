@@ -14,18 +14,23 @@ Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->
 
 // Temporary route
 Route::get('/temp-register', function () {
-    return view('register');
+    return view('auth.register');
 });
 Route::get('/temp-forgot-password', function () {
-    return view('forgot-password');
+    return view('auth.forgot-password');
 });
 Route::get('/temp-new-password', function () {
-    return view('new-password');
+    return view('auth.new-password');
 });
 
-// All Temp
-Route::get('/temp-edit-user', function () {
-    return view('edit-user');
+// Anggota
+Route::get('/anggota/dashboard', function () {
+    return view('anggota.dashboard');
+});
+
+// Petugas
+Route::get('/petugas/dashboard', function () {
+    return view('petugas.dashboard');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -34,28 +39,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:admin')->group(function () {
         // Route::get('/temp-admin-dashboard', function () {
         //     return view('admin-dashboard');
-        Route::get('/temp-admin-dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/temp-admin-user-management', [App\Http\Controllers\AdminController::class, 'users']);
-        Route::get('/temp-admin-create-user', [App\Http\Controllers\AdminController::class, 'createUser']);
-        Route::post('/temp-admin-store-user', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('user.store');
-        Route::delete('/temp-admin-delete-user/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('user.delete');
+        Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/admin/user-management', [App\Http\Controllers\AdminController::class, 'users']);
+        Route::get('/admin/create-user', [App\Http\Controllers\AdminController::class, 'createUser']);
+        Route::post('/admin/store-user', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('user.store');
+        Route::delete('/admin/delete-user/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('user.delete');
 
 
-        Route::get('/temp-admin-management-koperasi', [App\Http\Controllers\AdminController::class, 'koperasiManagement']);
-        
-        Route::get('/temp-admin-add-user', function () {
-            return view('admin-add-user');
+        Route::get('/admin/management-koperasi', [App\Http\Controllers\AdminController::class, 'koperasiManagement']);
+
+        Route::get('/admin/add-user', function () {
+            return view('admin.add-user');
         });
-        Route::get('/temp-admin-laporan-keuangan', function () {
-            return view('admin-laporan-keuangan');
+        Route::get('/admin/edit-user', function () {
+            return view('admin.edit-user');
+        });
+        Route::get('/admin/laporan-keuangan', function () {
+            return view('admin.laporan-keuangan');
         });
     });
 
     // Petugas
     Route::middleware('role:petugas')->group(function () {
-        Route::get('/petugas/dashboard', function () {
-            return 'Dashboard Petugas';
-        });
+        
     });
 });
 
