@@ -10,10 +10,7 @@ class BiodataController extends Controller
     // Menampilkan form tambah biodata baru
     public function create()
     {
-        if (Auth::user()->biodata()) {
-            return "Dashboard User"; //return redirect()->route('anggota.dashboard');
-        }
-        return "Buat Biodata"; //return view('biodata.create');
+        return view('anggota.biodata.create');
     }
 
     // Menyimpan data biodata yang baru dimasukkan

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     private function viewWithUser(string $view, array $data = [])
     {
-        return view($view, array_merge(['user' => auth()->user()], $data));
+        return view($view, array_merge(['user' => Auth::user()], $data));
     }
 
     public function dashboard()

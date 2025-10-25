@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+//use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -65,9 +65,9 @@ class LoginController extends Controller
             }
 
             // Fallback default jika role tidak ada
-            return redirect()->intended('/')->with('message', "Role tidak ditemukan");
+            return redirect()->intended()->with('message', "Role tidak ditemukan");
         } else {
-            return redirect()->intended('/')->with('message', "Username atau Password tidak sesuai");
+            return redirect()->intended()->with('message', "Username atau Password tidak sesuai");
         }
 
         // 5. Jika gagal, kembalikan ke form login dengan pesan error
