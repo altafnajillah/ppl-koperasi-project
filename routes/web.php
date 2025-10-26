@@ -25,14 +25,23 @@ Route::get('/temp-new-password', function () {
 });
 
 // Anggota
-Route::get('/anggota/dashboard', function () {
-    return view('anggota.dashboard');
+// Route::get('/anggota/dashboard', function () {
+//     return view('anggota.dashboard');
+// });
+
+// // Petugas
+// Route::get('/petugas/dashboard', function () {
+//     return view('petugas.dashboard');
+// });
+
+Route::get('/petugas/simpanan', function () {
+    return view('petugas.simpanan');
+});
+Route::get('/petugas/simpanan/pencatatan', function () {
+    return view('petugas.pencatatan-simpanan');
 });
 
-// Petugas
-Route::get('/petugas/dashboard', function () {
-    return view('petugas.dashboard');
-});
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

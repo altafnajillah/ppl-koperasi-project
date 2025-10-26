@@ -66,13 +66,13 @@
                     <div data-i18n="Analytics">Dashboard</div>
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
+            <li class="menu-item {{ Request::is('petugas/simpanan*') ? 'active' : '' }}">
+                <a href="{{ url('petugas/simpanan') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-notepad"></i>
                     <div data-i18n="Analytics">Pencatatan Simpanan</div>
                 </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item ">
                 <a href="#" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-transfer"></i>
                     <div data-i18n="Analytics">Pembayaran Angsuran</div>
