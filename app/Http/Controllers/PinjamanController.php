@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,46 +8,37 @@ use App\Models\Biodata;
 
 class PinjamanController extends Controller
 {
-    // Tampilkan form ajukan pinjaman
-    public function create()
-    {
-        // Ambil daftar anggota untuk dropdown
-        $biodatas = Biodata::all();
-        return view('pinjaman.create', compact('biodatas'));
-    }
-
-    // Simpan pinjaman baru
     public function store(Request $request)
+{
+    $request->validate([
+        'jumlah_pinjaman'=>'required|numeric|min:0.01|max:9999999999.99',
+        'tenor'=>'required|integer|min:1|max:99',
+    ]);
+
+    $bungaDefault = 0.05; // pastikan ada nilai default
+
+    Pinjaman::create([
+        'id_anggota'=>Auth::id(),
+        'jumlah_pinjaman'=>$request->jumlah_pinjaman,
+        'tenor'=>$request->tenor,
+        'status'=>'menunggu',
+        'tanggal_pengajuan'=>now(),
+        'bunga'=>$bungaDefault
+    ]);
+
+    return redirect()->route('anggota.pinjaman.index')
+        ->with('success', 'Pengajuan pinjaman anda berhasil dikirim pada '.now()->format('d M Y').' dan sedang menunggu persetujuan');
+}
+
+    //setujui pinjaman itu disetujui oleh admindan petugas jadi kodenya ditulis di bagian admincontrooler
+
+
+    //Lihat Simpanan
+    public function index()
     {
-        // Validasi input
-        $validatedData = $request->validate([
-            'user_id' => 'required|integer|exists:biodatas,id', 
-            'jumlah' => 'required|numeric|min:0',
-            'tenor' => 'required|integer|max:2', // tenor dalam bulan
-        ]);
-
-        Pinjaman::create($validatedData);
-
-        return redirect()->route('pinjaman.index', ['biodata' => $validatedData['user_id']])
-            ->with('success', 'Pinjaman berhasil diajukan!');
+        $anggotaId = Auth::id();
+        $riwayatPinjaman=Pinjaman::where('id_anggota', $anggotaId)->orderBy('tanggal_pengajuan', desc)->get();
+        return view('pinjaman.index',['pinjamans'=>$riwayatPinjaman]);
     }
 
-    // Setujui pinjaman
-    public function approve(Pinjaman $pinjaman)
-    {
-        $pinjaman->status = 'disetujui';
-        $pinjaman->save();
-
-        return redirect()->back()->with('success', 'Pinjaman berhasil disetujui.');
-    }
-
-    // Lihat pinjaman berdasarkan anggota biodata
-    public function index(Biodata $biodata)
-    {
-        $pinjaman = Pinjaman::where('user_id', $biodata->id)
-                            ->select('id', 'jumlah', 'tenor', 'status')
-                            ->get();
-
-        return view('pinjaman.index', compact('pinjaman', 'biodata'));
-    }
 }
