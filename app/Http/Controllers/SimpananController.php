@@ -4,47 +4,43 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Simpanan;
 use App\Models\Biodata;
+use Illuminate\Support\Facades\Auth;
 
 class SimpananController extends Controller
 {
-    // Tampilkan form tambah simpanan
-    public function create()
-    {
-        // Ambil daftar anggota (biodata) untuk dropdown
-        $biodatas = Biodata::all();
-        return view('simpanan.create', compact('biodatas'));
-    }
-
-    // Simpan simpanan baru
+    // Tambah Simpanan
     public function store(Request $request)
     {
-        // Validasi input
-        $validatedData = $request->validate([
-            'user_id' => 'required|integer|exists:biodatas,id',
-            'jenis_simpanan' => 'required|in:pokok,wajib,sukarela',
-            'jumlah' => 'required|numeric|min:0',
+        $request->validate([
+            'jenis_simpanan' => 'required','string', Rule::in(['pokok', 'wajib', 'sukarela']),
+            'jumlah' => 'required|numeric|min:0.01|max:9999999999.99',
         ]);
 
-        Simpanan::create($validatedData);
-
-        return redirect()->route('simpanan.index', ['biodata' => $validatedData['user_id']])
-            ->with('success', 'Data simpanan berhasil ditambahkan!');
+        //menggunakan model simpanan untuk menyimpan data
+        Simpanan::create([ 
+            'id_anggota'=>auth()->id(),
+            'jenis_simpanan'=>$request->jenis_simpanan,
+            'jumlah'=>$request->jumlah]);
+        return redirect()->route('anggota.simpanan.index')->with('succes', 'Simpanan berhasil ditambahkan');
     }
 
-    // Tampilkan daftar simpanan milik anggota tertentu
-    public function index(Biodata $biodata)
+
+    //lihat simpanan
+    public function index()
     {
-        $simpanan = Simpanan::where('user_id', $biodata->id)->get();
-        return view('simpanan.index', compact('simpanan', 'biodata'));
+        $anggotaId = Auth::id();
+        $riwayatSimpanan = Simpanan::where('id_anggota', $anggotaId)->get();
+        return view('simpanan.index', ['simpaans'=>$riwayatSimpanan]);
     }
 
-    // Hapus simpanan
-    public function destroy(Simpanan $simpanan)
+    //hapus simpanan
+    public function destroy (Simpanan $simpanan)
     {
+        if ($simpanan->id_anggota !==Auth::id()){
+            return redirect('error', 'Anda tidak diizinkan menghapus simpanan anggota lain');
+        }
         $simpanan->delete();
-        
-        // Redirect ke halaman daftar simpanan anggota yang sama
-        return redirect()->route('simpanan.index', ['biodata' => $simpanan->user_id])
-            ->with('success', 'Data simpanan berhasil dihapus!');
+        return redirect()->route('anggota.simpanan.index')->with('succes','Simpanan berhasil dihapus');
+
     }
 }
