@@ -14,13 +14,19 @@ Route::post('/', [App\Http\Controllers\LoginController::class, 'login'])->name('
 Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
 // Temporary route
-Route::get('/temp-register', function () {
+Route::get('/register', function () {
     return view('auth.register');
 });
-Route::get('/temp-forgot-password', function () {
-    return view('auth.forgot-password');
+Route::get('/verifikasi-email', function () {
+    return view('auth.verifikasi-email');
 });
-Route::get('/temp-new-password', function () {
+Route::get('/lupa-password', function () {
+    return view('auth.lupa-password');
+});
+Route::get('/verifikasi-lupa-password', function () {
+    return view('auth.verifikasi-lupa-password');
+});
+Route::get('/new-password', function () {
     return view('auth.new-password');
 });
 

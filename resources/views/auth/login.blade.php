@@ -12,8 +12,8 @@
         <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">
                 <label class="form-label" for="password">Password</label>
-                <a href="\temp-forgot-password">
-                    <small>Forgot Password?</small>
+                <a href="\lupa-password">
+                    <small>Lupa Password?</small>
                 </a>
             </div>
             <div class="input-group input-group-merge">
@@ -30,7 +30,7 @@
 
     <p class="text-center">
         <span>New on our platform?</span>
-        <a href="\temp-register">
+        <a href="\register">
             <span>Create an account</span>
         </a>
     </p>
