@@ -53,6 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin Route
     Route::middleware('role:admin')->group(function () {
+        // Dashboard Admin
         Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
 
         // Menu Manajemen Pengguna
@@ -67,9 +68,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('admin.pengguna.profil-user');
         });
 
-        // Menu 
-        Route::get('/admin/management-koperasi', [App\Http\Controllers\AdminController::class, 'koperasiManagement']);
+        // Menu Pinjaman
+        Route::get('/admin/pinjaman/', [App\Http\Controllers\AdminController::class, 'manajemenPinjaman']);
+        Route::get('/admin/pinjaman/tambah-pinjaman', function () {
+            return view('admin.pinjaman.tambah-pinjaman');
+        });
+        Route::get('/admin/pinjaman/tambah-angsuran', function () {
+            return view('admin.pinjaman.tambah-angsuran');
+        });
+        Route::get('/admin/pinjaman/riwayat-angsuran', function () {
+            return view('admin.pinjaman.riwayat-angsuran');
+        });
 
+        // Menu Simpanan
+        Route::get('/admin/simpanan', function () {
+            return view('admin.simpanan.simpanan');
+        });
+        Route::get('/admin/simpanan/simpanan-per-anggota', function () {
+            return view('admin.simpanan.simpanan-per-anggota');
+        });
+        Route::get('/admin/simpanan/tambah-simpanan', function () {
+            return view('admin.simpanan.tambah-simpanan');
+        });
+
+        // Menu Laporan Keuangan
         Route::get('/admin/laporan-keuangan', function () {
             return view('admin.laporan-keuangan');
         });

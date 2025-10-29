@@ -89,8 +89,8 @@ class AdminController extends Controller
         return redirect('/admin/pengguna/user-management')->with('success', 'User deleted successfully.');
     }
 
-    public function koperasiManagement()
+    public function manajemenPinjaman()
     {
-        return $this->viewWithUser('admin.management-koperasi');
+        return $this->viewWithUser('admin.pinjaman.pinjaman');
     }
 }

@@ -74,15 +74,15 @@
                 </a>
             </li>
 
-            <li class="menu-item {{ Request::is('admin/management-koperasi*') ? 'active' : '' }}">
-                <a href="{{ url('admin/management-koperasi') }}" class="menu-link">
+            <li class="menu-item {{ Request::is('admin/pinjaman*') ? 'active' : '' }}">
+                <a href="{{ url('admin/pinjaman/') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-money"></i>
                     <div data-i18n="Analytics">Manajemen Pinjaman</div>
                 </a>
             </li>
 
             <li class="menu-item {{ Request::is('admin/simpanan*') ? 'active' : '' }}">
-                <a href="{{ url('admin/management-koperasi') }}" class="menu-link">
+                <a href="{{ url('admin/simpanan') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wallet"></i>
                     <div data-i18n="Analytics">Manajemen Simpanan</div>
                 </a>

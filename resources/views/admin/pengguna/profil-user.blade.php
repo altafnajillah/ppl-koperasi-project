@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-2 row gx-2">
-                                        <div class="col-lg-8    col-6">
+                                        <div class="col-lg-8 col-6">
                                             <button type="submit" class="btn btn-success w-100">Terima Profil</button>
                                         </div>
                                         <div class="col-lg-4 col-6">
