@@ -101,13 +101,13 @@
                         <div class="px-4 mb-3">
                             <!-- Form filter: single row so columns stay aligned -->
                             <form method="GET" class="row gx-2 gy-2 align-items-center">
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-4">
                                     <div class="input-group">
                                         <span class="input-group-text fw-bold">Dari</span>
                                         <input type="date" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-4">
                                     <div class="input-group">
                                         <span class="input-group-text fw-bold">Sampai</span>
                                         <input type="date" class="form-control" />
@@ -116,13 +116,9 @@
                                 <div class="col-12 col-lg-2">
                                     <select id="jenis-laporan" name="jenis-laporan" class="form-select">
                                         <option value="">-- Pilih jenis laporan --</option>
-                                        <option value="pendapatan">Harian</option>
-                                        <option value="pengeluaran">Bulanan</option>
-                                        <option value="laporan">Tahunan</option>
+                                        <option value="pendapatan">Pemasukan</option>
+                                        <option value="pengeluaran">Pengeluaran</option>
                                     </select>
-                                </div>
-                                <div class="col-6 col-lg-2">
-                                    <button class="btn btn-primary w-100" type="submit">Tampilkan</button>
                                 </div>
                                 <div class="col-6 col-lg-2">
                                     <a href="#" class="btn btn-success w-100">Cetak CSV</a>
@@ -136,24 +132,21 @@
                                     <tr>
                                         <td>Tanggal</td>
                                         <td>Jenis</td>
-                                        <td>Keterangan</td>
-                                        <td>Pemasukan(Rp)</td>
-                                        <td>Pengeluaran(Rp)</td>
+                                        <td>Kategori</td>
+                                        <td>Nominal (Rp)</td>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
                                     <tr>
                                         <td>12/01/2023</td>
                                         <td>Pemasukan</td>
-                                        <td>Pembayaran Angsuran</td>
+                                        <td>Angsuran</td>
                                         <td>12.000.000</td>
-                                        <td>0</td>
                                     </tr>
                                     <tr>
                                         <td>12/01/2023</td>
-                                        <td>Pembayaran Simpanan</td>
-                                        <td></td>
-                                        <td>0</td>
+                                        <td>Pengeluaran</td>
+                                        <td>Pinjaman</td>
                                         <td>12.000.000</td>
                                     </tr>
                                 </tbody>

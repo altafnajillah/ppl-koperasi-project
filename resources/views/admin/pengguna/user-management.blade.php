@@ -20,7 +20,7 @@
                                         performance
                                         more closely!
                                     </p>
-                                    <a href="\admin\create-user" class="btn btn-primary">Tambah Pengguna</a>
+                                    <a href="\admin\pengguna\create-user" class="btn btn-primary">Tambah Pengguna</a>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -37,13 +37,13 @@
 
                 {{-- table --}}
                 <div class="col-lg-12 mb-4">
-                    <div class="card pb-3 border-0 border-bottom border-3 border-warning">
+                    <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Pengguna</h5>
 
                         <div class="px-4 mt-3 mb-3">
                             <div class="row gx-3">
                                 <!-- Info (6 columns) -->
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12 col-lg-5">
                                     <div class="h-100 d-flex align-items-center">
                                         <div class="w-100 bg-secondary text-white rounded px-3 py-2">
                                             <span class="me-3 fw-semibold">Total Users: <span
@@ -58,7 +58,7 @@
                                 <!-- Role dropdown (2 columns) -->
                                 <div class="col-12 col-lg-2 mt-2 mt-lg-0 col-md-4">
                                     <div class="h-100 d-flex align-items-center">
-                                        <div class="w-100">
+                                        <div class="w-100 h-100">
                                             <button class="btn btn-secondary w-100 h-100 dropdown-toggle" type="button"
                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Role
@@ -72,8 +72,24 @@
                                     </div>
                                 </div>
 
+                                <!-- Role dropdown (2 columns) -->
+                                <div class="col-12 col-lg-2 mt-2 mt-lg-0 col-md-4">
+                                    <div class="h-100 d-flex align-items-center">
+                                        <div class="w-100 h-100">
+                                            <button class="btn btn-secondary w-100 h-100 dropdown-toggle" type="button"
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Status
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" href="#">Ditunda</a></li>
+                                                <li><a class="dropdown-item" href="#">Diterima</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Search (4 columns) -->
-                                <div class="col-12 col-lg-4 mt-2 mt-lg-0 col-md-8">
+                                <div class="col-12 col-lg-3 mt-2 mt-lg-0 col-md-4">
                                     <div class="h-100 d-flex align-items-center">
                                         <input type="text" class="form-control h-100" placeholder="Search..." />
                                     </div>
@@ -89,8 +105,6 @@
                                         <td>Nama</td>
                                         <td>Email</td>
                                         <td>Role</td>
-                                        <td>Alamat</td>
-                                        <td>NIK</td>
                                         <td>Status</td>
                                         <td>Actions</td>
                                     </tr>
@@ -105,17 +119,24 @@
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
-                                                    <span class="badge bg-label-info me-1">{{ $user->role }}</span>
+                                                    <span
+                                                        class="badge me-1 @if ($user->role == 'admin') bg-label-primary 
+                                                        @elseif($user->role == 'petugas') bg-label-warning 
+                                                        @elseif($user->role == 'anggota') bg-label-info 
+                                                        @else bg-label-secondary @endif">
+                                                        {{ $user->role }}
+                                                    </span>
                                                 </td>
-                                                <td>Jl. Merdeka No. 123, Jakarta</td>
-                                                <td>762887181728889182</td>
-                                                <td><span class="badge bg-label-success me-1">Active</span></td>
+                                                <td><span class="badge bg-label-success me-1">Diterima</span></td>
                                                 <td>
-                                                    <a href="/admin/edit-user" class="btn btn-warning py-1">
-                                                        <i class=" bx bx-edit-alt me-1"></i>
+                                                    <a href="/admin/pengguna/profil-user" class="btn btn-primary py-1">
+                                                        Lihat Profile
+                                                    </a>
+                                                    <a href="/admin/pengguna/edit-user" class="btn btn-warning py-1">
+                                                        Edit
                                                     </a>
                                                     <button class="btn btn-danger py-1" type="submit">
-                                                        <i class=" bx bx-trash me-1"></i>
+                                                        Hapus
                                                     </button>
                                                 </td>
                                             </tr>

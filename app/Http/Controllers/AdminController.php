@@ -20,14 +20,14 @@ class AdminController extends Controller
 
     public function users()
     {
-        return $this->viewWithUser('admin.user-management', [
+        return $this->viewWithUser('admin.pengguna.user-management', [
             'listUsers' => User::all()
         ]);
     }
 
     public function createUser()
     {
-        return $this->viewWithUser('admin.add-user');
+        return $this->viewWithUser('admin.pengguna.add-user');
     }
 
     public function storeUser(Request $request)
@@ -51,7 +51,7 @@ class AdminController extends Controller
                 'role' => $request->role ?? 'anggota',
             ]);
 
-            return redirect('/admin/user-management')->with('success', 'User created successfully.');
+            return redirect('/admin/pengguna/user-management')->with('success', 'User created successfully.');
 
         } else {
             return back()->withErrors($validated)->withInput();
@@ -61,7 +61,7 @@ class AdminController extends Controller
     public function editUser($id)
     {
         $user = User::findOrFail($id);
-        return $this->viewWithUser('admin.edit-user', ['editUser' => $user]);
+        return $this->viewWithUser('admin.pengguna.edit-user', ['editUser' => $user]);
     }
 
     public function updateUser(Request $request, $id)
@@ -76,7 +76,7 @@ class AdminController extends Controller
 
         if ($validated) {
             $user->update($validated);
-            return redirect('/admin/user-management')->with('success', 'User updated successfully.');
+            return redirect('/admin/pengguna/user-management')->with('success', 'User updated successfully.');
         } else {
             return back()->withErrors($validated)->withInput();
         }
@@ -86,7 +86,7 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect('/admin/user-management')->with('success', 'User deleted successfully.');
+        return redirect('/admin/pengguna/user-management')->with('success', 'User deleted successfully.');
     }
 
     public function koperasiManagement()

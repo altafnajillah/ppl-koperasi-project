@@ -55,11 +55,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-        Route::get('/admin/user-management', [App\Http\Controllers\AdminController::class, 'users']);
-        Route::get('/admin/create-user', [App\Http\Controllers\AdminController::class, 'createUser']);
+        // Menu Manajemen Pengguna
+        Route::get('/admin/pengguna/user-management', [App\Http\Controllers\AdminController::class, 'users']);
+        Route::get('/admin/pengguna/create-user', [App\Http\Controllers\AdminController::class, 'createUser']);
         Route::post('/admin/store-user', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('user.store');
+        Route::get('/admin/pengguna/edit-user', function () {
+            return view('admin.pengguna.edit-user');
+        });
         Route::delete('/admin/delete-user/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('user.delete');
+        Route::get('/admin/pengguna/profil-user', function () {
+            return view('admin.pengguna.profil-user');
+        });
 
+        // Menu 
         Route::get('/admin/management-koperasi', [App\Http\Controllers\AdminController::class, 'koperasiManagement']);
 
         Route::get('/admin/laporan-keuangan', function () {

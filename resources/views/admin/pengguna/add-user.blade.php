@@ -51,21 +51,14 @@
                                 <input type="text" class="form-control" id="email" name="email"
                                     placeholder="Enter your email" />
                             </div>
-                            {{-- <div class="mb-3">
-                                <label for="nik" class="form-label">NIK</label>
-                                <input type="text" class="form-control" id="nik" name="nik"
-                                    placeholder="Enter your NIK" autofocus />
-                            </div>
                             <div class="mb-3">
-                                <label for="username" class="form-label">No Hp</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter your No Hp" autofocus />
+                                <label for="role" class="form-label">Role</label>
+                                <select id="role" name="role" class="form-select">
+                                    <option value="admin">Admin</option>
+                                    <option value="anggota">Anggota</option>
+                                    <option value="petugas">Petugas</option>
+                                </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter your Alamat" autofocus />
-                            </div> --}}
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
@@ -96,11 +89,8 @@
                                 </div>
                             </div>
                             <div class="row gx-3 align-items-center">
-                                <div class="col-12 col-lg-9">
+                                <div class="col-12">
                                     <button class="btn btn-primary w-100" type="submit">Tambah User</button>
-                                </div>
-                                <div class="col-12 col-lg-3">
-                                    <a href="" class="btn btn-secondary w-100">Reset</a>
                                 </div>
                             </div>
                         </form>

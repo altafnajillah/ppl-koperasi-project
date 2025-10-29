@@ -67,17 +67,24 @@
                 </a>
             </li>
 
-            <li class="menu-item {{ Request::is('admin/user-management*') ? 'active' : '' }}">
-                <a href="{{ url('admin/user-management') }}" class="menu-link">
+            <li class="menu-item {{ Request::is('admin/pengguna*') ? 'active' : '' }}">
+                <a href="{{ url('admin/pengguna/user-management') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
-                    <div data-i18n="Analytics">Manajemen User</div>
+                    <div data-i18n="Analytics">Manajemen Pengguna</div>
                 </a>
             </li>
 
             <li class="menu-item {{ Request::is('admin/management-koperasi*') ? 'active' : '' }}">
                 <a href="{{ url('admin/management-koperasi') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-coin-stack"></i>
-                    <div data-i18n="Analytics">Manajemen Koperasi</div>
+                    <i class="menu-icon tf-icons bx bx-money"></i>
+                    <div data-i18n="Analytics">Manajemen Pinjaman</div>
+                </a>
+            </li>
+
+            <li class="menu-item {{ Request::is('admin/simpanan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/management-koperasi') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-wallet"></i>
+                    <div data-i18n="Analytics">Manajemen Simpanan</div>
                 </a>
             </li>
 
