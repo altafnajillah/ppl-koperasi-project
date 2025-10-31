@@ -1,6 +1,6 @@
-@extends('templates.admin')
+@extends('templates.petugas')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Dashboard Petugas')
 
 @section('content')
     <!-- Content wrapper -->
@@ -21,9 +21,9 @@
                                         more closely!
                                     </p>
                                     <div class="d-flex gap-3">
-                                        <a href="\admin\pinjaman\tambah-pinjaman" class="btn btn-primary">Tambah
+                                        <a href="\petugas\pinjaman\tambah-pinjaman" class="btn btn-primary">Tambah
                                             Pinjaman</a>
-                                        <a href="\admin\pinjaman\tambah-angsuran" class="btn btn-primary">Tambah
+                                        <a href="\petugas\pinjaman\tambah-angsuran" class="btn btn-primary">Tambah
                                             Angsuran</a>
                                     </div>
                                 </div>
@@ -158,14 +158,8 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="/admin/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
+                                            <a href="/petugas/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
                                                 Riwayat Angsuran
-                                            </a>
-                                            <a href="/admin/pinjaman/edit-pinjaman" class="btn btn-warning py-1">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn btn-danger py-1">
-                                                Hapus
                                             </a>
                                         </td>
                                     </tr>

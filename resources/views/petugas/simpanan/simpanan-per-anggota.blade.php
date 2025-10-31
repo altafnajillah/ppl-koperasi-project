@@ -14,13 +14,12 @@
                         <div class="d-flex align-items-end row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <h3 class="card-title text-primary">PENCATATAN SIMPANAN</h3>
+                                    <h3 class="card-title text-primary">SIMPANAN PER ANGGOTA</h3>
                                     <p class="mb-4">
                                         Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
                                         performance
                                         more closely!
                                     </p>
-                                    <a href="/petugas/simpanan/pencatatan" class="btn btn-primary">Form Pencatatan</a>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -35,31 +34,19 @@
                     </div>
                 </div>
 
-                {{-- table --}}
+                {{-- Pengajuan Pinjaman Baru --}}
                 <div class="col-lg-12 mb-4">
-                    <div class="card pb-3 border-0 border-bottom border-3 border-warning">
-                        <h5 class="card-header">Daftar Pengguna</h5>
+                    <div class="card pb-3 border-0 border-bottom border-3 border-primary">
+                        <h5 class="card-header">Daftar Simpanan Per Anggota</h5>
 
-                        <div class="px-4 mt-3 mb-3">
+                        <div class="px-4 mb-3">
                             <div class="row gx-3">
-
                                 <!-- Search (4 columns) -->
-                                <div class="col-8 col-lg-10 mt-2 mt-lg-0 col-md-8">
+                                <div class="col-12mt-2 mt-lg-0">
                                     <div class="h-100 d-flex align-items-center">
                                         <input type="text" class="form-control h-100" placeholder="Search..." />
                                     </div>
                                 </div>
-
-                                <!-- Search butn -->
-                                <div class="col-4 col-lg-2 mt-2 mt-lg-0 col-md-4">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <div class="w-100">
-                                            <a href="" class="btn btn-primary w-100 h-100">Cari</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
 
@@ -68,34 +55,26 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <td>Tanggal</td>
-                                        <td>Waktu</td>
-                                        <td>ID Anggota</td>
-                                        <td>Tipe</td>
-                                        <td>Jumlah</td>
-                                        <td>Metode</td>
-                                        <td>Keterangan</td>
-                                    </tr>
+                                        <td>Nama Anggota</td>
+                                        <td>Wajib(Rp)</td>
+                                        <td>Pokok(Rp)</td>
+                                        <td>Sukarela(Rp)</td>
+                                        <td>Total(Rp)</td>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <form action="" method="POST">
-                                        <tr>
-                                            <td>01/01/2023</td>
-                                            <td>10:00</td>
-                                            <td>A001</td>
-                                            <td>
-                                                Wajib
-                                            </td>
-                                            <td>Rp. 1.000.000</td>
-                                            <td>Tunai</td>
-                                            <td>~~</td>
-                                        </tr>
-                                    </form>
+                                    <tr>
+                                        <td>12-12-20223</td>
+                                        <td>Joe</td>
+                                        <td>Rp.2.000.000</td>
+                                        <td>Rp.3.000.000</td>
+                                        <td>Rp.1.200.000</td>
+                                        <td>Rp.6.200.000</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {{-- end table --}}
             </div>
             <!-- / Content -->
 

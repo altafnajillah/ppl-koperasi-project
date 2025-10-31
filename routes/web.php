@@ -30,25 +30,6 @@ Route::get('/new-password', function () {
     return view('auth.new-password');
 });
 
-// Anggota
-// Route::get('/anggota/dashboard', function () {
-//     return view('anggota.dashboard');
-// });
-
-// // Petugas
-// Route::get('/petugas/dashboard', function () {
-//     return view('petugas.dashboard');
-// });
-
-Route::get('/petugas/simpanan', function () {
-    return view('petugas.simpanan');
-});
-Route::get('/petugas/simpanan/pencatatan', function () {
-    return view('petugas.pencatatan-simpanan');
-});
-
-
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin Route
@@ -73,6 +54,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/pinjaman/tambah-pinjaman', function () {
             return view('admin.pinjaman.tambah-pinjaman');
         });
+        Route::get('/admin/pinjaman/edit-pinjaman', function () {
+            return view('admin.pinjaman.edit-pinjaman');
+        });
         Route::get('/admin/pinjaman/tambah-angsuran', function () {
             return view('admin.pinjaman.tambah-angsuran');
         });
@@ -90,6 +74,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/simpanan/tambah-simpanan', function () {
             return view('admin.simpanan.tambah-simpanan');
         });
+        Route::get('/admin/simpanan/edit-simpanan', function () {
+            return view('admin.simpanan.edit-simpanan');
+        });
 
         // Menu Laporan Keuangan
         Route::get('/admin/laporan-keuangan', function () {
@@ -100,6 +87,54 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Petugas
     Route::middleware('role:petugas')->group(function () {
         Route::get('/petugas/dashboard', [App\Http\Controllers\PetugasController::class, 'dashboard'])->name('petugas.dashboard');
+
+        // Profile Anggota
+        Route::get('/petugas/anggota', function () {
+            return view('petugas.anggota.manajemen-anggota');
+        });
+        Route::get('/petugas/anggota/tambah-anggota', function () {
+            return view('petugas.anggota.tambah-anggota');
+        });
+        Route::get('/petugas/anggota/edit-anggota', function () {
+            return view('petugas.anggota.edit-anggota');
+        });
+        Route::get('/petugas/anggota/profil-anggota', function () {
+            return view('petugas.anggota.profil-anggota');
+        });
+
+        // Menu Pinjaman
+        Route::get('/petugas/pinjaman', function () {
+            return view('petugas.pinjaman.pinjaman');
+        });
+        Route::get('/petugas/pinjaman/tambah-pinjaman', function () {
+            return view('petugas.pinjaman.tambah-pinjaman');
+        });
+        Route::get('/petugas/pinjaman/tambah-angsuran', function () {
+            return view('petugas.pinjaman.tambah-angsuran');
+        });
+        Route::get('/petugas/pinjaman/riwayat-angsuran', function () {
+            return view('petugas.pinjaman.riwayat-angsuran');
+        });
+
+        // Menu Simpanan
+        Route::get('/petugas/simpanan', function () {
+            return view('petugas.simpanan.simpanan');
+        });
+        Route::get('/petugas/simpanan/tambah-simpanan', function () {
+            return view('petugas.simpanan.tambah-simpanan');
+        });
+        Route::get('/petugas/simpanan/edit-simpanan', function () {
+            return view('petugas.simpanan.edit-simpanan');
+        });
+        Route::get('/petugas/simpanan/simpanan-per-anggota', function () {
+            return view('petugas.simpanan.simpanan-per-anggota');
+        });
+
+        // Ganti Password
+        Route::get('/petugas/ganti-password', function () {
+            return view('petugas.ganti-password');
+        });
+
     });
 
    // Anggota

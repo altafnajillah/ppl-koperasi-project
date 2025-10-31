@@ -66,28 +66,28 @@
                     <div data-i18n="Analytics">Dashboard</div>
                 </a>
             </li>
+            <li class="menu-item {{ Request::is('petugas/anggota*') ? 'active' : '' }}">
+                <a href="{{ url('petugas/anggota') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="Analytics">Manajemen Anggota</div>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('petugas/pinjaman*') ? 'active' : '' }}">
+                <a href="{{ url('petugas/pinjaman') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-money"></i>
+                    <div data-i18n="Analytics">Manajemen Pinjaman</div>
+                </a>
+            </li>
             <li class="menu-item {{ Request::is('petugas/simpanan*') ? 'active' : '' }}">
                 <a href="{{ url('petugas/simpanan') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-notepad"></i>
-                    <div data-i18n="Analytics">Pencatatan Simpanan</div>
+                    <i class="menu-icon tf-icons bx bx-wallet"></i>
+                    <div data-i18n="Analytics">Manajemen Simpanan</div>
                 </a>
             </li>
-            <li class="menu-item ">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-transfer"></i>
-                    <div data-i18n="Analytics">Pembayaran Angsuran</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-check-circle"></i>
-                    <div data-i18n="Analytics">Verifikasi Pengajuan</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-file"></i>
-                    <div data-i18n="Analytics">Laporan Operasional</div>
+            <li class="menu-item {{ Request::is('petugas/ganti-password') ? 'active' : '' }}">
+                <a href="{{ url('petugas/ganti-password') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-lock"></i>
+                    <div data-i18n="Analytics">Ganti Password</div>
                 </a>
             </li>
         </ul>

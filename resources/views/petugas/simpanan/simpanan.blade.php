@@ -1,6 +1,6 @@
-@extends('templates.admin')
+@extends('templates.petugas')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Dashboard Petugas')
 
 @section('content')
     <!-- Content wrapper -->
@@ -21,9 +21,10 @@
                                         more closely!
                                     </p>
                                     <div class="d-flex gap-3">
-                                        <a href="\admin\simpanan\tambah-simpanan" class="btn btn-primary">Tambah
+                                        <a href="\petugas\simpanan\tambah-simpanan" class="btn btn-primary">Tambah
                                             Simpanan</a>
-                                        <a href="\admin\simpanan\simpanan-per-anggota" class="btn btn-primary">Simpanan Per
+                                        <a href="\petugas\simpanan\simpanan-per-anggota" class="btn btn-primary">Simpanan
+                                            Per
                                             Anggota</a>
                                     </div>
                                 </div>
@@ -94,12 +95,12 @@
                                         <td>Wajib</td>
                                         <td>Rp.12.000.000</td>
                                         <td>
-                                            <a href="/admin/simpanan/edit-simpanan" class="btn btn-warning py-1">
+                                            <a href="/petugas/simpanan/edit-simpanan" class="btn btn-warning py-1">
                                                 Edit
                                             </a>
-                                            <a href="" class="btn btn-danger py-1">
+                                            {{-- <a href="" class="btn btn-danger py-1">
                                                 Hapus
-                                            </a>
+                                            </a> --}}
                                         </td>
                                     </tr>
                                 </tbody>

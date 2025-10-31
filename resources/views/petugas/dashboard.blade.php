@@ -37,67 +37,67 @@
                 <div class="col-12 order-3 order-md-2">
                     <div class="row">
 
-                        <div class="col-lg-6 col-md-6 col-12 mb-4">
-                            <div class="card border-0 border-bottom border-3 border-success">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <div class="avatar">
-                                            <span class="avatar-initial rounded bg-label-success">
-                                                <i class="icon-base bx bx-transfer icon-lg"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span class="fw-semibold d-block mb-1">Transaksi Harian</span>
-                                    <h3 class="card-title mb-2">12,628</h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 col-12 mb-4">
-                            <div class="card border-0 border-bottom border-3 border-primary">
+                        <div class="col-lg-2 col-md-4 col-12 mb-4">
+                            <div class="card h-100 border-0 border-bottom border-3 border-primary">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
                                         <div class="avatar">
                                             <span class="avatar-initial rounded bg-label-primary">
-                                                <i class="icon-base bx bx-note icon-lg"></i>
+                                                <i class="icon-base bi bi-people"></i>
                                             </span>
                                         </div>
                                     </div>
-                                    <span class="fw-semibold d-block mb-1">Pengajuan Pinjaman Baru</span>
-                                    <h3 class="card-title mb-2">12,628</h3>
+                                    <span class="fw-semibold d-block mb-1">Anggota Belum Terferifikasi</span>
+                                    <h3 class="card-title mb-2">56</h3>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-12 mb-4">
-                            <div class="card border-0 border-bottom border-3 border-success">
+                        <div class="col-lg-3 col-md-8 col-12 mb-4">
+                            <div class="card h-100 border-0 border-bottom border-3 border-primary">
                                 <div class="card ">
                                     <div class="card-body">
                                         <div class="card-title d-flex align-items-start justify-content-between">
                                             <div class="avatar">
                                                 <span class="avatar-initial rounded bg-label-success">
-                                                    <i class="icon-base bx bx-coin-stack icon-lg"></i>
+                                                    <i class="icon-base bi bi-journal-text icon-lg"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                        <span class="fw-semibold d-block mb-1">Total Simpanan</span>
-                                        <h3 class="card-title text-nowrap mb-2">Rp. 35.000.000</h3>
+                                        <span class="fw-semibold d-block mb-1">Pengajuan Pinjaman Baru</span>
+                                        <h3 class="card-title text-nowrap mb-2">53</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-12 mb-4">
-                            <div class="card  border-0 border-bottom border-3 border-warning">
+                        <div class="col-lg-4 col-md-8 col-12 mb-4">
+                            <div class="card h-100 border-0 border-bottom border-3 border-primary">
+                                <div class="card-body">
+                                    <div class="card-title d-flex align-items-start justify-content-between">
+                                        <div class="avatar">
+                                            <span class="avatar-initial rounded bg-label-danger">
+                                                <i class="icon-base bi bi-cash-stack icon-lg"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span class="fw-semibold d-block mb-1">Total Pinjaman Beredar</span>
+                                    <h3 class="card-title mb-2">RP. 14.000.000.000</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-12 mb-4">
+                            <div class="card h-100 border-0 border-bottom border-3 border-primary">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
                                         <div class="avatar">
                                             <span class="avatar-initial rounded bg-label-warning">
-                                                <i class="icon-base bx bx-wallet-alt icon-lg"></i>
+                                                <i class="icon-base bi bi-cash-coin"></i>
                                             </span>
                                         </div>
                                     </div>
-                                    <span class="fw-semibold d-block mb-1">Saldo Pinjaman Aktif</span>
+                                    <span class="fw-semibold d-block mb-1">Pengajuan Simpanan</span>
                                     <h3 class="card-title mb-2">RP. 14.000.000</h3>
                                 </div>
                             </div>
