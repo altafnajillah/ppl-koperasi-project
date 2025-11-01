@@ -2,10 +2,11 @@
 @section('isi')
     <h4 class="mb-2 mt-4 fw-bold text-center fs-3 mb-4">Register</h4>
 
-    <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+    <form id="formAuthentication" class="mb-3" action="{{ route('register') }}" method="POST">
+        @csrf
         <div class="mb-3">
-            <label for="username" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username"
+            <label for="name" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name"
                 autofocus />
         </div>
         <div class="mb-3">
@@ -22,9 +23,9 @@
             </div>
         </div>
         <div class="mb-3 form-password-toggle">
-            <label class="form-label" for="password">Konfirmasi Password</label>
+            <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
             <div class="input-group input-group-merge">
-                <input type="password" id="password" class="form-control" name="password"
+                <input type="password" id="password_confirmation" class="form-control" name="password_confirmation"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                     aria-describedby="password" />
                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>

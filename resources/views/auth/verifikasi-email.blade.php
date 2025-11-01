@@ -11,6 +11,10 @@
             klik link
             verifikasi
             yang telah kami kirimkan untuk mengaktifkan akun Anda.</p>
+            <form action="{{ route('verification.send') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary mb-4">Kirim Email Verifikasi</button>
+            </form>
         <div class="">
             <p class="bg-info text-dark p-2 px-3 rounded">Tidak menemukan emailnya? Pastikan untuk memeriksa folder
                 Spam/Junk

@@ -4,22 +4,18 @@ use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\SimpananController;
 // use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Route;
 
 // Auth::routes(['verify' => true]);
 
-Route::get('/', [App\Http\Controllers\LoginController::class, 'showLoginForm']);
-Route::post('/', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
-Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+Route::get('/', [App\Http\Controllers\AuthController::class, 'showLoginForm']);
+Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
+Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegisterForm']);
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
 
 // Temporary route
-Route::get('/register', function () {
-    return view('auth.register');
-});
-Route::get('/verifikasi-email', function () {
-    return view('auth.verifikasi-email');
-});
 Route::get('/lupa-password', function () {
     return view('auth.lupa-password');
 });
@@ -28,6 +24,14 @@ Route::get('/verifikasi-lupa-password', function () {
 });
 Route::get('/new-password', function () {
     return view('auth.new-password');
+});
+
+// ================= Email Verification Routes =================
+
+Route::middleware('auth')->group(function () {
+    Route::get('/verify-notice', [App\Http\Controllers\AuthController::class, 'emailVerificationNotice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\AuthController::class, 'emailVerified'])->middleware('signed')->name('verification.verify');
+    Route::post('/email/verification-notification', [App\Http\Controllers\AuthController::class, 'resendVerificationEmail'])->middleware('throttle:6,1')->name('verification.send');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -137,30 +141,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     });
 
-   // Anggota
+    // Anggota
     Route::middleware(['role:anggota'])->group(function () {
-        
-        
-       Route::get('/anggota/biodata/create', [App\Http\Controllers\BiodataController::class, 'create'])->name('anggota.biodata.create');
-        
+
+        Route::get('/anggota/biodata/create', [App\Http\Controllers\BiodataController::class, 'create'])->name('anggota.biodata.create');
+
         Route::post('/anggota/biodata/store', [App\Http\Controllers\BiodataController::class, 'store'])
-             ->name('anggota.biodata.store');
+            ->name('anggota.biodata.store');
 
         Route::middleware(['biodata.completed'])->group(function () {
-            
+
             Route::get('/anggota/dashboard', [App\Http\Controllers\AnggotaController::class, 'dashboard'])
-                 ->name('anggota.dashboard');
+                ->name('anggota.dashboard');
 
             Route::get('/anggota/biodata', [App\Http\Controllers\BiodataController::class, 'show'])
-                 ->name('anggota.biodata.show');
+                ->name('anggota.biodata.show');
         });
     });
 });
 
 // Email Verification Notice Route
-Route::get('/verification-notice', function () {
-    return 'Mohon verifikasi email Anda terlebih dahulu sebelum mengakses halaman ini.';
-})->name('verification.notice');
+// Route::get('/verification-notice', function () {
+//     return 'Mohon verifikasi email Anda terlebih dahulu sebelum mengakses halaman ini.';
+// })->name('verification.notice');
 
 // ====== Di komen, ada yang sudah di intergasikan ke atas =====
 // BiodataController
