@@ -157,6 +157,37 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/anggota/biodata', [App\Http\Controllers\BiodataController::class, 'show'])
                 ->name('anggota.biodata.show');
         });
+
+        // Profile Saya
+        Route::get('/anggota/biodata/', function () {
+            return view('anggota.biodata.profil');
+        });
+
+        // Ganti Password
+        Route::get('/anggota/ganti-password', function () {
+            return view('anggota.ganti-password');
+        });
+
+        // Pinjaman\
+        Route::get('/anggota/pinjaman', function () {
+            return view('anggota.pinjaman.pinjaman');
+        });
+        Route::get('/anggota/pinjaman/tambah-pinjaman', function () {
+            return view('anggota.pinjaman.tambah-pinjaman');
+        });
+        Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
+            return view('anggota.pinjaman.riwayat-angsuran');
+        });
+
+        // Simpanan
+        Route::get('/anggota/simpanan', function () {
+            return view('anggota.simpanan');
+        });
+
+        // Notifikasi
+        Route::get('/anggota/notifikasi', function () {
+            return view('anggota.notifikasi');
+        });
     });
 });
 

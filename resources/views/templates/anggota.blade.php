@@ -64,9 +64,15 @@
 
 @section('nav-profile')
     <li>
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="{{ url('anggota/biodata') }}">
             <i class="bx bx-user me-2"></i>
-            <span class="align-middle">My Profile</span>
+            <span class="align-middle">Profil Saya</span>
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item" href="{{ url('anggota/ganti-password') }}">
+            <i class="bx bx-lock me-2"></i>
+            <span class="align-middle">Ganti Password</span>
         </a>
     </li>
     <li>
@@ -140,28 +146,28 @@
                     <div data-i18n="Analytics">Dashboard</div>
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
+            <li class="menu-item {{ Request::is('anggota/biodata*') ? 'active' : '' }}">
+                <a href="{{ url('anggota/biodata') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="Analytics">Profil Saya</div>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('anggota/pinjaman*') ? 'active' : '' }}">
+                <a href="{{ url('anggota/pinjaman') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-money"></i>
+                    <div data-i18n="Analytics">Pinjaman</div>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('anggota/simpanan*') ? 'active' : '' }}">
+                <a href="{{ url('anggota/simpanan') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wallet"></i>
                     <div data-i18n="Analytics">Simpanan</div>
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-credit-card"></i>
-                    <div data-i18n="Analytics">Angsuran</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-building-house"></i>
-                    <div data-i18n="Analytics">Pengajuan</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-file"></i>
-                    <div data-i18n="Analytics">Laporan Pribadi</div>
+            <li class="menu-item {{ Request::is('anggota/notifikasi*') ? 'active' : '' }}">
+                <a href="{{ url('anggota/notifikasi') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-bell"></i>
+                    <div data-i18n="Analytics">Notifikasi</div>
                 </a>
             </li>
         </ul>
