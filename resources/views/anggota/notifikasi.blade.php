@@ -16,7 +16,8 @@
                                 <div class="card-body">
                                     <h3 class="card-title text-primary">NOTIFIKASI</h3>
                                     <p class="mb-4">
-                                        Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
+                                        Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, let's monitoring
+                                        your user
                                         performance
                                         more closely!
                                     </p>
@@ -48,10 +49,12 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Bayarki anu ta dihh</td>
-                                    </tr>
+                                    @foreach ($notifikasi as $notif)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($notif->tanggal)->format('d M Y') }}</td>
+                                            <td>{{ $notif->pesan }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -63,4 +66,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

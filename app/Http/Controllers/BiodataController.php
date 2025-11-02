@@ -8,26 +8,41 @@ use Illuminate\Support\Facades\Auth;
 class BiodataController extends Controller
 {
     // Menampilkan form tambah biodata baru
-    public function create()
+public function index()
     {
-        return view('anggota.biodata.create');
+        $user = Auth::user();
+        $biodata = Auth::user()->biodata()->first();
+        // return $user . $biodata;
+        return view('anggota.biodata.profil', ['user'=> $user, 'biodata' => $biodata]);
     }
 
     // Menyimpan data biodata yang baru dimasukkan
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $validated = $request->validate([
-            'nama' => 'required|string|max:50',
+            // 'nama' => 'required|string|max:50',
+            // 'email' => 'required|email|max:100',
+        
             'alamat' => 'required|string|max:150',
             'no_hp' => 'required|string|max:15',
-            'email' => 'required|email|max:100',
             'nik' => 'required|string|max:20',
         ]);
 
-        $biodata = Biodata::create($validated);
+        // $user::update([
+        //     'name' => $validated['nama'],
+        //     'email' => $validated['email'],
+        // ]);
 
-        // Setelah data disimpan, redirect ke tampilan detail biodata yang baru dibuat
-        return redirect()->route('biodata.show', $biodata->id)->with('success', 'Data berhasil ditambahkan');
+        Biodata::create([
+            'user_id' => $user->id,
+            'alamat' => $validated['alamat'],
+            'no_hp' => $validated['no_hp'],
+            'nik' => $validated['nik'],
+        ]);
+
+        return redirect()->route('anggota.biodata')->with('success', 'Data berhasil ditambahkan');
     }
 
     // Menampilkan detail biodata berdasarkan ID
@@ -45,18 +60,33 @@ class BiodataController extends Controller
     // Memperbarui data biodata yang sudah ada
     public function update(Request $request, Biodata $biodata)
     {
+
+        $user = Auth::user();
+
         $validated = $request->validate([
-            'nama' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
             'alamat' => 'required|string|max:150',
+
             'no_hp' => 'required|string|max:15',
             'email' => 'required|email|max:100',
             'nik' => 'required|string|max:20',
         ]);
 
-        $biodata->update($validated);
+        $user::where('id', $user->id)
+        ->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
+
+        $biodata::where('user_id', $user->id)
+        ->update([
+            'alamat' => $validated['alamat'],
+            'no_hp' => $validated['no_hp'],
+            'nik' => $validated['nik'],
+        ]);
 
         // Setelah update, redirect ke detail biodata yang diperbaharui
-        return redirect()->route('biodata.show', $biodata->id)->with('success', 'Data berhasil diperbaharui');
+        return redirect()->route('anggota.biodata')->with('success', 'Data berhasil diperbaharui');
     }
 
     // Menghapus biodata berdasarkan ID

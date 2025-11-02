@@ -144,49 +144,45 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Anggota
     Route::middleware(['role:anggota'])->group(function () {
 
-        Route::get('/anggota/biodata/create', [App\Http\Controllers\BiodataController::class, 'create'])->name('anggota.biodata.create');
-
-        Route::post('/anggota/biodata/store', [App\Http\Controllers\BiodataController::class, 'store'])
-            ->name('anggota.biodata.store');
+        Route::get('/anggota/biodata/', [App\Http\Controllers\BiodataController::class, 'index'])->name('anggota.biodata');
+        Route::post('/anggota/biodata/', [App\Http\Controllers\BiodataController::class, 'store'])->name('anggota.biodata.store');
+        Route::put('/anggota/biodata/', [App\Http\Controllers\BiodataController::class, 'update'])->name('anggota.biodata.update');
 
         Route::middleware(['biodata.completed'])->group(function () {
 
             Route::get('/anggota/dashboard', [App\Http\Controllers\AnggotaController::class, 'dashboard'])
                 ->name('anggota.dashboard');
 
-            Route::get('/anggota/biodata', [App\Http\Controllers\BiodataController::class, 'show'])
-                ->name('anggota.biodata.show');
-        });
+            // Route::get('/anggota/biodata', [App\Http\Controllers\BiodataController::class, 'show'])
+            //     ->name('anggota.biodata.show');
+            // });
 
-        // Profile Saya
-        Route::get('/anggota/biodata/', function () {
-            return view('anggota.biodata.profil');
-        });
+            // Profile Saya
+            // Route::get('/anggota/biodata/', function () {
+            //     return view('anggota.biodata.profil');
+            // });
 
-        // Ganti Password
-        Route::get('/anggota/ganti-password', function () {
-            return view('anggota.ganti-password');
-        });
+            // Ganti Password
+            Route::get('/anggota/ganti-password', function () {
+                return view('anggota.ganti-password');
+            });
+            Route::post('/anggota/ganti-password', [App\Http\Controllers\AnggotaController::class, 'changePassword'])->name('anggota.changePassword');
 
-        // Pinjaman\
-        Route::get('/anggota/pinjaman', function () {
-            return view('anggota.pinjaman.pinjaman');
-        });
-        Route::get('/anggota/pinjaman/tambah-pinjaman', function () {
-            return view('anggota.pinjaman.tambah-pinjaman');
-        });
-        Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
-            return view('anggota.pinjaman.riwayat-angsuran');
-        });
+            // Pinjaman\
+            Route::get('/anggota/pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'index'])->name('anggota.pinjaman');
+            Route::get('/anggota/pinjaman/tambah-pinjaman', function () {
+                return view('anggota.pinjaman.tambah-pinjaman');
+            });
+            Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
+                return view('anggota.pinjaman.riwayat-angsuran');
+            });
 
-        // Simpanan
-        Route::get('/anggota/simpanan', function () {
-            return view('anggota.simpanan');
-        });
+            // Simpanan
+            Route::get('/anggota/simpanan', [App\Http\Controllers\Anggota\SimpananController::class, 'index'])->name('anggota.simpanan');
 
-        // Notifikasi
-        Route::get('/anggota/notifikasi', function () {
-            return view('anggota.notifikasi');
+            // Notifikasi
+            Route::get('/anggota/notifikasi', [App\Http\Controllers\Anggota\NotifikasiController::class, 'index'])->name('anggota.notifikasi');
+
         });
     });
 });

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->bigInteger('jumlah');
             $table->integer('tenor');
+            $table->float('bunga');
+            $table->text('alasan');
             $table->enum('status', ['menunggu', 'disetujui', 'ditolak'])->default('menunggu');
             $table->string('jaminan')->nullable();
             $table->timestamp('tanggal')->nullable();

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('no_hp');
             $table->string('nik');
-            // $table->string('ktp');
+            $table->string('ktp')->nullable();
             $table->timestamp('accepted_at')->nullable();
             $table->timestamps();
         });

@@ -19,7 +19,8 @@
                                         <div class="card-body">
                                             <h3 class="card-title text-primary">DASHBORAD ANGGOTA</h3>
                                             <p class="mb-4">
-                                                Welcome <span class="fw-bold fst-italic">YASIR</span>, Manage your savings
+                                                Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, Manage
+                                                your savings
                                                 and track
                                                 your loan progress easily here.
                                             </p>
@@ -52,7 +53,7 @@
                                                 </div>
                                             </div>
                                             <span class="fw-semibold d-block mb-1">Pinjaman Aktif</span>
-                                            <h3 class="card-title mb-2">3</h3>
+                                            <h3 class="card-title mb-2">{{ $pinjamanAktif }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +70,8 @@
                                                     </div>
                                                 </div>
                                                 <span class="fw-semibold d-block mb-1">Total Pinjaman Aktif</span>
-                                                <h3 class="card-title text-nowrap mb-2">Rp. 35.000.000</h3>
+                                                <h3 class="card-title text-nowrap mb-2">Rp.
+                                                    {{ number_format($pinjamanJumlah, 0, ',', '.') }}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +88,8 @@
                                                 </div>
                                             </div>
                                             <span class="fw-semibold d-block mb-1">Total Simpanan</span>
-                                            <h3 class="card-title mb-2">RP. 14.000.000</h3>
+                                            <h3 class="card-title mb-2">RP.
+                                                {{ number_format($simpananJumlah, 0, ',', '.') }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -107,17 +110,25 @@
                                 <h5 class="mb-4">Pembayaran Terdekat</h5>
 
                                 <div class=" position-relative pb-4">
-                                    <div class=" d-flex">
-                                        <span class="rounded-circle bg-primary d-block mt-1 me-3"
-                                            style="width:12px;height:12px;"></span>
-                                        <p class="fw-semibold mb-1">10 November 2025</p>
-                                    </div>
-                                    <div class="border-0 border-start border-3 border-primary ps-2 ms-1 ">
-                                        <p class="text-muted mb-2 ms-4">Angsuran Pinjaman Renovasi - Rp
-                                            1.100.000</p>
-                                    </div>
+                                    @forelse ($angsurans as $angsuran)
+                                        <div class=" d-flex">
+                                            <span class="rounded-circle bg-primary d-block mt-1 me-3"
+                                                style="width:12px;height:12px;"></span>
+                                            <p class="fw-semibold mb-1">{{ \Carbon\Carbon::parse($angsuran->tanggal)->format('d M Y') }}</p>
+                                        </div>
+                                        <div class="border-0 border-start border-3 border-primary ps-2 ms-1 ">
+                                            <p class="text-muted mb-2 ms-4">{{ $angsuran->alasan  }} -
+                                                Rp.{{ number_format($angsuran->jumlah, 0, ',', '.') }}</p>
+                                        </div>
+                                    @empty
+                                        <div class=" d-flex">
+                                            <p class="fw-semibold mb-1">Tidak ada pembayaran terdekat.</p>
+                                        </div>
+                                        <div class="border-0 border-start border-3 border-primary ps-2 ms-1 ">
+                                            <p class="text-muted mb-2 ms-4">Rp.0</p>
+                                        </div>
+                                    @endforelse
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -125,4 +136,4 @@
             </div>
 
             <!-- Content wrapper -->
-        @endsection
+@endsection

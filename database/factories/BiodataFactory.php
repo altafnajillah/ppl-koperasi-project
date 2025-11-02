@@ -22,7 +22,7 @@ class BiodataFactory extends Factory
             'alamat' => fake()->address(),
             'no_hp' => fake()->phoneNumber(),
             'nik' => fake()->unique()->numerify('################'),
-            // 'ktp' => 'ktp_images/' . fake()->uuid() . '.jpg',
+            'ktp' => 'ktp_images/' . fake()->uuid() . '.jpg',
             'accepted_at'=> fake()->randomElement([now(), null]),
             'created_at' => now(),
             'updated_at' => now(),

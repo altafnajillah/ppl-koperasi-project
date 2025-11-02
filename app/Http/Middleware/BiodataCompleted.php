@@ -35,7 +35,7 @@ class BiodataCompleted
         ) {
 
             // PAKSA user ke halaman 'create' biodata
-            return redirect()->route('anggota.biodata.create')
+            return redirect()->route('anggota.biodata')
                 ->with('warning', 'Harap lengkapi data diri Anda terlebih dahulu untuk mengakses halaman ini.');
         }
 

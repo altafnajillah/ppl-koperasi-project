@@ -20,6 +20,7 @@ class AngsuranFactory extends Factory
             'pinjaman_id' => null, // Akan di-set dari seeder
             'jumlah' => 0,
             'tanggal' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'is_paid' => $this->faker->boolean(),
         ];
     }
 }
