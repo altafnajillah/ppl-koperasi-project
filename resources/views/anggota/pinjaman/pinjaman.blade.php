@@ -21,7 +21,7 @@
                                         more closely!
                                     </p>
                                     <div class="d-flex gap-3">
-                                        <a href="\anggota\pinjaman\tambah-pinjaman" class="btn btn-primary">Tambah
+                                        <a href="\anggota\pinjaman\tambah-pinjaman" class="btn btn-primary">Pengajuan
                                             Pinjaman</a>
                                     </div>
                                 </div>
