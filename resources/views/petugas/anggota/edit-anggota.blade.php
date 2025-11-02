@@ -39,41 +39,78 @@
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Edit Akun Anggota</h5>
 
-                        <form id="formAuthentication" class="mb-3 mx-4" action="index.html" method="POST">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter your username" autofocus />
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
                             </div>
+                        @endif
+
+                        <form id="formAuthentication" class="mb-3 mx-4"
+                            action="{{ route('petugas.anggota.update', $anggota->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            {{-- Nama Lengkap --}}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" name="name" value="{{ old('name', $anggota->name) }}"
+                                    placeholder="Masukkan nama lengkap" autofocus />
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" />
+                                <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" value="{{ old('email', $anggota->email) }}"
+                                    placeholder="Masukkan email" />
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Password --}}
                             <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password">Password</label>
+                                <label class="form-label" for="password">Password (opsional)</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                    <input type="password" id="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        placeholder="••••••••••••" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
+                                @error('password')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Konfirmasi Password --}}
                             <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password">Konfirmasi Password</label>
+                                <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                    <input type="password" id="password_confirmation"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        name="password_confirmation" placeholder="••••••••••••" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
+                                @error('password_confirmation')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Tombol --}}
                             <div class="row gx-3 align-items-center">
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100">Edit User</button>
+                                    <button class="btn btn-primary w-100" type="submit">Edit User</button>
                                 </div>
                             </div>
+
+                            {{-- Pesan sukses --}}
+
                         </form>
+
                     </div>
                 </div>
                 {{-- end form add user  --}}

@@ -22,6 +22,8 @@ class PinjamanFactory extends Factory
             'user_id' => User::factory(),
             'jumlah' => fake()->numberBetween(1, 10) * 1000000, // Kelipatan 1 juta
             'tenor' => fake()->randomElement([6, 12, 18, 24]), // dalam bulan
+            'bunga' => fake()->randomFloat(2, 5, 15), // antara 5% - 15%
+            'alasan' => fake()->sentence(),
             'status' => fake()->randomElement(['menunggu', 'disetujui', 'ditolak']),
             'jaminan' => 'sertifikat/' . fake()->uuid() . '.pdf',
             'tanggal' => fake()->dateTimeBetween('-1 year', 'now'),

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('pinjaman_id')->constrained('pinjamans')->onDelete('cascade');
             $table->bigInteger('jumlah');
             $table->timestamp('tanggal')->nullable();
+            $table->boolean('is_paid')->default(false);
             // $table->timestamps();
         });
     }
