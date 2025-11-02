@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\Petugas\ManajemenAnggotaController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\SimpananController;
 // use Illuminate\Support\Facades\Auth;
@@ -93,18 +94,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/petugas/dashboard', [App\Http\Controllers\PetugasController::class, 'dashboard'])->name('petugas.dashboard');
 
         // Profile Anggota
-        Route::get('/petugas/anggota', function () {
-            return view('petugas.anggota.manajemen-anggota');
-        });
-        Route::get('/petugas/anggota/tambah-anggota', function () {
-            return view('petugas.anggota.tambah-anggota');
-        });
-        Route::get('/petugas/anggota/edit-anggota', function () {
-            return view('petugas.anggota.edit-anggota');
-        });
-        Route::get('/petugas/anggota/profil-anggota', function () {
-            return view('petugas.anggota.profil-anggota');
-        });
+        Route::get('/petugas/anggota',  [ManajemenAnggotaController::class, 'index'])->name('petugas.anggota.index');
+        Route::get('/petugas/anggota/tambah-anggota', [ManajemenAnggotaController::class, 'create'])->name('petugas.anggota.tambah');
+        Route::get('/petugas/anggota/profil-anggota/{id}', [ManajemenAnggotaController::class, 'show'])->name('petugas.anggota.show');
+        Route::get('/petugas/anggota/edit-anggota/{id}', [ManajemenAnggotaController::class, 'edit'])->name('petugas.anggota.edit');
+        Route::put('/petugas/anggota/update-anggota/{id}', [ManajemenAnggotaController::class, 'update'])->name('petugas.anggota.update');
+        Route::delete('/petugas/anggota/delete-anggota/{id}', [ManajemenAnggotaController::class, 'destroy'])->name('petugas.anggota.destroy');
+        Route::post('/petugas/anggota/store-anggota', [ManajemenAnggotaController::class, 'store'])->name('petugas.anggota.store');
 
         // Menu Pinjaman
         Route::get('/petugas/pinjaman', function () {

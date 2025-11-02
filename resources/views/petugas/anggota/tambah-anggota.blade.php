@@ -38,54 +38,85 @@
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Tambah Anggota Baru</h5>
-
-                        <form id="formAuthentication" class="mb-3 mx-4" action="{{ route('user.store') }}" method="POST">
+                        @if (session('success'))
+                            <div class="alert alert-success mt-1">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form id="formAuthentication" class="mb-3 mx-4" action="{{ route('petugas.anggota.store') }}"
+                            method="POST">
                             @csrf
+
+                            {{-- Nama --}}
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Enter your name" autofocus />
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" name="name" value="{{ old('name') }}" placeholder="Enter your name"
+                                    autofocus />
+
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
+                            {{-- Email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
+                                <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" value="{{ old('email') }}"
                                     placeholder="Enter your email" />
+
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
+                            {{-- Password --}}
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                    <input type="password" id="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        placeholder="••••••••••••" aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                            </div>
-                            <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" id="password_confirmation" class="form-control"
-                                        name="password_confirmation"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+
+                                    @error('password')
+                                        <div class="invalid-feedback d-block">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
-                                    <label class="form-check-label" for="terms-conditions">
-                                        I agree to
-                                        <ahref="javascript:void(0);">privacy policy & terms</ahref=>
-                                    </label>
+                            {{-- Konfirmasi Password --}}
+                            <div class="mb-3 form-password-toggle">
+                                <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password_confirmation"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        name="password_confirmation" placeholder="••••••••••••"
+                                        aria-describedby="password" />
+                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+
+                                    @error('password_confirmation')
+                                        <div class="invalid-feedback d-block">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="row gx-3 align-items-center">
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100" type="submit">Tambah User</button>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
                 {{-- end form add user  --}}

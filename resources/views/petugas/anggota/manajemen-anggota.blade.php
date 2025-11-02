@@ -47,7 +47,7 @@
                                     <div class="h-100 d-flex align-items-center">
                                         <div class="w-100 bg-secondary text-white rounded px-3 py-2">
                                             <span class="me-3 fw-semibold">Total Anggota: <span
-                                                    class="fw-bold">5</span></span>
+                                                    class="fw-bold">{{ $totalAnggota }}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -89,25 +89,33 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <form action="" method="POST">
+
+                                    @foreach ($anggota as $ang)
                                         <tr>
-                                            <td>1</td>
-                                            <td>Joe</td>
-                                            <td>joe@example.com</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $ang->name }}</td>
+                                            <td>{{ $ang->email }}</td>
                                             <td><span class="badge bg-label-success me-1">Diterima</span></td>
                                             <td>
-                                                <a href="/petugas/anggota/profil-anggota" class="btn btn-primary py-1">
-                                                    Lihat Profile
-                                                </a>
-                                                <a href="/petugas/anggota/edit-anggota" class="btn btn-warning py-1">
-                                                    Edit
-                                                </a>
-                                                <button class="btn btn-danger py-1" type="submit">
-                                                    Hapus
-                                                </button>
+                                                <form action="{{ route('petugas.anggota.destroy', $ang->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="/petugas/anggota/profil-anggota/{{ $ang->id }}"
+                                                        class="btn btn-primary py-1">
+                                                        Lihat Profile
+                                                    </a>
+                                                    <a href="{{ route('petugas.anggota.edit', $ang->id) }}"
+                                                        class="btn btn-warning py-1">
+                                                        Edit
+                                                    </a>
+                                                    <button class="btn btn-danger py-1" type="submit">
+                                                        Hapus
+                                                    </button>
                                             </td>
                                         </tr>
-                                    </form>
+                                        </form>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
