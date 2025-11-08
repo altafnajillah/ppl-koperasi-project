@@ -39,4 +39,34 @@ class ManajemenSimpananController extends Controller
 
         return redirect()->back()->with('success', 'Data simpanan berhasil ditambahkan.');
     }
+
+    public function edit($id)
+    {
+        $simpanan = Simpanan::findOrFail($id);
+        $users = User::where('role', 'anggota')->get();
+
+        return view('petugas.simpanan.edit-simpanan', compact('simpanan', 'users'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'user_id' => ['required'],
+            'jenis'   => ['required'],
+            'jumlah'  => ['required', 'numeric'],
+            'tanggal' => ['required'],
+        ]);
+
+        $simpanan = Simpanan::findOrFail($id);
+
+        $simpanan->update([
+            'user_id' => $request->user_id,
+            'jenis'   => $request->jenis,
+            'jumlah'  => $request->jumlah,
+            'tanggal' => $request->tanggal,
+        ]);
+
+        return redirect()->back()->with('success', 'Data simpanan berhasil diperbarui.');
+    }
 }

@@ -91,21 +91,21 @@
                                 <tbody class="table-border-bottom-0">
                                     @forelse ($simpanans as $simpanan)
                                         <tr>
-                                        <td>{{ \Carbon\Carbon::parse($simpanan->tanggal, 'd M Y') }}</td>
-                                        <td>{{ $simpanan->user->name }}</td>
-                                        <td>{{ $simpanan->jenis }}</td>
-                                        <td>Rp.{{ number_format($simpanan->jumlah, 0, ',', '.') }}</td>
-                                        <td>
-                                            <a href="/petugas/simpanan/edit-simpanan" class="btn btn-warning py-1">
-                                                Edit
-                                            </a>
-                                            {{-- <a href="" class="btn btn-danger py-1">
+                                            <td>{{ \Carbon\Carbon::parse($simpanan->tanggal, 'd M Y') }}</td>
+                                            <td>{{ $simpanan->user->name }}</td>
+                                            <td>{{ $simpanan->jenis }}</td>
+                                            <td>Rp.{{ number_format($simpanan->jumlah, 0, ',', '.') }}</td>
+                                            <td>
+                                                <a href="/petugas/simpanan/edit-simpanan/{{ $simpanan->id }}"
+                                                    class="btn btn-warning py-1">
+                                                    Edit
+                                                </a>
+                                                {{-- <a href="" class="btn btn-danger py-1">
                                                 Hapus
                                             </a> --}}
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     @empty
-                                        
                                     @endforelse
                                 </tbody>
                             </table>
