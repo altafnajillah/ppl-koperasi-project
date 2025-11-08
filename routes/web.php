@@ -118,9 +118,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Menu Simpanan
         Route::get('/petugas/simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'index']);
-        Route::get('/petugas/simpanan/tambah-simpanan', function () {
-            return view('petugas.simpanan.tambah-simpanan');
-        });
+        Route::get('/petugas/simpanan/tambah-simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'create']);
+        Route::post('/petugas/simpanan/tambah-simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'store']);
         Route::get('/petugas/simpanan/edit-simpanan', function () {
             return view('petugas.simpanan.edit-simpanan');
         });
