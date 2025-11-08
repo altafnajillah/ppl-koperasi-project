@@ -38,42 +38,67 @@
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Tambah Simpanan Baru</h5>
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form id="formAuthentication" class="mb-3 mx-4"
+                            action="{{ url('petugas/simpanan/tambah-simpanan') }}" method="POST">
+                            @csrf
 
-                        <form id="formAuthentication" class="mb-3 mx-4" action="" method="POST">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nama Lengkap</label>
-                                <input list="namaList" id="nama" name="nama" class="form-control"
-                                    placeholder="Cari Nama Lengkap...">
-                                <datalist id="namaList">
-                                    <option value="Yasir Nakano">
-                                    <option value="Altaf Najillah">
-                                    <option value="Aulia Zahra">
-                                </datalist>
-                            </div>
-                            <div class="mb-3 col-12">
-                                <label for="role" class="form-label">Jenis</label>
-                                <select id="role" class="select2 form-select">
-                                    <option value="">Select Jenis Simpanan</option>
-                                    <option value="admin">Pokok</option>
-                                    <option value="admin">Wajib</option>
-                                    <option value="user">Sukarela</option>
+                                <label class="form-label">Nama Lengkap</label>
+                                <select class="js-example-basic-single form-control @error('user_id') is-invalid @enderror"
+                                    name="user_id">
+                                    <option value="">-- Pilih Anggota --</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('user_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            <div class="mb-3 col-12">
+                                <label class="form-label">Jenis</label>
+                                <select name="jenis" class="form-select @error('jenis') is-invalid @enderror">
+                                    <option value="">-- Pilih Jenis Simpanan --</option>
+                                    <option value="pokok" {{ old('jenis') == 'pokok' ? 'selected' : '' }}>Pokok</option>
+                                    <option value="wajib" {{ old('jenis') == 'wajib' ? 'selected' : '' }}>Wajib</option>
+                                    <option value="sukarela" {{ old('jenis') == 'sukarela' ? 'selected' : '' }}>Sukarela
+                                    </option>
+                                </select>
+                                @error('jenis')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="mb-3">
-                                <label for="email" class="form-label">Jumlah</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Masukkan Jumlah" />
+                                <label class="form-label">Jumlah</label>
+                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
+                                    name="jumlah" value="{{ old('jumlah') }}" placeholder="Masukkan jumlah">
+                                @error('jumlah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="mb-3">
-                                <label for="email" class="form-label">Tanggal</label>
-                                <input type="date" class="form-control" id="email" name="email" />
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                    name="tanggal" value="{{ old('tanggal') }}">
+                                @error('tanggal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="row gx-3 align-items-center mt-3">
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100" type="submit">Submit</button>
-                                </div>
-                            </div>
+
+                            <button class="btn btn-primary w-100" type="submit">Submit</button>
                         </form>
+
                     </div>
                 </div>
                 {{-- end form add user --}}
@@ -83,4 +108,16 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
+    @endsection
+
+    @section('scripts')
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.js-example-basic-single').select2();
+            });
+        </script>
     @endsection

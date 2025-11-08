@@ -68,6 +68,9 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
     {{-- <link rel="stylesheet" href="{{ asset('templates') }}/assets/css/costum.css" /> --}}
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
   </head>
 
   <body>
@@ -191,5 +194,7 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    @yield('scripts')
   </body>
 </html>
