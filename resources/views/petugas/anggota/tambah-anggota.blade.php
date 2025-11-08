@@ -112,7 +112,7 @@
 
                             <div class="row gx-3 align-items-center">
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100" type="submit">Tambah User</button>
+                                    <button class="btn btn-primary w-100" type="submit">Tambah Anggota</button>
                                 </div>
                             </div>
                         </form>

@@ -16,7 +16,7 @@
                                 <div class="card-body">
                                     <h3 class="card-title text-primary">DASHBORAD PETUGAS</h3>
                                     <p class="mb-4">
-                                        Welcome <span class="fw-bold fst-italic">YASIR</span>, Let’s monitor members’
+                                        Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, Let’s monitor members’
                                         transactions and keep records up to date.
                                     </p>
                                 </div>
@@ -47,8 +47,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <span class="fw-semibold d-block mb-1">Anggota Belum Terferifikasi</span>
-                                    <h3 class="card-title mb-2">56</h3>
+                                    <span class="fw-semibold d-block mb-1">Anggota Belum Terverifikasi</span>
+                                    <h3 class="card-title mb-2">{{ $unverifiedUser }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                             </div>
                                         </div>
                                         <span class="fw-semibold d-block mb-1">Pengajuan Pinjaman Baru</span>
-                                        <h3 class="card-title text-nowrap mb-2">53</h3>
+                                        <h3 class="card-title text-nowrap mb-2">{{ $newPeminjamans }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                     <span class="fw-semibold d-block mb-1">Total Pinjaman Beredar</span>
-                                    <h3 class="card-title mb-2">RP. 14.000.000.000</h3>
+                                    <h3 class="card-title mb-2">Rp.{{ number_format($pinjamanBeredar, 0, ',', '.') }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -97,8 +97,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <span class="fw-semibold d-block mb-1">Pengajuan Simpanan</span>
-                                    <h3 class="card-title mb-2">RP. 14.000.000</h3>
+                                    <span class="fw-semibold d-block mb-1">Simpanan</span>
+                                    <h3 class="card-title mb-2">Rp.{{ number_format($totalSimpanan, 0, ',', '.') }}</h3>
                                 </div>
                             </div>
                         </div>

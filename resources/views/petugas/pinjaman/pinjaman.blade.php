@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                {{-- Pengajuan Pinjaman Baru  --}}
+                {{-- Pengajuan Pinjaman Baru --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Pengajuan Pinjaman Terbaru</h5>
@@ -71,36 +71,42 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Joe</td>
-                                        <td>Rp.12.000.000</td>
-                                        <td>12 Bulan</td>
-                                        <td>5%</td>
-                                        <td>Untuk Modal Usaha</td>
-                                        <td>
-                                            <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
-                                                class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                1.png
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn btn-success py-1">
-                                                Setujui
-                                            </a>
-                                            <a href="" class="btn btn-danger py-1">
-                                                Tolak
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @forelse ($pengajuanPinjaman as $pj)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($pj->tanggal)->format('d M Y') }}</td>
+                                            <td>{{ $pj->user->name }}</td>
+                                            <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
+                                            <td>{{ $pj->tenor }} Bulan</td>
+                                            <td>{{ $pj->bunga }}%</td>
+                                            <td>{{ $pj->alasan }}</td>
+                                            <td>
+                                                <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
+                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                    1.png
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-success py-1">
+                                                    Setujui
+                                                </a>
+                                                <a href="" class="btn btn-danger py-1">
+                                                    Tolak
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">Tidak ada pengajuan pinjaman baru.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                {{-- Daftar Pinjaman Aktif  --}}
+                {{-- Daftar Pinjaman Aktif --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Pinjaman Aktif</h5>
@@ -139,30 +145,39 @@
                                         <td>Bunga(%)</td>
                                         <td>Alasan</td>
                                         <td>Jaminan</td>
-                                        <td>Actions</td>
+                                        {{-- <td>Actions</td> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Joe</td>
-                                        <td>Rp.12.000.000</td>
-                                        <td>12 Bulan</td>
-                                        <td>5%</td>
-                                        <td>Untuk Modal Usaha</td>
-                                        <td>
-                                            <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
-                                                class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                1.png
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/petugas/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
-                                                Riwayat Angsuran
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @forelse ($pinjamanAktif as $pj)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($pj->tanggal)->format('d M Y') }}</td>
+                                            <td>{{ $pj->user->name }}</td>
+                                            <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
+                                            <td>{{ $pj->tenor }} Bulan</td>
+                                            <td>{{ $pj->bunga }}%</td>
+                                            <td>{{ $pj->alasan }}</td>
+                                            <td>
+                                                <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
+                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                    1.png
+                                                </a>
+                                            </td>
+                                            {{-- <td>
+                                                <a href="" class="btn btn-success py-1">
+                                                    Setujui
+                                                </a>
+                                                <a href="" class="btn btn-danger py-1">
+                                                    Tolak
+                                                </a>
+                                            </td> --}}
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">Tidak ada pinjaman aktif.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -174,4 +189,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

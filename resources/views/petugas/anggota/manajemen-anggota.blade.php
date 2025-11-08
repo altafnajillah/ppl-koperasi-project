@@ -40,42 +40,39 @@
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Anggota</h5>
 
-                        <div class="px-4 mt-3 mb-3">
-                            <div class="row gx-3">
-                                <!-- Info (6 columns) -->
-                                <div class="col-12 col-lg-2">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <div class="w-100 bg-secondary text-white rounded px-3 py-2">
-                                            <span class="me-3 fw-semibold">Total Anggota: <span
-                                                    class="fw-bold">{{ $totalAnggota }}</span></span>
+                        <form action="{{ route('petugas.anggota.index') }}" method="GET">
+                            <div class="px-4 mt-3 mb-3">
+                                <div class="row gx-3">
+                                    <div class="col-12 col-lg-2">
+                                        <div class="h-100 d-flex align-items-center">
+                                            <div class="w-100 bg-secondary text-white rounded px-3 py-2">
+                                                <span class="me-3 fw-semibold">Total Anggota: <span
+                                                        class="fw-bold">{{ $totalAnggota }}</span></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Role dropdown (2 columns) -->
-                                <div class="col-12 col-lg-2 mt-2 mt-lg-0 col-md-4">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <div class="w-100 h-100">
-                                            <button class="btn btn-secondary w-100 h-100 dropdown-toggle" type="button"
-                                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Status
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="#">Ditunda</a></li>
-                                                <li><a class="dropdown-item" href="#">Diterima</a></li>
-                                            </ul>
+                                    <div class="col-12 col-lg-2 mt-2 mt-lg-0 col-md-4">
+                                        <div class="h-100">
+                                            <select name="status" class="form-select h-100" aria-label="Filter Status">
+                                                <option value="">Semua Status</option>
+                                                <option value="ditunda" {{ request('status') == 'ditunda' ? 'selected' : '' }}>Ditunda</option>
+                                                <option value="diterima" {{ request('status') == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Search (4 columns) -->
-                                <div class="col-12 col-lg-8 mt-2 mt-lg-0 col-md-4">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <input type="text" class="form-control h-100" placeholder="Search..." />
+                                    <div class="col-12 col-lg-8 mt-2 mt-lg-0 col-md-4">
+                                        <div class="input-group h-100">
+                                            <input type="text" name="search" class="form-control h-100"
+                                                placeholder="Cari nama atau email..." value="{{ request('search') }}" />
+
+                                            <button class="btn btn-primary" type="submit">Cari</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                         <div class="table-responsive text-nowrap px-4">
                             <table class="table mb-0 align-middle">
@@ -90,15 +87,19 @@
                                 </thead>
                                 <tbody class="table-border-bottom-0">
 
-                                    @foreach ($anggota as $ang)
+                                    @forelse ($anggota as $ang)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $ang->name }}</td>
                                             <td>{{ $ang->email }}</td>
-                                            <td><span class="badge bg-label-success me-1">Diterima</span></td>
                                             <td>
-                                                <form action="{{ route('petugas.anggota.destroy', $ang->id) }}"
-                                                    method="POST">
+                                                <span
+                                                    class="badge {{ $ang->biodata->accepted_at == null ? "bg-label-danger" : "bg-label-success" }} me-1">
+                                                    {{ $ang->biodata->accepted_at == null ? "Ditunda" : "Diterima" }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('petugas.anggota.destroy', $ang->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <a href="/petugas/anggota/profil-anggota/{{ $ang->id }}"
@@ -112,20 +113,23 @@
                                                     <button class="btn btn-danger py-1" type="submit">
                                                         Hapus
                                                     </button>
+                                                </form>
                                             </td>
                                         </tr>
-                                        </form>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">Tidak ada data anggota yang ditemukan.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {{-- end table --}}
             </div>
-            <!-- / Content -->
+            {{-- <!-- / Content --> --}}
 
             <div class="content-backdrop fade"></div>
         </div>
-        <!-- Content wrapper -->
-    @endsection
+        {{-- <!-- Content wrapper --> --}}
+@endsection

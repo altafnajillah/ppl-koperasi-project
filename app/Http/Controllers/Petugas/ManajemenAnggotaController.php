@@ -9,10 +9,37 @@ use Illuminate\Support\Facades\Hash;
 
 class ManajemenAnggotaController extends Controller
 {
-    public function index()
+    public function index(Request $request) 
     {
-        $anggota = User::where('role', 'anggota')->get();
-        $totalAnggota = $anggota->count();
+        $totalAnggota = User::where('role', 'anggota')->count();
+    
+        $query = User::where('role', 'anggota')->with('biodata')->whereHas('biodata');
+    
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('email', 'like', '%' . $searchTerm . '%');
+            });
+        }
+    
+        if ($request->filled('status')) {
+            $status = $request->status;
+        
+            $query->whereHas('biodata', function($q) use ($status) {
+                if ($status == 'diterima') {
+                
+                    $q->whereNotNull('accepted_at');
+                } elseif ($status == 'ditunda') {
+                
+                    $q->whereNull('accepted_at');
+                }
+            });
+        }
+
+        // $anggota = $query->paginate(15);
+        $anggota = $query->get();
+    
         return view('petugas.anggota.manajemen-anggota', compact('anggota', 'totalAnggota'));
     }
 
@@ -50,7 +77,7 @@ class ManajemenAnggotaController extends Controller
         ]);
 
         // 🔹 3. Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Anggota baru berhasil ditambahkan!');
+        return redirect()->route('petugas.anggota.index')->with('success', 'Anggota baru berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -95,5 +122,20 @@ class ManajemenAnggotaController extends Controller
     {
         $anggota = User::findOrFail($id);
         return view('petugas.anggota.profil-anggota', compact('anggota'));
+    }
+
+    public function acceptBiodata($id)
+    {
+        $anggota = User::findOrFail($id);
+        $biodata = $anggota->biodata;
+
+        if ($biodata) {
+            $biodata->accepted_at = now();
+            $biodata->save();
+
+            return redirect()->back()->with('success', 'Anggota berhasil diverifikasi.');
+        }
+
+        return redirect()->back()->with('error', 'Biodata anggota tidak ditemukan.');
     }
 }

@@ -102,10 +102,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/petugas/anggota/delete-anggota/{id}', [ManajemenAnggotaController::class, 'destroy'])->name('petugas.anggota.destroy');
         Route::post('/petugas/anggota/store-anggota', [ManajemenAnggotaController::class, 'store'])->name('petugas.anggota.store');
 
+        Route::post('/petugas/anggota/accept-biodata/{id}', [ManajemenAnggotaController::class, 'acceptBiodata'])->name('petugas.anggota.acceptBiodata');
+
         // Menu Pinjaman
-        Route::get('/petugas/pinjaman', function () {
-            return view('petugas.pinjaman.pinjaman');
-        });
+        Route::get('/petugas/pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'index']);
         Route::get('/petugas/pinjaman/tambah-pinjaman', function () {
             return view('petugas.pinjaman.tambah-pinjaman');
         });
@@ -117,9 +117,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Menu Simpanan
-        Route::get('/petugas/simpanan', function () {
-            return view('petugas.simpanan.simpanan');
-        });
+        Route::get('/petugas/simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'index']);
         Route::get('/petugas/simpanan/tambah-simpanan', function () {
             return view('petugas.simpanan.tambah-simpanan');
         });
@@ -164,7 +162,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
             Route::post('/anggota/ganti-password', [App\Http\Controllers\AnggotaController::class, 'changePassword'])->name('anggota.changePassword');
 
-            // Pinjaman\
+            // Pinjaman
             Route::get('/anggota/pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'index'])->name('anggota.pinjaman');
             Route::get('/anggota/pinjaman/tambah-pinjaman', function () {
                 return view('anggota.pinjaman.tambah-pinjaman');
@@ -182,11 +180,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 });
-
-// Email Verification Notice Route
-// Route::get('/verification-notice', function () {
-//     return 'Mohon verifikasi email Anda terlebih dahulu sebelum mengakses halaman ini.';
-// })->name('verification.notice');
 
 // ====== Di komen, ada yang sudah di intergasikan ke atas =====
 // BiodataController
