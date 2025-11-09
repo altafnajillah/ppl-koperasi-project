@@ -49,12 +49,16 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    @foreach ($notifikasi as $notif)
+                                    @forelse ($notifikasi as $notif)
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($notif->tanggal)->format('d M Y') }}</td>
                                             <td>{{ $notif->pesan }}</td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="2" class="text-center">Tidak ada notifikasi.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

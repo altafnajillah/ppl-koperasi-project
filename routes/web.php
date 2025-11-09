@@ -9,12 +9,15 @@ use Illuminate\Support\Facades\Route;
 
 // Auth::routes(['verify' => true]);
 
-Route::get('/', [App\Http\Controllers\AuthController::class, 'showLoginForm']);
-Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::middleware('redirect.if.verified')->group(function () {
+    Route::get('/', [App\Http\Controllers\AuthController::class, 'showLoginForm']);
+    Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
-Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegisterForm']);
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegisterForm']);
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+});
+
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // Temporary route
 Route::get('/lupa-password', function () {
@@ -30,7 +33,7 @@ Route::get('/new-password', function () {
 // ================= Email Verification Routes =================
 
 Route::middleware('auth')->group(function () {
-    Route::get('/verify-notice', [App\Http\Controllers\AuthController::class, 'emailVerificationNotice'])->name('verification.notice');
+    Route::get('/verify-notice', [App\Http\Controllers\AuthController::class, 'emailVerificationNotice'])->middleware('redirect.if.verified')->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\AuthController::class, 'emailVerified'])->middleware('signed')->name('verification.verify');
     Route::post('/email/verification-notification', [App\Http\Controllers\AuthController::class, 'resendVerificationEmail'])->middleware('throttle:6,1')->name('verification.send');
 });

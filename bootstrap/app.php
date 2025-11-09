@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\CheckRole::class,
             'biodata.completed' => \App\Http\Middleware\BiodataCompleted::class,
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            'redirect.if.verified' => \App\Http\Middleware\RedirectIfVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
