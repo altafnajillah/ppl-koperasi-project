@@ -56,8 +56,11 @@
                                         <div class="h-100">
                                             <select name="status" class="form-select h-100" aria-label="Filter Status">
                                                 <option value="">Semua Status</option>
-                                                <option value="ditunda" {{ request('status') == 'ditunda' ? 'selected' : '' }}>Ditunda</option>
-                                                <option value="diterima" {{ request('status') == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                                                <option value="ditunda"
+                                                    {{ request('status') == 'ditunda' ? 'selected' : '' }}>Ditunda</option>
+                                                <option value="diterima"
+                                                    {{ request('status') == 'diterima' ? 'selected' : '' }}>Diterima
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -94,31 +97,38 @@
                                             <td>{{ $ang->email }}</td>
                                             <td>
                                                 <span
-                                                    class="badge {{ $ang->biodata->accepted_at == null ? "bg-label-danger" : "bg-label-success" }} me-1">
-                                                    {{ $ang->biodata->accepted_at == null ? "Ditunda" : "Diterima" }}
+                                                    class="badge {{ $ang->biodata->accepted_at == null ? 'bg-label-danger' : 'bg-label-success' }} me-1">
+                                                    {{ $ang->biodata->accepted_at == null ? 'Ditunda' : 'Diterima' }}
                                                 </span>
                                             </td>
                                             <td>
-                                                <form action="{{ route('petugas.anggota.destroy', $ang->id) }}" method="POST">
+                                                <form action="{{ route('petugas.anggota.destroy', $ang->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan!');">
                                                     @csrf
                                                     @method('DELETE')
+
                                                     <a href="/petugas/anggota/profil-anggota/{{ $ang->id }}"
                                                         class="btn btn-primary py-1">
                                                         Lihat Profile
                                                     </a>
+
                                                     <a href="{{ route('petugas.anggota.edit', $ang->id) }}"
                                                         class="btn btn-warning py-1">
                                                         Edit
                                                     </a>
+
                                                     <button class="btn btn-danger py-1" type="submit">
                                                         Hapus
                                                     </button>
                                                 </form>
+
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Tidak ada data anggota yang ditemukan.</td>
+                                            <td colspan="5" class="text-center">Tidak ada data anggota yang ditemukan.
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -132,4 +142,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         {{-- <!-- Content wrapper --> --}}
-@endsection
+    @endsection
