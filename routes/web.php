@@ -73,17 +73,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Menu Simpanan
-        Route::get('/admin/simpanan', function () {
-            return view('admin.simpanan.simpanan');
-        });
+        Route::get('/admin/simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'index']);
+        Route::get('/admin/simpanan/tambah-simpanan',  [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'create']);
+        Route::post('/admin/simpanan/tambah-simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'store']);
+        Route::get('/admin/simpanan/edit-simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'edit']);
+        Route::put('/admin/simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'update']);
         Route::get('/admin/simpanan/simpanan-per-anggota', function () {
             return view('admin.simpanan.simpanan-per-anggota');
-        });
-        Route::get('/admin/simpanan/tambah-simpanan', function () {
-            return view('admin.simpanan.tambah-simpanan');
-        });
-        Route::get('/admin/simpanan/edit-simpanan', function () {
-            return view('admin.simpanan.edit-simpanan');
         });
 
         // Menu Laporan Keuangan

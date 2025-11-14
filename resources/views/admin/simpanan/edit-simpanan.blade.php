@@ -39,40 +39,77 @@
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Edit Simpanan</h5>
 
-                        <form id="formAuthentication" class="mb-3 mx-4" action="" method="POST">
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        <form id="formAuthentication" class="mb-3 mx-4"
+                            action="{{ url('admin/simpanan/' . $simpanan->id) }}" method="POST">
+
+                            @csrf
+                            @method('PUT')
+
+                            {{-- pilih user --}}
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nama Lengkap</label>
-                                <input list="namaList" id="nama" name="nama" class="form-control"
-                                    placeholder="Cari Nama Lengkap...">
-                                <datalist id="namaList">
-                                    <option value="Yasir Nakano">
-                                    <option value="Altaf Najillah">
-                                    <option value="Aulia Zahra">
-                                </datalist>
-                            </div>
-                            <div class="mb-3 col-12">
-                                <label for="role" class="form-label">Jenis</label>
-                                <select id="role" class="select2 form-select">
-                                    <option value="">Select Jenis Simpanan</option>
-                                    <option value="admin">Pokok</option>
-                                    <option value="admin">Wajib</option>
-                                    <option value="user">Sukarela</option>
+                                <label class="form-label">Nama Lengkap</label>
+                                <select class="js-example-basic-single form-control @error('user_id') is-invalid @enderror"
+                                    name="user_id">
+                                    <option value="">-- Pilih Anggota --</option>
+
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                            {{ old('user_id', $simpanan->user_id) == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('user_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- jenis --}}
+                            <div class="mb-3 col-12">
+                                <label class="form-label">Jenis</label>
+                                <select name="jenis" class="form-select @error('jenis') is-invalid @enderror">
+                                    <option value="">-- Pilih Jenis Simpanan --</option>
+                                    <option value="pokok"
+                                        {{ old('jenis', $simpanan->jenis) == 'pokok' ? 'selected' : '' }}>Pokok</option>
+                                    <option value="wajib"
+                                        {{ old('jenis', $simpanan->jenis) == 'wajib' ? 'selected' : '' }}>Wajib</option>
+                                    <option value="sukarela"
+                                        {{ old('jenis', $simpanan->jenis) == 'sukarela' ? 'selected' : '' }}>Sukarela
+                                    </option>
+                                </select>
+                                @error('jenis')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- jumlah --}}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Jumlah</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Masukkan Jumlah" />
+                                <label class="form-label">Jumlah</label>
+                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
+                                    name="jumlah" value="{{ old('jumlah', $simpanan->jumlah) }}"
+                                    placeholder="Masukkan jumlah">
+                                @error('jumlah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- tanggal --}}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Tanggal</label>
-                                <input type="date" class="form-control" id="email" name="email" />
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                    name="tanggal"
+                                    value="{{ old('tanggal', \Carbon\Carbon::parse($simpanan->tanggal)->format('Y-m-d')) }}">
+
+                                @error('tanggal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="row gx-3 align-items-center mt-3">
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100" type="submit">Submit</button>
-                                </div>
-                            </div>
+
+                            <button class="btn btn-primary w-100" type="submit">Update Data</button>
                         </form>
                     </div>
                 </div>
