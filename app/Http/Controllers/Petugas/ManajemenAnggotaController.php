@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -69,11 +70,18 @@ class ManajemenAnggotaController extends Controller
         );
 
         // 🔹 2. Simpan data ke tabel users
-        User::create([
+        $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'role' => 'anggota',
+        ]);
+
+        Notifikasi::create([
+            'user_id' => $user->id,
+            'pesan' => 'Selamat datang di Koperasi Kami! Akun Anda telah berhasil dibuat via Petigas.',
+            'dibaca' => false,
+            'tanggal' => now(),
         ]);
 
         // 🔹 3. Redirect kembali dengan pesan sukses
@@ -132,6 +140,13 @@ class ManajemenAnggotaController extends Controller
         if ($biodata) {
             $biodata->accepted_at = now();
             $biodata->save();
+
+            Notifikasi::create([
+                'user_id' => $anggota->id,
+                'pesan' => 'Biodata Anda telah diverifikasi oleh petugas.',
+                'dibaca' => false,
+                'tanggal' => now(),
+            ]);
 
             return redirect()->back()->with('success', 'Anggota berhasil diverifikasi.');
         }

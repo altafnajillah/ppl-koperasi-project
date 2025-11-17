@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notifikasi;
 use App\Models\Simpanan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,6 +36,13 @@ class ManajemenSimpananController extends Controller
             'jenis'   => $request->jenis,
             'jumlah'  => $request->jumlah,
             'tanggal' => $request->tanggal,
+        ]);
+
+        Notifikasi::create([
+            'user_id' => $request->user_id,
+            'pesan' => 'Simpanan '. $request->jenis .' sebesar Rp ' . number_format($request->jumlah, 2, ',', '.') . ' telah berhasil ditambahkan.',
+            'dibaca' => false,
+            'tanggal' => now(),
         ]);
 
         return redirect()->back()->with('success', 'Data simpanan berhasil ditambahkan.');
