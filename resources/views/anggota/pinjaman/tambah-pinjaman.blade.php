@@ -38,38 +38,71 @@
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Tambah Pinjaman Baru</h5>
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form id="formAuthentication" class="mb-3 mx-4" action="{{ route('anggota.pinjaman.store') }}"
+                            method="POST" enctype="multipart/form-data">
+                            @csrf
 
-                        <form id="formAuthentication" class="mb-3 mx-4" action="" method="POST">
                             <div class="">
-                                <p class="bg-secondary text-white p-2 rounded text-center">Batas Pinjaman Maksimal: Rp
-                                    10.000.000. Jika melebihi batas, jaminan
-                                    diperlukan.</p>
+                                <p class="bg-secondary text-white p-2 rounded text-center">
+                                    Batas Pinjaman Maksimal: Rp 10.000.000. Jika melebihi batas, jaminan diperlukan.
+                                </p>
                             </div>
+
+                            {{-- Tujuan / Alasan --}}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Tujuan</label>
-                                <input type="text" class="form-control" id="email" name="email"
+                                <label for="alasan" class="form-label">Tujuan</label>
+                                <input type="text" class="form-control @error('alasan') is-invalid @enderror"
+                                    id="alasan" name="alasan" value="{{ old('alasan') }}"
                                     placeholder="Masukkan Tujuan" />
+                                @error('alasan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Jumlah --}}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Jumlah</label>
-                                <input type="text" class="form-control" id="email" name="email"
+                                <label for="jumlah" class="form-label">Jumlah</label>
+                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
+                                    id="jumlah" name="jumlah" value="{{ old('jumlah') }}"
                                     placeholder="Masukkan Jumlah" />
+                                @error('jumlah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Tenor --}}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Tenor</label>
-                                <input type="text" class="form-control" id="email" name="email"
+                                <label for="tenor" class="form-label">Tenor (bulan)</label>
+                                <input type="number" class="form-control @error('tenor') is-invalid @enderror"
+                                    id="tenor" name="tenor" value="{{ old('tenor') }}"
                                     placeholder="Masukkan Tenor" />
+                                @error('tenor')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Jaminan --}}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Jaminan</label>
-                                <input type="file" class="form-control" id="email" name="email" />
+                                <label for="jaminan" class="form-label">Jaminan</label>
+                                <input type="file" class="form-control @error('jaminan') is-invalid @enderror"
+                                    id="jaminan" name="jaminan" />
+                                @error('jaminan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="row gx-3 align-items-center mt-3">
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100" type="submit">Submit</button>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
                 {{-- end form add user --}}
