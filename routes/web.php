@@ -161,9 +161,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // Pinjaman
             Route::get('/anggota/pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'index'])->name('anggota.pinjaman');
-            Route::get('/anggota/pinjaman/tambah-pinjaman', function () {
-                return view('anggota.pinjaman.tambah-pinjaman');
-            });
+            Route::get('/anggota/pinjaman/tambah-pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'create'])->name('anggota.pinjaman.tambah');
+            Route::post('/anggota/pinjaman/tambah-pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'store'])->name('anggota.pinjaman.store');
             Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
                 return view('anggota.pinjaman.riwayat-angsuran');
             });
