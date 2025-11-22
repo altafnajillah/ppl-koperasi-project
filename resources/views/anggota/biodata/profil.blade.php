@@ -39,6 +39,20 @@
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Profile Saya</h5>
 
+                        @session('success')
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endsession
+
+                        @session('warning')
+                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                {{ session('warning') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endsession
+
                         <div class="row px-2 gx-3">
                             <div class="card-body col-lg-2">
                                 <div class="d-flex align-items-start align-items-sm-center">

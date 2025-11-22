@@ -3,16 +3,44 @@
 namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class ManajemenAnggotaController extends Controller
 {
-    public function index()
+    public function index(Request $request) 
     {
-        $anggota = User::where('role', 'anggota')->get();
-        $totalAnggota = $anggota->count();
+        $totalAnggota = User::where('role', 'anggota')->count();
+    
+        $query = User::where('role', 'anggota')->with('biodata')->whereHas('biodata');
+    
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('email', 'like', '%' . $searchTerm . '%');
+            });
+        }
+    
+        if ($request->filled('status')) {
+            $status = $request->status;
+        
+            $query->whereHas('biodata', function($q) use ($status) {
+                if ($status == 'diterima') {
+                
+                    $q->whereNotNull('accepted_at');
+                } elseif ($status == 'ditunda') {
+                
+                    $q->whereNull('accepted_at');
+                }
+            });
+        }
+
+        // $anggota = $query->paginate(15);
+        $anggota = $query->get();
+    
         return view('petugas.anggota.manajemen-anggota', compact('anggota', 'totalAnggota'));
     }
 
@@ -42,15 +70,22 @@ class ManajemenAnggotaController extends Controller
         );
 
         // 🔹 2. Simpan data ke tabel users
-        User::create([
+        $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'role' => 'anggota',
         ]);
 
+        Notifikasi::create([
+            'user_id' => $user->id,
+            'pesan' => 'Selamat datang di Koperasi Kami! Akun Anda telah berhasil dibuat via Petigas.',
+            'dibaca' => false,
+            'tanggal' => now(),
+        ]);
+
         // 🔹 3. Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Anggota baru berhasil ditambahkan!');
+        return redirect()->route('petugas.anggota.index')->with('success', 'Anggota baru berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -95,5 +130,27 @@ class ManajemenAnggotaController extends Controller
     {
         $anggota = User::findOrFail($id);
         return view('petugas.anggota.profil-anggota', compact('anggota'));
+    }
+
+    public function acceptBiodata($id)
+    {
+        $anggota = User::findOrFail($id);
+        $biodata = $anggota->biodata;
+
+        if ($biodata) {
+            $biodata->accepted_at = now();
+            $biodata->save();
+
+            Notifikasi::create([
+                'user_id' => $anggota->id,
+                'pesan' => 'Biodata Anda telah diverifikasi oleh petugas.',
+                'dibaca' => false,
+                'tanggal' => now(),
+            ]);
+
+            return redirect()->back()->with('success', 'Anggota berhasil diverifikasi.');
+        }
+
+        return redirect()->back()->with('error', 'Biodata anggota tidak ditemukan.');
     }
 }

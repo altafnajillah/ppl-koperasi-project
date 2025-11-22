@@ -26,7 +26,7 @@ class PinjamanController extends Controller
         'bunga'=>$bungaDefault
     ]);
 
-    return redirect()->route('anggota.pinjaman.index')
+    return redirect()->route('anggota.pinjaman')
         ->with('success', 'Pengajuan pinjaman anda berhasil dikirim pada '.now()->format('d M Y').' dan sedang menunggu persetujuan');
 }
 

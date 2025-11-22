@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -36,7 +37,6 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      *
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function login(Request $request)
     {
@@ -73,11 +73,6 @@ class AuthController extends Controller
         } else {
             return redirect()->intended()->with('message', 'Username atau Password tidak sesuai');
         }
-
-        // 5. Jika gagal, kembalikan ke form login dengan pesan error
-        // throw ValidationException::withMessages([
-        //     'email' => __('auth.failed'), // Menggunakan pesan standar dari Laravel
-        // ]);
     }
 
     /**
@@ -108,7 +103,6 @@ class AuthController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'admin') {
-
             return redirect()->intended(route('admin.dashboard'));
         }
         else if ($user->role === 'petugas') {
@@ -133,25 +127,28 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Validasi input registrasi
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Buat pengguna baru
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'anggota', // Set role default sebagai anggota
+            'role' => 'anggota', 
         ]);
 
-        // Otentikasi pengguna baru
+        Notifikasi::create([
+            'user_id' => $user->id,
+            'pesan' => 'Selamat datang di Koperasi Kami! Akun Anda telah berhasil dibuat via Register.',
+            'dibaca' => false,
+            'tanggal' => now(),
+        ]);
+        
         Auth::login($user);
 
-        // Redirect ke dashboard atau halaman lain setelah registrasi
         return redirect()->route('anggota.dashboard');
     }
 }

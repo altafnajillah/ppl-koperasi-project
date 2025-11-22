@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biodata;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,20 +43,27 @@ public function index()
             'nik' => $validated['nik'],
         ]);
 
+        Notifikasi::create([
+            'user_id' => $user->id,
+            'pesan' => 'Biodata Anda telah Diajukan.',
+            'dibaca' => false,
+            'tanggal' => now(),
+        ]);
+
         return redirect()->route('anggota.biodata')->with('success', 'Data berhasil ditambahkan');
     }
 
     // Menampilkan detail biodata berdasarkan ID
-    public function show(Biodata $biodata)
-    {
-        return view('biodata.show', compact('biodata'));
-    }
+    // public function show(Biodata $biodata)
+    // {
+    //     return view('biodata.show', compact('biodata'));
+    // }
 
     // Menampilkan form edit biodata
-    public function edit(Biodata $biodata)
-    {
-        return view('biodata.edit', compact('biodata'));
-    }
+    // public function edit(Biodata $biodata)
+    // {
+    //     return view('biodata.edit', compact('biodata'));
+    // }
 
     // Memperbarui data biodata yang sudah ada
     public function update(Request $request, Biodata $biodata)
@@ -95,6 +103,6 @@ public function index()
         $biodata->delete();
 
         // Setelah dihapus, redirect ke form tambah biodata baru
-        return redirect()->route('biodata.create')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('anggota.biodata')->with('success', 'Data berhasil dihapus');
     }
 }

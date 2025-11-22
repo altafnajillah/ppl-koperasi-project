@@ -44,7 +44,7 @@
                 {{-- Pengajuan Pinjaman Baru --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
-                        <h5 class="card-header">Daftar Pengajuan Pinjaman Terbaru</h5>
+                        <h5 class="card-header">Daftar Simpanan Terbaru</h5>
 
                         <div class="px-4 mb-3 g-2">
                             <div class="row gx-3">
@@ -89,20 +89,24 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Joe</td>
-                                        <td>Wajib</td>
-                                        <td>Rp.12.000.000</td>
-                                        <td>
-                                            <a href="/petugas/simpanan/edit-simpanan" class="btn btn-warning py-1">
-                                                Edit
-                                            </a>
-                                            {{-- <a href="" class="btn btn-danger py-1">
+                                    @forelse ($simpanans as $simpanan)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($simpanan->tanggal, 'd M Y') }}</td>
+                                            <td>{{ $simpanan->user->name }}</td>
+                                            <td>{{ $simpanan->jenis }}</td>
+                                            <td>Rp.{{ number_format($simpanan->jumlah, 0, ',', '.') }}</td>
+                                            <td>
+                                                <a href="/petugas/simpanan/edit-simpanan/{{ $simpanan->id }}"
+                                                    class="btn btn-warning py-1">
+                                                    Edit
+                                                </a>
+                                                {{-- <a href="" class="btn btn-danger py-1">
                                                 Hapus
                                             </a> --}}
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

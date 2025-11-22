@@ -9,12 +9,15 @@ use Illuminate\Support\Facades\Route;
 
 // Auth::routes(['verify' => true]);
 
-Route::get('/', [App\Http\Controllers\AuthController::class, 'showLoginForm']);
-Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::middleware('redirect.if.verified')->group(function () {
+    Route::get('/', [App\Http\Controllers\AuthController::class, 'showLoginForm']);
+    Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
-Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegisterForm']);
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegisterForm']);
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+});
+
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // Temporary route
 Route::get('/lupa-password', function () {
@@ -30,7 +33,7 @@ Route::get('/new-password', function () {
 // ================= Email Verification Routes =================
 
 Route::middleware('auth')->group(function () {
-    Route::get('/verify-notice', [App\Http\Controllers\AuthController::class, 'emailVerificationNotice'])->name('verification.notice');
+    Route::get('/verify-notice', [App\Http\Controllers\AuthController::class, 'emailVerificationNotice'])->middleware('redirect.if.verified')->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\AuthController::class, 'emailVerified'])->middleware('signed')->name('verification.verify');
     Route::post('/email/verification-notification', [App\Http\Controllers\AuthController::class, 'resendVerificationEmail'])->middleware('throttle:6,1')->name('verification.send');
 });
@@ -55,10 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Menu Pinjaman
-        Route::get('/admin/pinjaman/', [App\Http\Controllers\AdminController::class, 'manajemenPinjaman']);
-        Route::get('/admin/pinjaman/tambah-pinjaman', function () {
-            return view('admin.pinjaman.tambah-pinjaman');
-        });
+        Route::get('/admin/pinjaman/', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'index']);
+        Route::get('/admin/pinjaman/tambah-pinjaman', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'create']);
+        Route::post('/admin/pinjaman/tambah-pinjaman', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'store'])->name('admin.pinjaman.store');
         Route::get('/admin/pinjaman/edit-pinjaman', function () {
             return view('admin.pinjaman.edit-pinjaman');
         });
@@ -70,17 +72,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Menu Simpanan
-        Route::get('/admin/simpanan', function () {
-            return view('admin.simpanan.simpanan');
-        });
+        Route::get('/admin/simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'index']);
+        Route::get('/admin/simpanan/tambah-simpanan',  [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'create']);
+        Route::post('/admin/simpanan/tambah-simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'store']);
+        Route::get('/admin/simpanan/edit-simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'edit']);
+        Route::put('/admin/simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'update']);
         Route::get('/admin/simpanan/simpanan-per-anggota', function () {
             return view('admin.simpanan.simpanan-per-anggota');
-        });
-        Route::get('/admin/simpanan/tambah-simpanan', function () {
-            return view('admin.simpanan.tambah-simpanan');
-        });
-        Route::get('/admin/simpanan/edit-simpanan', function () {
-            return view('admin.simpanan.edit-simpanan');
         });
 
         // Menu Laporan Keuangan
@@ -102,13 +100,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/petugas/anggota/delete-anggota/{id}', [ManajemenAnggotaController::class, 'destroy'])->name('petugas.anggota.destroy');
         Route::post('/petugas/anggota/store-anggota', [ManajemenAnggotaController::class, 'store'])->name('petugas.anggota.store');
 
+        Route::post('/petugas/anggota/accept-biodata/{id}', [ManajemenAnggotaController::class, 'acceptBiodata'])->name('petugas.anggota.acceptBiodata');
+
         // Menu Pinjaman
-        Route::get('/petugas/pinjaman', function () {
-            return view('petugas.pinjaman.pinjaman');
-        });
-        Route::get('/petugas/pinjaman/tambah-pinjaman', function () {
-            return view('petugas.pinjaman.tambah-pinjaman');
-        });
+        Route::get('/petugas/pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'index']);
+        Route::get('/petugas/pinjaman/tambah-pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'create']);
+        Route::post('/petugas/pinjaman/tambah-pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'store'])->name('petugas.pinjaman.store');
+
         Route::get('/petugas/pinjaman/tambah-angsuran', function () {
             return view('petugas.pinjaman.tambah-angsuran');
         });
@@ -117,15 +115,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Menu Simpanan
-        Route::get('/petugas/simpanan', function () {
-            return view('petugas.simpanan.simpanan');
-        });
-        Route::get('/petugas/simpanan/tambah-simpanan', function () {
-            return view('petugas.simpanan.tambah-simpanan');
-        });
-        Route::get('/petugas/simpanan/edit-simpanan', function () {
-            return view('petugas.simpanan.edit-simpanan');
-        });
+        Route::get('/petugas/simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'index']);
+        Route::get('/petugas/simpanan/tambah-simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'create']);
+        Route::post('/petugas/simpanan/tambah-simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'store']);
+        Route::get('/petugas/simpanan/edit-simpanan/{id}', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'edit']);
+        Route::put('/petugas/simpanan/{id}', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'update']);
         Route::get('/petugas/simpanan/simpanan-per-anggota', function () {
             return view('petugas.simpanan.simpanan-per-anggota');
         });
@@ -164,11 +158,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
             Route::post('/anggota/ganti-password', [App\Http\Controllers\AnggotaController::class, 'changePassword'])->name('anggota.changePassword');
 
-            // Pinjaman\
+            // Pinjaman
             Route::get('/anggota/pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'index'])->name('anggota.pinjaman');
-            Route::get('/anggota/pinjaman/tambah-pinjaman', function () {
-                return view('anggota.pinjaman.tambah-pinjaman');
-            });
+            Route::get('/anggota/pinjaman/tambah-pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'create'])->name('anggota.pinjaman.tambah');
+            Route::post('/anggota/pinjaman/tambah-pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'store'])->name('anggota.pinjaman.store');
             Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
                 return view('anggota.pinjaman.riwayat-angsuran');
             });
@@ -182,11 +175,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 });
-
-// Email Verification Notice Route
-// Route::get('/verification-notice', function () {
-//     return 'Mohon verifikasi email Anda terlebih dahulu sebelum mengakses halaman ini.';
-// })->name('verification.notice');
 
 // ====== Di komen, ada yang sudah di intergasikan ke atas =====
 // BiodataController
