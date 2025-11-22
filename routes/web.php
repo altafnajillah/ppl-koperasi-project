@@ -58,10 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Menu Pinjaman
-        Route::get('/admin/pinjaman/', [App\Http\Controllers\AdminController::class, 'manajemenPinjaman']);
-        Route::get('/admin/pinjaman/tambah-pinjaman', function () {
-            return view('admin.pinjaman.tambah-pinjaman');
-        });
+        Route::get('/admin/pinjaman/', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'index']);
+        Route::get('/admin/pinjaman/tambah-pinjaman', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'create']);
+        Route::post('/admin/pinjaman/tambah-pinjaman', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'store'])->name('admin.pinjaman.store');
         Route::get('/admin/pinjaman/edit-pinjaman', function () {
             return view('admin.pinjaman.edit-pinjaman');
         });
@@ -105,9 +104,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Menu Pinjaman
         Route::get('/petugas/pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'index']);
-        Route::get('/petugas/pinjaman/tambah-pinjaman', function () {
-            return view('petugas.pinjaman.tambah-pinjaman');
-        });
+        Route::get('/petugas/pinjaman/tambah-pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'create']);
+        Route::post('/petugas/pinjaman/tambah-pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'store'])->name('petugas.pinjaman.store');
+
         Route::get('/petugas/pinjaman/tambah-angsuran', function () {
             return view('petugas.pinjaman.tambah-angsuran');
         });

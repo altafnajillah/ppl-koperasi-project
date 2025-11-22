@@ -79,12 +79,16 @@
                                             <td>{{ $pj->tenor }} Bulan</td>
                                             <td>{{ $pj->bunga }}%</td>
                                             <td>{{ $pj->alasan }}</td>
-                                            <td>
-                                                <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
-                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                    1.png
-                                                </a>
+                                            <td class="text-center">
+                                                @if (!$pj->jaminan)
+                                                    <span class="badge bg-secondary">-</span>
+                                                @else
+                                                    <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
+                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                        Lihat Jaminan
+                                                    </a>
+                                                @endif
                                             </td>
                                             <td>
                                                 <a href="" class="btn btn-success py-1">
@@ -158,11 +162,15 @@
                                             <td>{{ $pj->bunga }}%</td>
                                             <td>{{ $pj->alasan }}</td>
                                             <td>
-                                                <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
+                                                @if (!$pj->jaminan)
+                                                    <span class="badge bg-secondary">-</span>
+                                                @else
+                                                <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
                                                     class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
                                                     <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                    1.png
+                                                    Lihat Jaminan
                                                 </a>
+                                                @endif
                                             </td>
                                             {{-- <td>
                                                 <a href="" class="btn btn-success py-1">
@@ -189,4 +197,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-@endsection
+    @endsection

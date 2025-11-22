@@ -71,29 +71,39 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Joe</td>
-                                        <td>Rp.12.000.000</td>
-                                        <td>12 Bulan</td>
-                                        <td>5%</td>
-                                        <td>Untuk Modal Usaha</td>
-                                        <td>
-                                            <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
-                                                class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                1.png
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn btn-success py-1">
-                                                Setujui
-                                            </a>
-                                            <a href="" class="btn btn-danger py-1">
-                                                Tolak
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @forelse ($pengajuanPinjaman as $pj)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($pj->tanggal)->format('d M Y') }}</td>
+                                            <td>{{ $pj->user->name }}</td>
+                                            <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
+                                            <td>{{ $pj->tenor }} Bulan</td>
+                                            <td>{{ $pj->bunga }}%</td>
+                                            <td>{{ $pj->alasan }}</td>
+                                            <td class="text-center">
+                                                @if (!$pj->jaminan)
+                                                    <span class="badge bg-secondary">-</span>
+                                                @else
+                                                    <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
+                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                        Lihat Jaminan
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-success py-1">
+                                                    Setujui
+                                                </a>
+                                                <a href="" class="btn btn-danger py-1">
+                                                    Tolak
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">Tidak ada pinjaman aktif.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -143,7 +153,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
+                                    {{-- <tr>
                                         <td>12-12-20223</td>
                                         <td>Joe</td>
                                         <td>Rp.12.000.000</td>
@@ -168,7 +178,50 @@
                                                 Hapus
                                             </a>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
+                                    @forelse ($pinjamanAktif as $pj)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($pj->tanggal)->format('d M Y') }}</td>
+                                            <td>{{ $pj->user->name }}</td>
+                                            <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
+                                            <td>{{ $pj->tenor }} Bulan</td>
+                                            <td>{{ $pj->bunga }}%</td>
+                                            <td>{{ $pj->alasan }}</td>
+                                            <td>
+                                                @if (!$pj->jaminan)
+                                                    <span class="badge bg-secondary">-</span>
+                                                @else
+                                                    <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
+                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                        Lihat Jaminan
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
+                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                    1.png
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
+                                                    Riwayat Angsuran
+                                                </a>
+                                                <a href="/admin/pinjaman/edit-pinjaman" class="btn btn-warning py-1">
+                                                    Edit
+                                                </a>
+                                                <a href="" class="btn btn-danger py-1">
+                                                    Hapus
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">Tidak ada pinjaman aktif.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
