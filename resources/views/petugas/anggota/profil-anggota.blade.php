@@ -58,8 +58,8 @@
                                         </div>
                                         <div class="mb-3 col-12">
                                             <label for="firstName" class="form-label">Name</label>
-                                            <input class="form-control" value="{{ $anggota->name }}" type="text" id="firstName" name="firstName"
-                                                 autofocus />
+                                            <input class="form-control" value="{{ $anggota->name }}" type="text"
+                                                id="firstName" name="firstName" autofocus />
                                         </div>
                                         <div class="mb-3 col-12">
                                             <label for="lastName" class="form-label">Alamat</label>
@@ -70,8 +70,9 @@
                                             <label class="form-label" for="phoneNumber">No Hp</label>
                                             <div class="input-group input-group-merge">
                                                 <span class="input-group-text">ID (+62)</span>
-                                                <input type="text" value="{{ $anggota->biodata->no_hp }}" id="phoneNumber" name="phoneNumber"
-                                                    class="form-control" placeholder="202 555 0111" />
+                                                <input type="text" value="{{ $anggota->biodata->no_hp }}"
+                                                    id="phoneNumber" name="phoneNumber" class="form-control"
+                                                    placeholder="202 555 0111" />
                                             </div>
                                         </div>
                                         <div class="mb-3 col-12">

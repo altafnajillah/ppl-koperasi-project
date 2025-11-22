@@ -114,10 +114,11 @@
                                         <div class=" d-flex">
                                             <span class="rounded-circle bg-primary d-block mt-1 me-3"
                                                 style="width:12px;height:12px;"></span>
-                                            <p class="fw-semibold mb-1">{{ \Carbon\Carbon::parse($angsuran->tanggal)->format('d M Y') }}</p>
+                                            <p class="fw-semibold mb-1">
+                                                {{ \Carbon\Carbon::parse($angsuran->tanggal)->format('d M Y') }}</p>
                                         </div>
                                         <div class="border-0 border-start border-3 border-primary ps-2 ms-1 ">
-                                            <p class="text-muted mb-2 ms-4">{{ $angsuran->alasan  }} -
+                                            <p class="text-muted mb-2 ms-4">{{ $angsuran->alasan }} -
                                                 Rp.{{ number_format($angsuran->jumlah, 0, ',', '.') }}</p>
                                         </div>
                                     @empty
@@ -136,4 +137,4 @@
             </div>
 
             <!-- Content wrapper -->
-@endsection
+        @endsection
