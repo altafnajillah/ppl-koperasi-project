@@ -62,23 +62,23 @@ class DatabaseSeeder extends Seeder
             ]);
 
             // Membuat 0-2 Pinjaman untuk setiap anggota
-            Pinjaman::factory(rand(0, 2))->create([
-                'user_id' => $anggota->id,
-            ])->each(function ($pinjaman) {
-                // Jika pinjaman disetujui, buat data angsurannya
-                if ($pinjaman->status == 'disetujui') {
-                    $jumlah_angsuran = $pinjaman->jumlah / $pinjaman->tenor;
-                    // Membuat beberapa data angsuran (tidak harus lunas)
-                    $sudah_bayar = rand(1, $pinjaman->tenor);
-                    for ($i = 1; $i <= $sudah_bayar; $i++) {
-                        Angsuran::factory()->create([
-                            'pinjaman_id' => $pinjaman->id,
-                            'jumlah' => $jumlah_angsuran,
-                            'tanggal' => \Carbon\Carbon::parse($pinjaman->tanggal)->addMonths($i),
-                        ]);
-                    }
-                }
-            });
+            // Pinjaman::factory(rand(0, 2))->create([
+            //     'user_id' => $anggota->id,
+            // ])->each(function ($pinjaman) {
+            //     // Jika pinjaman disetujui, buat data angsurannya
+            //     if ($pinjaman->status == 'disetujui') {
+            //         $jumlah_angsuran = $pinjaman->jumlah / $pinjaman->tenor;
+            //         // Membuat beberapa data angsuran (tidak harus lunas)
+            //         $sudah_bayar = rand(1, $pinjaman->tenor);
+            //         for ($i = 1; $i <= $sudah_bayar; $i++) {
+            //             Angsuran::factory()->create([
+            //                 'pinjaman_id' => $pinjaman->id,
+            //                 'jumlah' => $jumlah_angsuran,
+            //                 'tanggal' => \Carbon\Carbon::parse($pinjaman->tanggal)->addMonths($i),
+            //             ]);
+            //         }
+            //     }
+            // });
         }
     }
 }

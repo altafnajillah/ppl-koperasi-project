@@ -1,38 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\Anggota;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pinjaman;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class PinjamanController extends Controller
+class ManajemenPinjamanController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $pinjamans = $user->pinjaman;
-        return view('anggota.pinjaman.pinjaman', ['user' => $user, 'pinjamans' => $pinjamans]);
+        $pengajuanPinjaman = Pinjaman::where('status', 'menunggu')->get();
+        $pinjamanAktif = Pinjaman::where('status', 'disetujui')->get();
+        return view('admin.pinjaman.pinjaman', compact('pinjamanAktif', 'pengajuanPinjaman'));
     }
 
     public function create()
     {
-        return view('anggota.pinjaman.tambah-pinjaman');
+        $users = User::where('role', 'anggota')->get();
+        return view('admin.pinjaman.tambah-pinjaman', compact('users'));
     }
 
     public function store(Request $request)
     {
         // Validasi input
         $request->validate([
+            'user_id' => 'required|exists:users,id',
             'alasan' => 'required|string|max:255',
             'jumlah' => 'required|numeric|min:100000',
             'tenor' => 'required|integer|min:1|max:24',
             'jaminan' => 'file|mimes:jpg,jpeg,png,pdf',
         ]);
 
-        $user = Auth::user();
         $pinjaman = new \App\Models\Pinjaman();
-        $jaminanPath = null; 
+        $jaminanPath = null;
         if ($request->jumlah > 10000000) {
             if ($request->hasFile('jaminan')) {
                 # code...
@@ -49,7 +51,7 @@ class PinjamanController extends Controller
         }
 
         // Buat pinjaman baru
-        $pinjaman->user_id = $user->id;
+        $pinjaman->user_id = $request->input('user_id');
         $pinjaman->alasan = $request->input('alasan');
         $pinjaman->jumlah = $request->input('jumlah');
         $pinjaman->tenor = $request->input('tenor');

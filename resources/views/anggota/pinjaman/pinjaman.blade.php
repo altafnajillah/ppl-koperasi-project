@@ -76,6 +76,7 @@
                                         <td>Tenor</td>
                                         <td>Bunga(%)</td>
                                         <td>Alasan</td>
+                                        <td>Status</td>
                                         <td>Jaminan</td>
                                         <td>Actions</td>
                                     </tr>
@@ -88,15 +89,16 @@
                                             <td>{{ $pinjaman->tenor }} Bulan</td>
                                             <td>{{ $pinjaman->bunga }}%</td>
                                             <td>{{ $pinjaman->alasan }}</td>
+                                            <td>{{ $pinjaman->status }}</td>
                                             <td class="text-center">
                                                 @if (!$pinjaman->jaminan)
                                                     <span class="badge bg-secondary">-</span>
                                                 @else
-                                                <a href="{{ asset('') . $pinjaman->jaminan }}" target="_blank"
-                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                    Lihat Jaminan
-                                                </a>
+                                                    <a href="{{ asset('') . $pinjaman->jaminan }}" target="_blank"
+                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                        Lihat Jaminan
+                                                    </a>
                                                 @endif
                                             </td>
                                             <td>
