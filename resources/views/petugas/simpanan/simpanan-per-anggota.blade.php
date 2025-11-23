@@ -41,38 +41,55 @@
 
                         <div class="px-4 mb-3">
                             <div class="row gx-3">
-                                <!-- Search (4 columns) -->
-                                <div class="col-12mt-2 mt-lg-0">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <input type="text" class="form-control h-100" placeholder="Search..." />
-                                    </div>
+                                <div class="col-12 mt-2 mt-lg-0">
+                                    <form action="{{ url()->current() }}" method="GET">
+                                        <div class="h-100 d-flex align-items-center">
+                                            <input type="text" name="search" value="{{ request('search') }}"
+                                                class="form-control h-100" placeholder="Cari nama anggota..." />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
                         <div class="table-responsive text-nowrap px-4">
-                            <table class="table mb-0 align-middle">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <td>Tanggal</td>
-                                        <td>Nama Anggota</td>
-                                        <td>Wajib(Rp)</td>
-                                        <td>Pokok(Rp)</td>
-                                        <td>Sukarela(Rp)</td>
-                                        <td>Total(Rp)</td>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Joe</td>
-                                        <td>Rp.2.000.000</td>
-                                        <td>Rp.3.000.000</td>
-                                        <td>Rp.1.200.000</td>
-                                        <td>Rp.6.200.000</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div style="max-height: 500px; overflow-y: auto;">
+                                <table class="table mb-0 align-middle">
+                                    <thead class="table-dark sticky-top text-white">
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Nama Anggota</th>
+                                            <th>Wajib(Rp)</th>
+                                            <th>Pokok(Rp)</th>
+                                            <th>Sukarela(Rp)</th>
+                                            <th>Total(Rp)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @forelse ($data as $user)
+                                            @php
+                                                $grandTotal = ($user->wajib ?? 0) + ($user->pokok ?? 0) + ($user->sukarela ?? 0);
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $user->tanggal_terakhir ? \Carbon\Carbon::parse($user->tanggal_terakhir)->format('d-m-Y') : '-' }}
+                                                </td>
+                                                <td class="fw-bold">{{ $user->name }}</td>
+                                                <td>Rp {{ number_format($user->wajib ?? 0, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($user->pokok ?? 0, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($user->sukarela ?? 0, 0, ',', '.') }}</td>
+                                                <td class="fw-bold text-primary">Rp
+                                                    {{ number_format($grandTotal, 0, ',', '.') }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">Tidak ada data ditemukan.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -81,4 +98,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

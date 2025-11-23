@@ -12,8 +12,8 @@ class AnggotaController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $pinjamanAktif = $user->pinjaman->count();
-        $pinjamanJumlah = $user->pinjaman->sum('jumlah');
+        $pinjamanAktif = $user->pinjaman->where('status', 'disetujui')->count();
+        $pinjamanJumlah = $user->pinjaman->where('status', 'disetujui')->sum('jumlah');
         $simpananJumlah = $user->simpanan->sum('jumlah');
         $angsurans = Pinjaman::where('user_id', $user->id)
             ->with(['angsuran' => function ($query) {

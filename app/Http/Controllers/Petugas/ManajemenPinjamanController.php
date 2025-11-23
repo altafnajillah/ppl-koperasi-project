@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Angsuran;
+use App\Models\Notifikasi;
 use App\Models\Pinjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManajemenPinjamanController extends Controller
 {
     public function index()
     {
-        $pengajuanPinjaman = Pinjaman::where('status', 'menunggu')->get();
+        $pengajuanPinjaman = Pinjaman::where('status', 'menunggu')->orderByDesc('tanggal')->get();
         $pinjamanAktif = Pinjaman::where('status', 'disetujui')->get();
         return view('petugas.pinjaman.pinjaman', compact('pinjamanAktif', 'pengajuanPinjaman'));
     }
@@ -62,5 +65,31 @@ class ManajemenPinjamanController extends Controller
         $pinjaman->save();
 
         return back()->with('success', 'Pengajuan pinjaman berhasil diajukan.');
+    }
+
+    public function approve($id)
+    {
+        $pinjaman = Pinjaman::findOrFail($id);
+        $pinjaman->status = 'disetujui';
+        
+        for ($i = 1; $i <= $pinjaman->tenor; $i++) {
+            Angsuran::create([
+                'pinjaman_id' => $pinjaman->id,
+                'jumlah' => ($pinjaman->jumlah / $pinjaman->tenor), //+ (($pinjaman->jumlah * $pinjaman->bunga) / $pinjaman->tenor),
+                'tanggal' => now()->addMonths($i),
+                'is_paid' => false,
+            ]);
+        }
+
+        $pinjaman->save();
+        
+        Notifikasi::create([
+            'user_id' => $pinjaman->user_id,
+            'pesan' => 'Pengajuan pinjaman Anda telah disetujui.',
+            'dibaca' => false,
+            'tanggal' => now(),
+        ]);
+
+        return back()->with('success', 'Pengajuan pinjaman berhasil disetujui.');
     }
 }

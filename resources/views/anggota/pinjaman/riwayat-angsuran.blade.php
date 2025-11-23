@@ -16,7 +16,7 @@
                                 <div class="card-body">
                                     <h3 class="card-title text-primary">RIWAYAT ANGSURAN</h3>
                                     <p class="mb-4">
-                                        Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
+                                        Welcome <span class="fw-bold fst-italic">{{ $user->name }}</span>, let's monitoring your user
                                         performance
                                         more closely!
                                     </p>
@@ -47,27 +47,27 @@
                                             <tr>
                                                 <td>Nama</td>
                                                 <td style="padding: 0 10px;">:</td>
-                                                <td>Joe</td>
+                                                <td>{{ $user->name }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Alamat</td>
                                                 <td style="padding: 0 10px;">:</td>
-                                                <td>Jakarta</td>
+                                                <td>{{ $user->biodata->alamat }}</td>
                                             </tr>
                                             <tr>
                                                 <td>No Hp</td>
                                                 <td style="padding: 0 10px;">:</td>
-                                                <td>08123456789</td>
+                                                <td>{{ $user->biodata->no_hp }}</td>
                                             </tr>
                                         </table>
                                     </div>
                                     <div class="col-4 col-lg-2 ms-3 bg-warning pt-2 row rounded">
                                         <div class="text-white">Sisa Tenor</div>
-                                        <h2 class="text-white">7</h2>
+                                        <h2 class="text-white">{{ $sisaTenor }}</h2>
                                     </div>
                                     <div class="col-7 col-lg-5 ms-3 bg-primary pt-2 row rounded">
                                         <div class="text-white">Sisa Pinjaman</div>
-                                        <h2 class="text-white">Rp. 7.000.000</h2>
+                                        <h2 class="text-white">Rp.{{ number_format($sisaPinjaman, 0, ',', '.') }}</h2>
                                     </div>
                                 </div>
 
@@ -83,12 +83,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($angsuran as $k => $ang)
                                         <tr>
-                                            <td>1</td>
-                                            <td>12-12-2023</td>
-                                            <td>Rp. 1.000.000</td>
-                                            <td><span class="badge bg-label-success">Lunas</span></td>
+                                            <td>{{ $k + 1 }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($ang->tanggal)->format('d M Y') }}</td>
+                                            <td>Rp.{{ number_format($ang->jumlah, 0, ',', '.') }}</td>
+                                            <td><span class="badge {{ $ang->is_paid ? "bg-label-success" : "bg-label-danger"}}">{{ $ang->is_paid ? "Lunas" : "Belum Lunas"}}</span></td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

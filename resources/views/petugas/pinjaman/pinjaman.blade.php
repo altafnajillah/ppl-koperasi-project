@@ -64,7 +64,7 @@
                                         <td>Nama Anggota</td>
                                         <td>Jumlah Pinjaman(Rp)</td>
                                         <td>Tenor</td>
-                                        <td>Bunga(%)</td>
+                                        {{-- <td>Bunga(%)</td> --}}
                                         <td>Alasan</td>
                                         <td>Jaminan</td>
                                         <td>Actions</td>
@@ -77,7 +77,7 @@
                                             <td>{{ $pj->user->name }}</td>
                                             <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
                                             <td>{{ $pj->tenor }} Bulan</td>
-                                            <td>{{ $pj->bunga }}%</td>
+                                            {{-- <td>{{ $pj->bunga }}%</td> --}}
                                             <td>{{ $pj->alasan }}</td>
                                             <td class="text-center">
                                                 @if (!$pj->jaminan)
@@ -91,9 +91,12 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="" class="btn btn-success py-1">
-                                                    Setujui
-                                                </a>
+                                                <form action="{{ route('petugas.pinjaman.approve', $pj->id) }}" method="POST">
+                                                    @csrf
+                                                    <button action="submit" class="btn btn-success py-1">
+                                                        Setujui
+                                                    </button>
+                                                </form>
                                                 <a href="" class="btn btn-danger py-1">
                                                     Tolak
                                                 </a>
@@ -165,11 +168,11 @@
                                                 @if (!$pj->jaminan)
                                                     <span class="badge bg-secondary">-</span>
                                                 @else
-                                                <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
-                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                    Lihat Jaminan
-                                                </a>
+                                                    <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
+                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
+                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
+                                                        Lihat Jaminan
+                                                    </a>
                                                 @endif
                                             </td>
                                             {{-- <td>
@@ -197,4 +200,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

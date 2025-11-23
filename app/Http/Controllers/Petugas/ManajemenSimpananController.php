@@ -13,12 +13,14 @@ class ManajemenSimpananController extends Controller
     public function index()
     {
         $simpanans = Simpanan::with('user')->get()->sortByDesc('tanggal');
+
         return view('petugas.simpanan.simpanan', compact('simpanans'));
     }
 
     public function create()
     {
         $users = User::where('role', 'anggota')->get();
+
         return view('petugas.simpanan.tambah-simpanan', compact('users'));
     }
 
@@ -26,21 +28,21 @@ class ManajemenSimpananController extends Controller
     {
         $request->validate([
             'user_id' => ['required'],
-            'jenis'   => ['required'],
-            'jumlah'  => ['required', 'numeric'],
-            'tanggal' => ['required', 'date']
+            'jenis' => ['required'],
+            'jumlah' => ['required', 'numeric'],
+            'tanggal' => ['required', 'date'],
         ]);
 
         Simpanan::create([
             'user_id' => $request->user_id,
-            'jenis'   => $request->jenis,
-            'jumlah'  => $request->jumlah,
+            'jenis' => $request->jenis,
+            'jumlah' => $request->jumlah,
             'tanggal' => $request->tanggal,
         ]);
 
         Notifikasi::create([
             'user_id' => $request->user_id,
-            'pesan' => 'Simpanan '. $request->jenis .' sebesar Rp ' . number_format($request->jumlah, 2, ',', '.') . ' telah berhasil ditambahkan.',
+            'pesan' => 'Simpanan '.$request->jenis.' sebesar Rp '.number_format($request->jumlah, 2, ',', '.').' telah berhasil ditambahkan.',
             'dibaca' => false,
             'tanggal' => now(),
         ]);
@@ -56,13 +58,12 @@ class ManajemenSimpananController extends Controller
         return view('petugas.simpanan.edit-simpanan', compact('simpanan', 'users'));
     }
 
-
     public function update(Request $request, $id)
     {
         $request->validate([
             'user_id' => ['required'],
-            'jenis'   => ['required'],
-            'jumlah'  => ['required', 'numeric'],
+            'jenis' => ['required'],
+            'jumlah' => ['required', 'numeric'],
             'tanggal' => ['required'],
         ]);
 
@@ -70,11 +71,36 @@ class ManajemenSimpananController extends Controller
 
         $simpanan->update([
             'user_id' => $request->user_id,
-            'jenis'   => $request->jenis,
-            'jumlah'  => $request->jumlah,
+            'jenis' => $request->jenis,
+            'jumlah' => $request->jumlah,
             'tanggal' => $request->tanggal,
         ]);
 
         return redirect()->back()->with('success', 'Data simpanan berhasil diperbarui.');
+    }
+
+    public function simpananPerAnggota(Request $request)
+    {
+        $query = User::query()->whereHas('simpanan');
+
+        // Fitur Search
+        if ($request->filled('search')) {
+            $query->where('name', 'like', "%{$request->search}%");
+        }
+
+        // Ambil semua data (get) dengan agregasi penjumlahan
+        $data = $query->withSum(['simpanan as wajib' => function ($q) {
+            $q->where('jenis', 'wajib');
+        }], 'jumlah')
+            ->withSum(['simpanan as pokok' => function ($q) {
+                $q->where('jenis', 'pokok');
+            }], 'jumlah')
+            ->withSum(['simpanan as sukarela' => function ($q) {
+                $q->where('jenis', 'sukarela');
+            }], 'jumlah')
+            ->withMax('simpanan as tanggal_terakhir', 'tanggal')
+            ->get(); // <--- Diganti dari paginate() menjadi get()
+
+        return view('petugas.simpanan.simpanan-per-anggota', compact('data'));
     }
 }

@@ -73,7 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Menu Simpanan
         Route::get('/admin/simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'index']);
-        Route::get('/admin/simpanan/tambah-simpanan',  [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'create']);
+        Route::get('/admin/simpanan/tambah-simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'create']);
         Route::post('/admin/simpanan/tambah-simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'store']);
         Route::get('/admin/simpanan/edit-simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'edit']);
         Route::put('/admin/simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'update']);
@@ -92,7 +92,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/petugas/dashboard', [App\Http\Controllers\PetugasController::class, 'dashboard'])->name('petugas.dashboard');
 
         // Profile Anggota
-        Route::get('/petugas/anggota',  [ManajemenAnggotaController::class, 'index'])->name('petugas.anggota.index');
+        Route::get('/petugas/anggota', [ManajemenAnggotaController::class, 'index'])->name('petugas.anggota.index');
         Route::get('/petugas/anggota/tambah-anggota', [ManajemenAnggotaController::class, 'create'])->name('petugas.anggota.tambah');
         Route::get('/petugas/anggota/profil-anggota/{id}', [ManajemenAnggotaController::class, 'show'])->name('petugas.anggota.show');
         Route::get('/petugas/anggota/edit-anggota/{id}', [ManajemenAnggotaController::class, 'edit'])->name('petugas.anggota.edit');
@@ -106,6 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/petugas/pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'index']);
         Route::get('/petugas/pinjaman/tambah-pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'create']);
         Route::post('/petugas/pinjaman/tambah-pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'store'])->name('petugas.pinjaman.store');
+        Route::post('/petugas/pinjaman/approve-pinjaman/{id}', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'approve'])->name('petugas.pinjaman.approve');
 
         Route::get('/petugas/pinjaman/tambah-angsuran', function () {
             return view('petugas.pinjaman.tambah-angsuran');
@@ -120,9 +121,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/petugas/simpanan/tambah-simpanan', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'store']);
         Route::get('/petugas/simpanan/edit-simpanan/{id}', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'edit']);
         Route::put('/petugas/simpanan/{id}', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'update']);
-        Route::get('/petugas/simpanan/simpanan-per-anggota', function () {
-            return view('petugas.simpanan.simpanan-per-anggota');
-        });
+        // Route::get('/petugas/simpanan/simpanan-per-anggota', function () {
+        //     return view('petugas.simpanan.simpanan-per-anggota');
+        // });
+        Route::get('/petugas/simpanan/simpanan-per-anggota', [App\Http\Controllers\Petugas\ManajemenSimpananController::class, 'simpananPerAnggota']);
 
         // Ganti Password
         Route::get('/petugas/ganti-password', function () {
@@ -162,15 +164,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/anggota/pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'index'])->name('anggota.pinjaman');
             Route::get('/anggota/pinjaman/tambah-pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'create'])->name('anggota.pinjaman.tambah');
             Route::post('/anggota/pinjaman/tambah-pinjaman', [App\Http\Controllers\Anggota\PinjamanController::class, 'store'])->name('anggota.pinjaman.store');
-            Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
-                return view('anggota.pinjaman.riwayat-angsuran');
-            });
+            // Route::get('/anggota/pinjaman/riwayat-angsuran', function () {
+            //     return view('anggota.pinjaman.riwayat-angsuran');
+            // });
+            Route::get('/anggota/pinjaman/riwayat-angsuran/{id}', [App\Http\Controllers\Anggota\PinjamanController::class, 'riwayatAngsuran']);
 
             // Simpanan
             Route::get('/anggota/simpanan', [App\Http\Controllers\Anggota\SimpananController::class, 'index'])->name('anggota.simpanan');
 
             // Notifikasi
             Route::get('/anggota/notifikasi', [App\Http\Controllers\Anggota\NotifikasiController::class, 'index'])->name('anggota.notifikasi');
+
 
         });
     });

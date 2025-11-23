@@ -102,7 +102,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="/anggota/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
+                                                <a href="/anggota/pinjaman/riwayat-angsuran/{{ $pinjaman->id }}" class="btn btn-primary py-1">
                                                     Riwayat Angsuran
                                                 </a>
                                             </td>

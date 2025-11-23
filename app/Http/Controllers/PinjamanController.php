@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pinjaman;
 use App\Models\Biodata;
+use Illuminate\Support\Facades\Auth;
 
 class PinjamanController extends Controller
 {
@@ -37,7 +38,7 @@ class PinjamanController extends Controller
     public function index()
     {
         $anggotaId = Auth::id();
-        $riwayatPinjaman=Pinjaman::where('id_anggota', $anggotaId)->orderBy('tanggal_pengajuan', desc)->get();
+        $riwayatPinjaman=Pinjaman::where('id_anggota', $anggotaId)->orderByDesc('tanggal_pengajuan')->get();
         return view('pinjaman.index',['pinjamans'=>$riwayatPinjaman]);
     }
 

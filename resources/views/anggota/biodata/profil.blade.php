@@ -54,25 +54,38 @@
                         @endsession
 
                         <div class="row px-2 gx-3">
+                            {{-- Tampilkan Avatar di Kiri --}}
                             <div class="card-body col-lg-2">
                                 <div class="d-flex align-items-start align-items-sm-center">
-                                    <img src="{{ asset('templates') }}/assets/img/avatars/1.png" alt="user-avatar"
-                                        class="d-block rounded" height="150" width="150" id="uploadedAvatar" />
+                                    {{-- Menggunakan gambar dari database, atau gambar default --}}
+                                    @php
+                                        // Tentukan path gambar avatar
+                                        $avatarPath = $user->avatar ? 'storage/' . $user->avatar : 'templates/assets/img/avatars/1.png';
+                                    @endphp
+                                    <img src="{{ asset($avatarPath) }}" alt="user-avatar" class="d-block rounded"
+                                        height="150" width="150" id="uploadedAvatar" />
                                 </div>
                             </div>
+                            {{-- Form Utama --}}
                             <div class="card-body col-lg-10">
                                 @if ($biodata)
-                                    <form id="formAccountSettings" method="POST" action="{{ route('anggota.biodata.update') }}">
+                                    {{-- PENTING: Tambahkan enctype="multipart/form-data" --}}
+                                    <form id="formAccountSettings" method="POST" action="{{ route('anggota.biodata.update') }}"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
+                                            {{-- Upload Avatar --}}
                                             <div class="button-wrapper col-12 ">
-                                                <label for="upload" class="btn btn-primary mb-4 w-100" tabindex="0">
-                                                    <span class="d-block">Upload New Foto</span>
-                                                    <input type="file" id="upload" class="account-file-input" hidden
-                                                        accept="image/png, image/jpeg" />
+                                                <label for="upload_avatar" class="btn btn-primary mb-4 w-100" tabindex="0">
+                                                    <span class="d-block">Upload New Foto (Avatar)</span>
+                                                    {{-- PENTING: Tambahkan name="avatar" dan ubah id --}}
+                                                    <input type="file" id="upload_avatar" name="avatar"
+                                                        class="account-file-input" hidden accept="image/png, image/jpeg" />
                                                 </label>
                                             </div>
+
+                                            {{-- Bagian input lainnya (Name, Email, Alamat, No Hp, NIK) --}}
                                             <div class="mb-3 col-12">
                                                 <label for="name" class="form-label">Name</label>
                                                 <input class="form-control" type="text" id="name" name="name"
@@ -101,14 +114,21 @@
                                                 <input type="text" class="form-control" id="nik" name="nik"
                                                     value="{{ $biodata->nik }}" />
                                             </div>
+
+                                            {{-- Upload KTP --}}
                                             <div class="mb-3 col-12">
-                                                <label for="ktp" class="form-label">Ktp</label>
-                                                <input type="file" class="form-control" id="ktp" name="ktp" placeholder="231465"
-                                                    maxlength="6" />
+                                                <label for="ktp" class="form-label">KTP</label>
+                                                {{-- PENTING: Tambahkan name="ktp" --}}
+                                                <input type="file" class="form-control" id="ktp" name="ktp"
+                                                    accept="image/png, image/jpeg" />
                                                 <div class="d-flex align-items-start align-items-sm-center mt-2">
-                                                    <img src="{{ asset('templates') }}/assets/img/avatars/1.png"
-                                                        alt="user-avatar" class="d-block rounded" height="180" width="320"
-                                                        id="uploadedAvatar" />
+                                                    {{-- Menggunakan gambar dari database, atau gambar default --}}
+                                                    @php
+                                                        // Tentukan path gambar KTP
+                                                        $ktpPath = $biodata->ktp ? 'storage/' . $biodata->ktp : 'templates/assets/img/avatars/1.png';
+                                                    @endphp
+                                                    <img src="{{ asset($ktpPath) }}" alt="KTP Image" class="d-block rounded"
+                                                        height="180" width="320" id="uploadedKtp" />
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +138,6 @@
                                             </div>
                                         </div>
                                     </form>
-
                                 @else
                                     <form id="formAccountSettings" method="POST" action="{{ route('anggota.biodata.store') }}">
                                         <div class="row">
@@ -174,7 +193,6 @@
                                         </div>
                                     </form>
                                 @endif
-
                             </div>
                         </div>
 
