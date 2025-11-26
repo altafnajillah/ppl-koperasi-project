@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                {{-- form add user  --}}
+                {{-- form add user --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Profile User</h5>
@@ -42,66 +42,75 @@
                         <div class="row px-2 gx-3">
                             <div class="card-body col-lg-2">
                                 <div class="d-flex align-items-start align-items-sm-center">
-                                    <img src="{{ asset('templates') }}/assets/img/avatars/1.png" alt="user-avatar"
-                                        class="d-block rounded" height="150" width="150" id="uploadedAvatar" />
+                                    @php
+                                        // Tentukan path gambar avatar
+                                        $avatarPath = $anggota->avatar ? 'storage/' . $anggota->avatar : 'templates/assets/img/avatars/1.png';
+                                    @endphp
+                                    <img src="{{ asset($avatarPath) }}" alt="user-avatar" class="d-block rounded"
+                                        height="150" width="150" id="uploadedAvatar" />
                                 </div>
                             </div>
                             <div class="card-body col-lg-10">
                                 <form id="formAccountSettings" method="POST" onsubmit="return false">
                                     <div class="row">
-                                        <div class="button-wrapper col-12 ">
+                                        {{-- <div class="button-wrapper col-12 ">
                                             <label for="upload" class="btn btn-primary mb-4 w-100" tabindex="0">
                                                 <span class="d-block">Upload New Foto</span>
                                                 <input type="file" id="upload" class="account-file-input" hidden
                                                     accept="image/png, image/jpeg" />
                                             </label>
-                                        </div>
+                                        </div> --}}
                                         <div class="mb-3 col-12">
                                             <label for="firstName" class="form-label">Name</label>
                                             <input class="form-control" type="text" id="firstName" name="firstName"
-                                                value="" autofocus />
+                                                value="{{ $anggota->name }}" autofocus disabled />
                                         </div>
-                                        <div class="mb-3 col-12">
-                                            <label for="lastName" class="form-label">Alamat</label>
-                                            <input class="form-control" type="text" name="lastName" id="lastName"
-                                                value="" />
-                                        </div>
-                                        <div class="mb-3 col-12">
-                                            <label class="form-label" for="phoneNumber">No Hp</label>
-                                            <div class="input-group input-group-merge">
-                                                <span class="input-group-text">ID (+62)</span>
-                                                <input type="text" id="phoneNumber" name="phoneNumber"
-                                                    class="form-control" placeholder="202 555 0111" />
+                                        @if ($biodata)
+                                            <div class="mb-3 col-12">
+                                                <label for="lastName" class="form-label">Alamat</label>
+                                                <input class="form-control" type="text" name="lastName" id="lastName"
+                                                    value="{{ $biodata->alamat }}" disabled />
                                             </div>
-                                        </div>
-                                        <div class="mb-3 col-12">
-                                            <label for="organization" class="form-label">NIK</label>
-                                            <input type="text" class="form-control" id="organization" name="organization"
-                                                value="" />
-                                        </div>
-                                        <div class="mb-3 col-12">
-                                            <label for="zipCode" class="form-label">Ktp</label>
-                                            <input type="file" class="form-control" id="zipCode" name="zipCode"
-                                                placeholder="231465" maxlength="6" />
-                                            <div class="d-flex align-items-start align-items-sm-center mt-2">
-                                                <img src="{{ asset('templates') }}/assets/img/avatars/1.png"
-                                                    alt="user-avatar" class="d-block rounded" height="180" width="320"
-                                                    id="uploadedAvatar" />
+                                            <div class="mb-3 col-12">
+                                                <label class="form-label" for="phoneNumber">No Hp</label>
+                                                <div class="input-group input-group-merge">
+                                                    <span class="input-group-text">ID (+62)</span>
+                                                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+                                                        placeholder="202 555 0111" value="{{ $biodata->no_hp }}" disabled />
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="mb-3 col-12">
+                                                <label for="organization" class="form-label">NIK</label>
+                                                <input type="text" class="form-control" id="organization" name="organization"
+                                                    value="{{ $biodata->nik }}" disabled />
+                                            </div>
+                                            <div class="mb-3 col-12">
+                                                <label for="zipCode" class="form-label">Ktp</label>
+                                                {{-- <input type="file" class="form-control" id="zipCode" name="zipCode"
+                                                    placeholder="231465" maxlength="6" disabled /> --}}
+                                                <div class="d-flex align-items-start align-items-sm-center mt-2">
+                                                    @php
+                                                        // Tentukan path gambar KTP
+                                                        $ktpPath = $biodata->ktp ? 'storage/' . $biodata->ktp : 'templates/assets/img/avatars/1.png';
+                                                    @endphp
+                                                    <img src="{{ asset($ktpPath) }}" alt="KTP Image" class="d-block rounded"
+                                                        height="180" width="320" id="uploadedKtp" />
+                                                </div>
+                                            </div>
+                                        @endif
                                         <div class="mb-3 col-12">
                                             <label for="email" class="form-label">E-mail</label>
                                             <input class="form-control" type="text" id="email" name="email"
-                                                value="" placeholder="john.doe@example.com" />
+                                                value="{{ $anggota->email }}" placeholder="john.doe@example.com" disabled />
                                         </div>
-                                        <div class="mb-3 col-12">
+                                        {{-- <div class="mb-3 col-12">
                                             <label for="role" class="form-label">Role</label>
-                                            <select id="role" class="select2 form-select">
+                                            <select id="role" class="select2 form-select" disabled>
                                                 <option value="">Select Role</option>
                                                 <option value="admin">Admin</option>
                                                 <option value="user">User</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="mt-2 row gx-2">
                                         <div class="col-lg-8 col-6">
@@ -117,9 +126,9 @@
 
                     </div>
                 </div>
-                {{-- end form add user  --}}
+                {{-- end form add user --}}
             </div>
             <!-- / Content -->
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

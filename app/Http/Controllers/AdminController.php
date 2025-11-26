@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Biodata;
+use App\Models\Pinjaman;
+use App\Models\Simpanan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,14 +18,23 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return $this->viewWithUser('admin.dashboard');
+        $user = Auth::user();
+        $totalAnggota = User::where('role', 'anggota')->count();
+        $totalSimpanan = Simpanan::sum('jumlah');
+        $totalPinjaman = Pinjaman::where('status', 'disetujui')->sum('jumlah');
+        $pengajuanPinjaman = Pinjaman::where('status', operator: 'menunggu')->count();
+        return view('admin.dashboard', compact('user', 'totalAnggota', 'totalSimpanan', 'totalPinjaman', 'pengajuanPinjaman'));
     }
 
     public function users()
     {
-        return $this->viewWithUser('admin.pengguna.user-management', [
-            'listUsers' => User::all()
-        ]);
+        $users = User::all();
+        $totalUser = User::count();
+        $totalAdmin = User::where('role', 'admin')->count();
+        $totalPetugas = User::where('role', 'petugas')->count();
+        $totalAnggota = User::where('role', 'anggota')->count();
+
+        return view('admin.pengguna.user-management', compact('users', 'totalUser', 'totalAdmin', 'totalPetugas', 'totalAnggota'));
     }
 
     public function createUser()
@@ -92,5 +104,12 @@ class AdminController extends Controller
     public function manajemenPinjaman()
     {
         return $this->viewWithUser('admin.pinjaman.pinjaman');
+    }
+
+    public function profileUser($id)
+    {
+        $anggota = User::findOrFail($id);
+        $biodata = Biodata::where('user_id', $anggota->id)->first();
+        return view('admin.pengguna.profil-user', compact('anggota', 'biodata'));
     }
 }

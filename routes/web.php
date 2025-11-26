@@ -53,9 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('admin.pengguna.edit-user');
         });
         Route::delete('/admin/delete-user/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('user.delete');
-        Route::get('/admin/pengguna/profil-user', function () {
-            return view('admin.pengguna.profil-user');
-        });
+        Route::get('/admin/pengguna/profil-user/{id}', [App\Http\Controllers\AdminController::class, 'profileUser'])->name('admin.user.profile');
 
         // Menu Pinjaman
         Route::get('/admin/pinjaman/', [App\Http\Controllers\Admin\ManajemenPinjamanController::class, 'index']);

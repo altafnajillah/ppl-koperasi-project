@@ -17,11 +17,17 @@ class BiodataCompleted
         $user = Auth::user()->load('biodata');
 
         $isBiodataIncomplete = ($user->biodata == null);
+        $isBiodataAccepted = ($user->biodata->accepted_at === null);
 
         if ($isBiodataIncomplete) {
 
             return redirect()->route('anggota.biodata')
                 ->with('warning', 'Harap lengkapi data diri Anda terlebih dahulu untuk mengakses halaman ini.');
+        }
+
+        if ($isBiodataAccepted) {
+            return redirect()->route('anggota.biodata')
+                ->with('warning', 'Menunggu persetujuan biodata Anda. Silakan cek kembali nanti.');
         }
 
         return $next($request);

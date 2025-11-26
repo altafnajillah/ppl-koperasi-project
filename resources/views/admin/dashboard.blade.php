@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                     <span class="fw-semibold d-block mb-1">Total Anggota</span>
-                                    <h3 class="card-title mb-2">56</h3>
+                                    <h3 class="card-title mb-2">{{ $totalAnggota }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
                                         <span class="fw-semibold d-block mb-1">Total Simpanan</span>
-                                        <h3 class="card-title text-nowrap mb-2">Rp. 35.000.000</h3>
+                                        <h3 class="card-title text-nowrap mb-2">Rp.{{ number_format($totalSimpanan, 0, ',', '.') }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <span class="fw-semibold d-block mb-1">Total Pinjaman Beredar</span>
-                                    <h3 class="card-title mb-2">RP. 14.000.000.000</h3>
+                                    <h3 class="card-title mb-2">Rp.{{ number_format($totalPinjaman, 0, ',', '.') }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                         </div>
                                     </div>
                                     <span class="fw-semibold d-block mb-1">Pengajuan Pinjaman Baru</span>
-                                    <h3 class="card-title mb-2">56</h3>
+                                    <h3 class="card-title mb-2">{{ $pengajuanPinjaman }}</h3>
                                 </div>
                             </div>
                         </div>
