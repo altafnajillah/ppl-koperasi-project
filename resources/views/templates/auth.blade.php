@@ -101,7 +101,7 @@
                         </g>
                     </svg>
                 </span>
-                <span class="app-brand-text demo fw-bolder text-white">Kopersaiku</span>
+                <span class="app-brand-text demo fw-bolder text-white">Koperasiku</span>
             </a>
         </div>
         <!-- /Logo -->

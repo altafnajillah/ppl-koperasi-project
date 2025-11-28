@@ -165,6 +165,11 @@
           @yield('content')
           {{-- end content  --}}
         </div>
+
+        {{-- footer  --}}
+          @yield('footer')
+        {{-- end footer  --}}
+
         <!-- / Layout page -->
       </div>
 
