@@ -83,7 +83,7 @@
 @section('sidebar')
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="/anggota/dashboard" class="app-brand-link">
                 <span class="app-brand-logo demo">
                     <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -188,7 +188,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-4 order-1 order-md-2 mb-lg-1 mb-md-1 mb-4">
-                <a href="/" class="app-brand-link gap-2">
+                <a href="/anggota/dashboard" class="app-brand-link gap-2">
                     <span class="app-brand-logo demo">
                         <svg style="width: 28px; height: auto;" viewBox="0 0 25 42" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
