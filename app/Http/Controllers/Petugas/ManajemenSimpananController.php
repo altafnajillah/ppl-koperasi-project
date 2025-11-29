@@ -99,7 +99,7 @@ class ManajemenSimpananController extends Controller
                 $q->where('jenis', 'sukarela');
             }], 'jumlah')
             ->withMax('simpanan as tanggal_terakhir', 'tanggal')
-            ->get(); // <--- Diganti dari paginate() menjadi get()
+            ->get();
 
         return view('petugas.simpanan.simpanan-per-anggota', compact('data'));
     }

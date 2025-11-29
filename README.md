@@ -67,7 +67,12 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal A
     * `migrate:fresh`: Menghapus semua tabel lama dan menjalankan migrasi dari awal.
     * `--seed`: Menjalankan seeder untuk mengisi data.
 
-7.  **Jalankan Server Pengembangan**
+7.  **Hubungkan Storage Penyimpanan**
+    ```bash
+    php artisan storage:link
+    ```
+
+8.  **Jalankan Server Pengembangan**
     ```bash
     php artisan serve
     ```

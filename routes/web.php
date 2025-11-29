@@ -75,14 +75,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/admin/simpanan/tambah-simpanan', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'store']);
         Route::get('/admin/simpanan/edit-simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'edit']);
         Route::put('/admin/simpanan/{id}', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'update']);
-        Route::get('/admin/simpanan/simpanan-per-anggota', function () {
-            return view('admin.simpanan.simpanan-per-anggota');
-        });
+        Route::get('/admin/simpanan/simpanan-per-anggota', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'simpananPerAnggota']);
 
         // Menu Laporan Keuangan
-        Route::get('/admin/laporan-keuangan', function () {
-            return view('admin.laporan-keuangan');
-        });
+        Route::get('/admin/laporan-keuangan', [App\Http\Controllers\LaporanController::class, 'index']);
     });
 
     // Petugas

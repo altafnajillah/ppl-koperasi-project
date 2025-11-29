@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="ps-3">
                                             <span class="fw-semibold d-block mb-1">Total Saldo Bersih</span>
-                                            <h3 class="card-title mb-2">Rp.21.000.000</h3>
+                                            <h3 class="card-title mb-2">Rp.{{ number_format($saldoBersih, 0, ',', '.') }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="ps-3">
                                                 <span class="fw-semibold d-block mb-1">Total Pemasukan</span>
-                                                <h3 class="card-title text-nowrap mb-2">Rp. 35.000.000</h3>
+                                                <h3 class="card-title text-nowrap mb-2">Rp.{{ number_format($pemasukan, 0, ',', '.') }}</h3>
                                             </div>
                                         </div>
 
@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="ps-3">
                                             <span class="fw-semibold d-block mb-1">Total Pengeluaran</span>
-                                            <h3 class="card-title mb-2">RP. 14.000.000</h3>
+                                            <h3 class="card-title mb-2">Rp.{{ number_format($pengeluaran, 0, ',', '.') }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                 {{-- table --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
-                        <h5 class="card-header">Daftar Pengajuan Pinjaman Terbaru</h5>
+                        <h5 class="card-header">Daftar Simpanan dan Pinjaman</h5>
 
                         <div class="px-4 mb-3">
                             <!-- Form filter: single row so columns stay aligned -->

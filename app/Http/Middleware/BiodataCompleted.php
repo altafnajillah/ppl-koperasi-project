@@ -16,16 +16,16 @@ class BiodataCompleted
 
         $user = Auth::user()->load('biodata');
 
-        $isBiodataIncomplete = ($user->biodata == null);
-        $isBiodataAccepted = ($user->biodata->accepted_at === null);
+        if ($request->routeIs('anggota.biodata')) {
+            return $next($request);
+        }
 
-        if ($isBiodataIncomplete) {
-
+        if (! $user->biodata) {
             return redirect()->route('anggota.biodata')
                 ->with('warning', 'Harap lengkapi data diri Anda terlebih dahulu untuk mengakses halaman ini.');
         }
 
-        if ($isBiodataAccepted) {
+        if ($user->biodata->accepted_at === null) {
             return redirect()->route('anggota.biodata')
                 ->with('warning', 'Menunggu persetujuan biodata Anda. Silakan cek kembali nanti.');
         }

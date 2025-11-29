@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use App\Models\Pinjaman;
+use App\Models\Simpanan;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -12,7 +14,10 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        //
+        $pemasukan = Simpanan::sum('jumlah');
+        $pengeluaran = Pinjaman::where('status', 'disetujui')->sum('jumlah');
+        $saldoBersih = $pemasukan - $pengeluaran;
+        return view('admin.laporan-keuangan', compact('pemasukan', 'pengeluaran', 'saldoBersih'));
     }
 
     /**

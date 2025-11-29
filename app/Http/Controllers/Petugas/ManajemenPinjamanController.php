@@ -75,7 +75,7 @@ class ManajemenPinjamanController extends Controller
         for ($i = 1; $i <= $pinjaman->tenor; $i++) {
             Angsuran::create([
                 'pinjaman_id' => $pinjaman->id,
-                'jumlah' => ($pinjaman->jumlah / $pinjaman->tenor), //+ (($pinjaman->jumlah * $pinjaman->bunga) / $pinjaman->tenor),
+                'jumlah' => ($pinjaman->jumlah + $pinjaman->jumlah * $pinjaman->bunga / 100) / $pinjaman->tenor,
                 'tanggal' => now()->addMonths($i),
                 'is_paid' => false,
             ]);
