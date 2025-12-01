@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Notifikasi;
 use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 
 // use Illuminate\Validation\ValidationException;
 
@@ -36,7 +41,6 @@ class AuthController extends Controller
      * Menangani permintaan login yang masuk.
      *
      * @return \Illuminate\Http\RedirectResponse
-     *
      */
     public function login(Request $request)
     {
@@ -104,11 +108,9 @@ class AuthController extends Controller
 
         if ($user->role === 'admin') {
             return redirect()->intended(route('admin.dashboard'));
-        }
-        else if ($user->role === 'petugas') {
+        } elseif ($user->role === 'petugas') {
             return redirect()->intended(route('petugas.dashboard'));
-        }
-        else {
+        } else {
             return redirect()->intended(route('anggota.dashboard'));
         }
     }
@@ -137,7 +139,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'anggota', 
+            'role' => 'anggota',
         ]);
 
         Notifikasi::create([
@@ -146,9 +148,69 @@ class AuthController extends Controller
             'dibaca' => false,
             'tanggal' => now(),
         ]);
-        
+
         Auth::login($user);
 
         return redirect()->route('anggota.dashboard');
+    }
+
+    public function requestView()
+    {
+        return view('auth.lupa-password');
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $request->validate(['email' => ['required', 'email']]);
+
+        // Kirim link reset password
+        $status = Password::sendResetLink($request->only('email'));
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return view('auth.verifikasi-lupa-password')->with('status', __($status));
+        }
+
+        throw ValidationException::withMessages([
+            'email' => [__($status)],
+        ]);
+    }
+
+    public function resetView(Request $request)
+    {
+        return view('auth.new-password', [
+            'token' => $request->route('token'),
+            'email' => $request->email,
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        // Proses reset password
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => $password, // Auto hash oleh model User L12
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            // Redirect ke login dengan pesan sukses
+            return redirect()->route('login')->with('status', __($status));
+        }
+
+        throw ValidationException::withMessages([
+            'email' => [__($status)],
+        ]);
     }
 }

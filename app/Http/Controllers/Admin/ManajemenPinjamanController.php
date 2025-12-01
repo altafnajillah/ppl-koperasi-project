@@ -9,16 +9,36 @@ use Illuminate\Http\Request;
 
 class ManajemenPinjamanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pengajuanPinjaman = Pinjaman::where('status', 'menunggu')->get();
-        $pinjamanAktif = Pinjaman::where('status', 'disetujui')->get();
+        $pengajuanPinjaman = Pinjaman::with('user')
+            ->where('status', 'menunggu')
+            ->when($request->search_pending, function ($query, $search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->get();
+
+        $pinjamanAktif = Pinjaman::with('user')
+            ->where('status', 'disetujui')
+            ->when($request->search_active, function ($query, $search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->date_from && $request->date_to, function ($query) use ($request) {
+                $query->whereBetween('tanggal', [$request->date_from, $request->date_to]);
+            })
+            ->get();
+
         return view('admin.pinjaman.pinjaman', compact('pinjamanAktif', 'pengajuanPinjaman'));
     }
 
     public function create()
     {
         $users = User::where('role', 'anggota')->get();
+
         return view('admin.pinjaman.tambah-pinjaman', compact('users'));
     }
 
@@ -33,16 +53,16 @@ class ManajemenPinjamanController extends Controller
             'jaminan' => 'file|mimes:jpg,jpeg,png,pdf',
         ]);
 
-        $pinjaman = new \App\Models\Pinjaman();
+        $pinjaman = new \App\Models\Pinjaman;
         $jaminanPath = null;
         if ($request->jumlah > 10000000) {
             if ($request->hasFile('jaminan')) {
-                # code...
-                $filename = time() . '_' . $request->file('jaminan')->getClientOriginalName();
+                // code...
+                $filename = time().'_'.$request->file('jaminan')->getClientOriginalName();
 
                 $request->file('jaminan')->move(public_path('jaminan'), $filename);
 
-                $jaminanPath = 'jaminan/' . $filename;
+                $jaminanPath = 'jaminan/'.$filename;
             } else {
                 $request->validate([
                     'jaminan' => 'required',

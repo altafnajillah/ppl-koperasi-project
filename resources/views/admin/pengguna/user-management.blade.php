@@ -129,6 +129,8 @@
                                                 </td>
                                                 @if ($user->biodata !== null)
                                                     <td><span class="badge {{ $user->biodata->accepted_at == null ? "bg-label-danger" : "bg-label-success" }} me-1">{{ $user->biodata->accepted_at == null ? "Tertunda" : "Diterima" }}</span></td>
+                                                @elseif ($user->role === 'anggota')
+                                                    <td><span class="badge bg-label-warning me-1">Menunggu</span></td>
                                                 @else
                                                     <td><span class="badge bg-label-secondary me-1"></span></td>
                                                 @endif

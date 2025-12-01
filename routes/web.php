@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\BiodataController;
-use App\Http\Controllers\Petugas\ManajemenAnggotaController;
-use App\Http\Controllers\PinjamanController;
-use App\Http\Controllers\SimpananController;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,15 +16,23 @@ Route::middleware('redirect.if.verified')->group(function () {
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // Temporary route
-Route::get('/lupa-password', function () {
-    return view('auth.lupa-password');
-});
-Route::get('/verifikasi-lupa-password', function () {
-    return view('auth.verifikasi-lupa-password');
-});
-Route::get('/new-password', function () {
-    return view('auth.new-password');
-});
+Route::get('/lupa-password', [App\Http\Controllers\AuthController::class, 'requestView'])->name('lupa.password');
+// Route::get('/verifikasi-lupa-password', function () {
+//     return view('auth.verifikasi-lupa-password');
+// });
+// Route::get('/new-password', function () {
+//     return view('auth.new-password');
+// });
+
+Route::post('forgot-password', [App\Http\Controllers\AuthController::class, 'sendEmail'])
+    ->name('password.email');
+
+// 2. Reset Password (Link dari email mengarah ke sini)
+Route::get('reset-password/{token}', [App\Http\Controllers\AuthController::class, 'resetView'])
+    ->name('password.reset');
+
+Route::post('reset-password', [App\Http\Controllers\AuthController::class, 'updatePassword'])
+    ->name('password.store');
 
 // ================= Email Verification Routes =================
 
@@ -78,7 +82,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/simpanan/simpanan-per-anggota', [App\Http\Controllers\Admin\ManajemenSimpananController::class, 'simpananPerAnggota']);
 
         // Menu Laporan Keuangan
-        Route::get('/admin/laporan-keuangan', [App\Http\Controllers\LaporanController::class, 'index']);
+        Route::get('/admin/laporan-keuangan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('/admin/laporan-keuangan/export', [App\Http\Controllers\LaporanController::class, 'exportCsv'])->name('laporan.export');
     });
 
     // Petugas
@@ -86,15 +91,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/petugas/dashboard', [App\Http\Controllers\PetugasController::class, 'dashboard'])->name('petugas.dashboard');
 
         // Profile Anggota
-        Route::get('/petugas/anggota', [ManajemenAnggotaController::class, 'index'])->name('petugas.anggota.index');
-        Route::get('/petugas/anggota/tambah-anggota', [ManajemenAnggotaController::class, 'create'])->name('petugas.anggota.tambah');
-        Route::get('/petugas/anggota/profil-anggota/{id}', [ManajemenAnggotaController::class, 'show'])->name('petugas.anggota.show');
-        Route::get('/petugas/anggota/edit-anggota/{id}', [ManajemenAnggotaController::class, 'edit'])->name('petugas.anggota.edit');
-        Route::put('/petugas/anggota/update-anggota/{id}', [ManajemenAnggotaController::class, 'update'])->name('petugas.anggota.update');
-        Route::delete('/petugas/anggota/delete-anggota/{id}', [ManajemenAnggotaController::class, 'destroy'])->name('petugas.anggota.destroy');
-        Route::post('/petugas/anggota/store-anggota', [ManajemenAnggotaController::class, 'store'])->name('petugas.anggota.store');
+        Route::get('/petugas/anggota', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'index'])->name('petugas.anggota.index');
+        Route::get('/petugas/anggota/tambah-anggota', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'create'])->name('petugas.anggota.tambah');
+        Route::get('/petugas/anggota/profil-anggota/{id}', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'show'])->name('petugas.anggota.show');
+        Route::get('/petugas/anggota/edit-anggota/{id}', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'edit'])->name('petugas.anggota.edit');
+        Route::put('/petugas/anggota/update-anggota/{id}', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'update'])->name('petugas.anggota.update');
+        Route::delete('/petugas/anggota/delete-anggota/{id}', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'destroy'])->name('petugas.anggota.destroy');
+        Route::post('/petugas/anggota/store-anggota', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'store'])->name('petugas.anggota.store');
 
-        Route::post('/petugas/anggota/accept-biodata/{id}', [ManajemenAnggotaController::class, 'acceptBiodata'])->name('petugas.anggota.acceptBiodata');
+        Route::post('/petugas/anggota/accept-biodata/{id}', [App\Http\Controllers\Petugas\ManajemenAnggotaController::class, 'acceptBiodata'])->name('petugas.anggota.acceptBiodata');
 
         // Menu Pinjaman
         Route::get('/petugas/pinjaman', [App\Http\Controllers\Petugas\ManajemenPinjamanController::class, 'index']);
@@ -139,15 +144,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/anggota/dashboard', [App\Http\Controllers\AnggotaController::class, 'dashboard'])
                 ->name('anggota.dashboard');
 
-            // Route::get('/anggota/biodata', [App\Http\Controllers\BiodataController::class, 'show'])
-            //     ->name('anggota.biodata.show');
-            // });
-
-            // Profile Saya
-            // Route::get('/anggota/biodata/', function () {
-            //     return view('anggota.biodata.profil');
-            // });
-
             // Ganti Password
             Route::get('/anggota/ganti-password', function () {
                 return view('anggota.ganti-password');
@@ -168,29 +164,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // Notifikasi
             Route::get('/anggota/notifikasi', [App\Http\Controllers\Anggota\NotifikasiController::class, 'index'])->name('anggota.notifikasi');
-
-
         });
     });
 });
-
-// ====== Di komen, ada yang sudah di intergasikan ke atas =====
-// BiodataController
-// Route::get('/biodata/create', [BiodataController::class, 'create'])->name('biodata.create');
-// Route::post('/biodata', [BiodataController::class, 'store'])->name('biodata.store');
-// Route::get('/biodata/{biodata}', [BiodataController::class, 'show'])->name('biodata.show');
-// Route::get('/biodata/{biodata}/edit', [BiodataController::class, 'edit'])->name('biodata.edit');
-// Route::put('/biodata/{biodata}', [BiodataController::class, 'update'])->name('biodata.update');
-// Route::delete('/biodata/{biodata}', [BiodataController::class, 'destroy'])->name('biodata.destroy');
-
-// Route SimpananController
-// Route::get('/simpanan/create', [SimpananController::class, 'create'])->name('simpanan.create');
-// Route::post('/simpanan', [SimpananController::class, 'store'])->name('simpanan.store');
-// Route::get('/simpanan/{biodata}', [SimpananController::class, 'index'])->name('simpanan.index');
-// Route::delete('/simpanan/{simpanan}', [SimpananController::class, 'destroy'])->name('simpanan.destroy');
-
-// Route PinjamanController
-// Route::get('/pinjaman/create', [PinjamanController::class, 'create'])->name('pinjaman.create');
-// Route::post('/pinjaman', [PinjamanController::class, 'store'])->name('pinjaman.store');
-// Route::get('/pinjaman/{biodata}', [PinjamanController::class, 'index'])->name('pinjaman.index');
-// Route::post('/pinjaman/{pinjaman}/approve', [PinjamanController::class, 'approve'])->name('pinjaman.approve');

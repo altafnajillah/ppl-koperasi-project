@@ -47,7 +47,8 @@
                                         </div>
                                         <div class="ps-3">
                                             <span class="fw-semibold d-block mb-1">Total Saldo Bersih</span>
-                                            <h3 class="card-title mb-2">Rp.{{ number_format($saldoBersih, 0, ',', '.') }}</h3>
+                                            <h3 class="card-title mb-2">Rp.{{ number_format($saldoBersih, 0, ',', '.') }}
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +66,8 @@
                                             </div>
                                             <div class="ps-3">
                                                 <span class="fw-semibold d-block mb-1">Total Pemasukan</span>
-                                                <h3 class="card-title text-nowrap mb-2">Rp.{{ number_format($pemasukan, 0, ',', '.') }}</h3>
+                                                <h3 class="card-title text-nowrap mb-2">
+                                                    Rp.{{ number_format($pemasukan, 0, ',', '.') }}</h3>
                                             </div>
                                         </div>
 
@@ -84,7 +86,8 @@
                                         </div>
                                         <div class="ps-3">
                                             <span class="fw-semibold d-block mb-1">Total Pengeluaran</span>
-                                            <h3 class="card-title mb-2">Rp.{{ number_format($pengeluaran, 0, ',', '.') }}</h3>
+                                            <h3 class="card-title mb-2">Rp.{{ number_format($pengeluaran, 0, ',', '.') }}
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -93,72 +96,105 @@
                     </div>
                 </div>
 
-                {{-- table --}}
-                <div class="col-lg-12 mb-4">
-                    <div class="card pb-3 border-0 border-bottom border-3 border-primary">
-                        <h5 class="card-header">Daftar Simpanan dan Pinjaman</h5>
+                {{-- Main Card --}}
+                <div class="card pb-3 border-0 border-bottom border-3 border-primary">
+                    <h5 class="card-header">Daftar Simpanan dan Pinjaman</h5>
 
-                        <div class="px-4 mb-3">
-                            <!-- Form filter: single row so columns stay aligned -->
-                            <form method="GET" class="row gx-2 gy-2 align-items-center">
-                                <div class="col-12 col-lg-4">
-                                    <div class="input-group">
-                                        <span class="input-group-text fw-bold">Dari</span>
-                                        <input type="date" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-4">
-                                    <div class="input-group">
-                                        <span class="input-group-text fw-bold">Sampai</span>
-                                        <input type="date" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-2">
-                                    <select id="jenis-laporan" name="jenis-laporan" class="form-select">
-                                        <option value="">-- Pilih jenis laporan --</option>
-                                        <option value="pendapatan">Pemasukan</option>
-                                        <option value="pengeluaran">Pengeluaran</option>
-                                    </select>
-                                </div>
-                                <div class="col-6 col-lg-2">
-                                    <a href="#" class="btn btn-success w-100">Cetak CSV</a>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="px-4 mb-3">
+                        {{-- FORM FILTER & EXPORT --}}
+                        {{-- Action default mengarah ke Index (Tampilan Web) --}}
+                        <form method="GET" action="{{ route('laporan.index') }}" class="row gx-2 gy-2 align-items-center">
 
-                        <div class="table-responsive text-nowrap px-4">
-                            <table class="table mb-0 align-middle">
-                                <thead class="table-dark">
+                            <div class="col-12 col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-text fw-bold">Dari</span>
+                                    {{-- 'value' mempertahankan input user setelah reload --}}
+                                    <input type="date" name="start_date" class="form-control"
+                                        value="{{ request('start_date') }}" />
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-text fw-bold">Sampai</span>
+                                    <input type="date" name="end_date" class="form-control"
+                                        value="{{ request('end_date') }}" />
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-2">
+                                <select name="jenis_laporan" class="form-select">
+                                    <option value="">-- Semua --</option>
+                                    <option value="pemasukan" {{ request('jenis_laporan') == 'pemasukan' ? 'selected' : '' }}>
+                                        Pemasukan</option>
+                                    <option value="pengeluaran" {{ request('jenis_laporan') == 'pengeluaran' ? 'selected' : '' }}>Pengeluaran</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6 col-lg-2">
+                                <div class="d-grid gap-2">
+                                    {{-- Tombol Filter: Submit biasa ke route('laporan.index') --}}
+                                    <button type="submit" class="btn btn-primary">
+                                        Filter
+                                    </button>
+
+                                    {{-- Tombol CSV: Submit ke route('laporan.export') berkat 'formaction' --}}
+                                    {{-- Data tanggal & select di form ini akan otomatis ikut terkirim --}}
+                                    <button type="submit" formaction="{{ route('laporan.export') }}"
+                                        class="btn btn-success">
+                                        Cetak CSV
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    {{-- TABLE DATA --}}
+                    <div class="table-responsive text-nowrap px-4">
+                        <table class="table mb-0 align-middle table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Jenis Transaksi</th>
+                                    <th>Nominal (Rp)</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($data as $datum)
                                     <tr>
-                                        <td>Tanggal</td>
-                                        <td>Jenis</td>
-                                        <td>Kategori</td>
-                                        <td>Nominal (Rp)</td>
+                                        <td>
+                                            {{ $datum->tanggal ? \Carbon\Carbon::parse($datum->tanggal)->format('d M Y') : '-' }}
+                                        </td>
+                                        <td>
+                                            @if($datum->kategori == 'pemasukan')
+                                                <span class="badge bg-success bg-opacity-75">{{ $datum->jenis_label }}</span>
+                                            @else
+                                                <span class="badge bg-danger bg-opacity-75">{{ $datum->jenis_label }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="fw-bold">
+                                            Rp {{ number_format($datum->jumlah, 0, ',', '.') }}
+                                        </td>
+                                        <td>{{ $datum->keterangan ?? '-' }}</td>
                                     </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
+                                @empty
                                     <tr>
-                                        <td>12/01/2023</td>
-                                        <td>Pemasukan</td>
-                                        <td>Angsuran</td>
-                                        <td>12.000.000</td>
+                                        <td colspan="4" class="text-center py-4 text-muted">
+                                            Tidak ada data ditemukan untuk periode ini.
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>12/01/2023</td>
-                                        <td>Pengeluaran</td>
-                                        <td>Pinjaman</td>
-                                        <td>12.000.000</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                {{-- end table --}}
             </div>
-            <!-- / Content -->
-
-            <div class="content-backdrop fade"></div>
+            {{-- end table --}}
         </div>
-        <!-- Content wrapper -->
-    @endsection
+        <!-- / Content -->
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+@endsection

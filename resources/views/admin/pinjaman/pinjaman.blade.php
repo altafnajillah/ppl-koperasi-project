@@ -40,20 +40,31 @@
                     </div>
                 </div>
 
-                {{-- Pengajuan Pinjaman Baru  --}}
+                {{-- Pengajuan Pinjaman Baru --}}
+                {{-- Daftar Pengajuan Pinjaman Terbaru --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Pengajuan Pinjaman Terbaru</h5>
 
                         <div class="px-4 mb-3">
-                            <div class="row gx-3">
-                                <!-- Search (4 columns) -->
-                                <div class="col-12mt-2 mt-lg-0">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <input type="text" class="form-control h-100" placeholder="Search..." />
+                            {{-- FORM PENCARIAN PENGAJUAN (Pending) --}}
+                            <form action="{{ url()->current() }}" method="GET">
+                                {{-- Pertahankan filter tabel bawah jika ada --}}
+                                @foreach(request()->except(['search_pending', '_token']) as $key => $value)
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endforeach
+
+                                <div class="row gx-3">
+                                    <div class="col-12 mt-2 mt-lg-0">
+                                        <div class="h-100 d-flex align-items-center">
+                                            {{-- Tambahkan name="search_pending" dan value --}}
+                                            <input type="text" name="search_pending" value="{{ request('search_pending') }}"
+                                                class="form-control h-100"
+                                                placeholder="Cari nama anggota... (Tekan Enter)" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
                         <div class="table-responsive text-nowrap px-4">
@@ -64,10 +75,7 @@
                                         <td>Nama Anggota</td>
                                         <td>Jumlah Pinjaman(Rp)</td>
                                         <td>Tenor</td>
-                                        <td>Bunga(%)</td>
                                         <td>Alasan</td>
-                                        <td>Jaminan</td>
-                                        <td>Actions</td>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
@@ -77,31 +85,11 @@
                                             <td>{{ $pj->user->name }}</td>
                                             <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
                                             <td>{{ $pj->tenor }} Bulan</td>
-                                            <td>{{ $pj->bunga }}%</td>
                                             <td>{{ $pj->alasan }}</td>
-                                            <td class="text-center">
-                                                @if (!$pj->jaminan)
-                                                    <span class="badge bg-secondary">-</span>
-                                                @else
-                                                    <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
-                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                        Lihat Jaminan
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href="" class="btn btn-success py-1">
-                                                    Setujui
-                                                </a>
-                                                <a href="" class="btn btn-danger py-1">
-                                                    Tolak
-                                                </a>
-                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center">Tidak ada pinjaman aktif.</td>
+                                            <td colspan="5" class="text-center">Tidak ada data ditemukan.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -110,32 +98,46 @@
                     </div>
                 </div>
 
-                {{-- Daftar Pinjaman Aktif  --}}
+                {{-- Daftar Pinjaman Aktif --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
                         <h5 class="card-header">Daftar Pinjaman Aktif</h5>
 
                         <div class="px-4 mb-3">
-                            <div class="row gx-3">
-                                <!-- Search (4 columns) -->
-                                <div class="col-12 col-lg-3">
-                                    <div class="input-group">
-                                        <span class="input-group-text fw-bold">Dari</span>
-                                        <input type="date" class="form-control" />
+                            {{-- FORM FILTER PINJAMAN AKTIF --}}
+                            <form action="{{ url()->current() }}" method="GET">
+                                {{-- Pertahankan filter tabel atas jika ada --}}
+                                @if(request('search_pending'))
+                                    <input type="hidden" name="search_pending" value="{{ request('search_pending') }}">
+                                @endif
+
+                                <div class="row gx-3">
+                                    <div class="col-12 col-lg-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text fw-bold">Dari</span>
+                                            {{-- Input Date From --}}
+                                            <input type="date" name="date_from" value="{{ request('date_from') }}"
+                                                class="form-control" onchange="this.form.submit()" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text fw-bold">Sampai</span>
+                                            {{-- Input Date To --}}
+                                            <input type="date" name="date_to" value="{{ request('date_to') }}"
+                                                class="form-control" onchange="this.form.submit()" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mt-2 mt-lg-0">
+                                        <div class="h-100 d-flex align-items-center">
+                                            {{-- Input Search Active --}}
+                                            <input type="text" name="search_active" value="{{ request('search_active') }}"
+                                                class="form-control h-100"
+                                                placeholder="Cari nama anggota... (Tekan Enter)" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3">
-                                    <div class="input-group">
-                                        <span class="input-group-text fw-bold">Sampai</span>
-                                        <input type="date" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mt-2 mt-lg-0">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <input type="text" class="form-control h-100" placeholder="Search..." />
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
 
                         <div class="table-responsive text-nowrap px-4">
@@ -146,80 +148,22 @@
                                         <td>Nama Anggota</td>
                                         <td>Jumlah Pinjaman(Rp)</td>
                                         <td>Tenor</td>
-                                        <td>Bunga(%)</td>
                                         <td>Alasan</td>
-                                        <td>Jaminan</td>
-                                        <td>Actions</td>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    {{-- <tr>
-                                        <td>12-12-20223</td>
-                                        <td>Joe</td>
-                                        <td>Rp.12.000.000</td>
-                                        <td>12 Bulan</td>
-                                        <td>5%</td>
-                                        <td>Untuk Modal Usaha</td>
-                                        <td>
-                                            <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
-                                                class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                1.png
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/admin/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
-                                                Riwayat Angsuran
-                                            </a>
-                                            <a href="/admin/pinjaman/edit-pinjaman" class="btn btn-warning py-1">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn btn-danger py-1">
-                                                Hapus
-                                            </a>
-                                        </td>
-                                    </tr> --}}
                                     @forelse ($pinjamanAktif as $pj)
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($pj->tanggal)->format('d M Y') }}</td>
                                             <td>{{ $pj->user->name }}</td>
                                             <td>Rp.{{ number_format($pj->jumlah, 0, ',', '.') }}</td>
                                             <td>{{ $pj->tenor }} Bulan</td>
-                                            <td>{{ $pj->bunga }}%</td>
                                             <td>{{ $pj->alasan }}</td>
-                                            <td>
-                                                @if (!$pj->jaminan)
-                                                    <span class="badge bg-secondary">-</span>
-                                                @else
-                                                    <a href="{{ asset('') . $pj->jaminan }}" target="_blank"
-                                                        class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                        <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                        Lihat Jaminan
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ asset('templates') }}/assets/img/avatars/1.png" target="_blank"
-                                                    class="ne-flex align-items-center rounded px-2 py-1 btn btn-primary">
-                                                    <i class="bi bi-file-earmark-text-fill me-2 fs-6"></i>
-                                                    1.png
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="/admin/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
-                                                    Riwayat Angsuran
-                                                </a>
-                                                <a href="/admin/pinjaman/edit-pinjaman" class="btn btn-warning py-1">
-                                                    Edit
-                                                </a>
-                                                <a href="" class="btn btn-danger py-1">
-                                                    Hapus
-                                                </a>
-                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center">Tidak ada pinjaman aktif.</td>
+                                            <td colspan="5" class="text-center">Tidak ada pinjaman aktif yang sesuai filter.
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -233,4 +177,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-    @endsection
+@endsection

@@ -9,15 +9,33 @@ use Illuminate\Http\Request;
 
 class ManajemenSimpananController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $simpanans = Simpanan::with('user')->get()->sortByDesc('tanggal');
+        $simpanans = Simpanan::with('user')
+            ->when($request->search, function ($query, $search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+        
+            ->when($request->date_from && $request->date_to, function ($query) use ($request) {
+                $query->whereBetween('tanggal', [$request->date_from, $request->date_to]);
+            })
+        
+            ->when($request->jenis_simpanan, function ($query, $jenis) {
+                $query->where('jenis', $jenis);
+            })
+        
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
         return view('admin.simpanan.simpanan', compact('simpanans'));
     }
 
     public function create()
     {
         $users = User::where('role', 'anggota')->get();
+
         return view('admin.simpanan.tambah-simpanan', compact('users'));
     }
 
@@ -25,15 +43,15 @@ class ManajemenSimpananController extends Controller
     {
         $request->validate([
             'user_id' => ['required'],
-            'jenis'   => ['required'],
-            'jumlah'  => ['required', 'numeric'],
-            'tanggal' => ['required', 'date']
+            'jenis' => ['required'],
+            'jumlah' => ['required', 'numeric'],
+            'tanggal' => ['required', 'date'],
         ]);
 
         Simpanan::create([
             'user_id' => $request->user_id,
-            'jenis'   => $request->jenis,
-            'jumlah'  => $request->jumlah,
+            'jenis' => $request->jenis,
+            'jumlah' => $request->jumlah,
             'tanggal' => $request->tanggal,
         ]);
 
@@ -48,13 +66,12 @@ class ManajemenSimpananController extends Controller
         return view('admin.simpanan.edit-simpanan', compact('simpanan', 'users'));
     }
 
-
     public function update(Request $request, $id)
     {
         $request->validate([
             'user_id' => ['required'],
-            'jenis'   => ['required'],
-            'jumlah'  => ['required', 'numeric'],
+            'jenis' => ['required'],
+            'jumlah' => ['required', 'numeric'],
             'tanggal' => ['required'],
         ]);
 
@@ -62,8 +79,8 @@ class ManajemenSimpananController extends Controller
 
         $simpanan->update([
             'user_id' => $request->user_id,
-            'jenis'   => $request->jenis,
-            'jumlah'  => $request->jumlah,
+            'jenis' => $request->jenis,
+            'jumlah' => $request->jumlah,
             'tanggal' => $request->tanggal,
         ]);
 
