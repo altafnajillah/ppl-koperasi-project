@@ -94,7 +94,10 @@
                                             <td>Rp. 1.000.000</td>
                                             <td><span class="badge bg-label-success">Lunas</span></td>
                                             <td>
-                                                <button class="btn btn-success py-1">Tandai Dibayar</button>
+                                                <form action="" method="POST"
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin menandai angsuran ini sebagai dibayar?');">
+                                                    <button class="btn btn-success py-1">Tandai Dibayar</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </tbody>
