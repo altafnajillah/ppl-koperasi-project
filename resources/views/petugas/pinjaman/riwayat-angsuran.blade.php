@@ -84,6 +84,7 @@
                                             <td>Tanggal</td>
                                             <td>Jumlah</td>
                                             <td>Status</td>
+                                            <td>Action</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -92,6 +93,9 @@
                                             <td>12-12-2023</td>
                                             <td>Rp. 1.000.000</td>
                                             <td><span class="badge bg-label-success">Lunas</span></td>
+                                            <td>
+                                                <button class="btn btn-success py-1">Tandai Dibayar</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

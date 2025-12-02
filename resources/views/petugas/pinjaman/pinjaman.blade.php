@@ -90,14 +90,15 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <form action="{{ route('petugas.pinjaman.approve', $pj->id) }}" method="POST">
+                                            <td class="d-flex">
+                                                <form action="{{ route('petugas.pinjaman.approve', $pj->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     <button action="submit" class="btn btn-success py-1">
                                                         Setujui
                                                     </button>
                                                 </form>
-                                                <a href="" class="btn btn-danger py-1">
+                                                <a href="" class="btn btn-danger py-1 ms-2">
                                                     Tolak
                                                 </a>
                                             </td>
@@ -152,7 +153,7 @@
                                         <td>Bunga(%)</td>
                                         <td>Alasan</td>
                                         <td>Jaminan</td>
-                                        {{-- <td>Actions</td> --}}
+                                        <td>Actions</td>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
@@ -175,14 +176,11 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                            {{-- <td>
-                                                <a href="" class="btn btn-success py-1">
-                                                    Setujui
+                                            <td>
+                                                <a href="/petugas/pinjaman/riwayat-angsuran" class="btn btn-primary py-1">
+                                                    Riwayat Angsuran
                                                 </a>
-                                                <a href="" class="btn btn-danger py-1">
-                                                    Tolak
-                                                </a>
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -200,4 +198,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-@endsection
+    @endsection

@@ -105,7 +105,7 @@
                         {{-- Action default mengarah ke Index (Tampilan Web) --}}
                         <form method="GET" action="{{ route('laporan.index') }}" class="row gx-2 gy-2 align-items-center">
 
-                            <div class="col-12 col-lg-4">
+                            <div class="col-12 col-lg-3">
                                 <div class="input-group">
                                     <span class="input-group-text fw-bold">Dari</span>
                                     {{-- 'value' mempertahankan input user setelah reload --}}
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-lg-4">
+                            <div class="col-12 col-lg-3">
                                 <div class="input-group">
                                     <span class="input-group-text fw-bold">Sampai</span>
                                     <input type="date" name="end_date" class="form-control"
@@ -125,24 +125,30 @@
                             <div class="col-12 col-lg-2">
                                 <select name="jenis_laporan" class="form-select">
                                     <option value="">-- Semua --</option>
-                                    <option value="pemasukan" {{ request('jenis_laporan') == 'pemasukan' ? 'selected' : '' }}>
+                                    <option value="pemasukan"
+                                        {{ request('jenis_laporan') == 'pemasukan' ? 'selected' : '' }}>
                                         Pemasukan</option>
-                                    <option value="pengeluaran" {{ request('jenis_laporan') == 'pengeluaran' ? 'selected' : '' }}>Pengeluaran</option>
+                                    <option value="pengeluaran"
+                                        {{ request('jenis_laporan') == 'pengeluaran' ? 'selected' : '' }}>Pengeluaran
+                                    </option>
                                 </select>
                             </div>
 
                             <div class="col-6 col-lg-2">
                                 <div class="d-grid gap-2">
-                                    {{-- Tombol Filter: Submit biasa ke route('laporan.index') --}}
-                                    <button type="submit" class="btn btn-primary">
-                                        Filter
-                                    </button>
-
                                     {{-- Tombol CSV: Submit ke route('laporan.export') berkat 'formaction' --}}
                                     {{-- Data tanggal & select di form ini akan otomatis ikut terkirim --}}
                                     <button type="submit" formaction="{{ route('laporan.export') }}"
                                         class="btn btn-success">
                                         Cetak CSV
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-2">
+                                <div class="d-grid gap-2">
+                                    {{-- Tombol Filter: Submit biasa ke route('laporan.index') --}}
+                                    <button type="submit" class="btn btn-primary">
+                                        Filter
                                     </button>
                                 </div>
                             </div>
@@ -167,10 +173,12 @@
                                             {{ $datum->tanggal ? \Carbon\Carbon::parse($datum->tanggal)->format('d M Y') : '-' }}
                                         </td>
                                         <td>
-                                            @if($datum->kategori == 'pemasukan')
-                                                <span class="badge bg-success bg-opacity-75">{{ $datum->jenis_label }}</span>
+                                            @if ($datum->kategori == 'pemasukan')
+                                                <span
+                                                    class="badge bg-success bg-opacity-75">{{ $datum->jenis_label }}</span>
                                             @else
-                                                <span class="badge bg-danger bg-opacity-75">{{ $datum->jenis_label }}</span>
+                                                <span
+                                                    class="badge bg-danger bg-opacity-75">{{ $datum->jenis_label }}</span>
                                             @endif
                                         </td>
                                         <td class="fw-bold">

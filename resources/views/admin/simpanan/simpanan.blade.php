@@ -42,14 +42,16 @@
                                             Wajib</option>
                                         <option value="Pokok" {{ request('jenis_simpanan') == 'Pokok' ? 'selected' : '' }}>
                                             Pokok</option>
-                                        <option value="Sukarela" {{ request('jenis_simpanan') == 'Sukarela' ? 'selected' : '' }}>Sukarela</option>
+                                        <option value="Sukarela"
+                                            {{ request('jenis_simpanan') == 'Sukarela' ? 'selected' : '' }}>Sukarela
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-lg-4 col-md-8 mt-2 mt-lg-0">
-                                    <div class="h-100 d-flex align-items-center">
+                                    <div class="h-100 d-flex align-items-end">
                                         {{-- Input Search --}}
                                         <input type="text" name="search" value="{{ request('search') }}"
-                                            class="form-control h-100" placeholder="Cari nama anggota... (Enter)" />
+                                            class="form-control" placeholder="Cari nama anggota... (Enter)" />
                                     </div>
                                 </div>
                             </div>
@@ -97,4 +99,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-@endsection
+    @endsection

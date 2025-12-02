@@ -50,7 +50,7 @@
                             {{-- FORM PENCARIAN PENGAJUAN (Pending) --}}
                             <form action="{{ url()->current() }}" method="GET">
                                 {{-- Pertahankan filter tabel bawah jika ada --}}
-                                @foreach(request()->except(['search_pending', '_token']) as $key => $value)
+                                @foreach (request()->except(['search_pending', '_token']) as $key => $value)
                                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                                 @endforeach
 
@@ -58,8 +58,8 @@
                                     <div class="col-12 mt-2 mt-lg-0">
                                         <div class="h-100 d-flex align-items-center">
                                             {{-- Tambahkan name="search_pending" dan value --}}
-                                            <input type="text" name="search_pending" value="{{ request('search_pending') }}"
-                                                class="form-control h-100"
+                                            <input type="text" name="search_pending"
+                                                value="{{ request('search_pending') }}" class="form-control h-100"
                                                 placeholder="Cari nama anggota... (Tekan Enter)" />
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@
                             {{-- FORM FILTER PINJAMAN AKTIF --}}
                             <form action="{{ url()->current() }}" method="GET">
                                 {{-- Pertahankan filter tabel atas jika ada --}}
-                                @if(request('search_pending'))
+                                @if (request('search_pending'))
                                     <input type="hidden" name="search_pending" value="{{ request('search_pending') }}">
                                 @endif
 
@@ -131,8 +131,8 @@
                                     <div class="col-lg-6 mt-2 mt-lg-0">
                                         <div class="h-100 d-flex align-items-center">
                                             {{-- Input Search Active --}}
-                                            <input type="text" name="search_active" value="{{ request('search_active') }}"
-                                                class="form-control h-100"
+                                            <input type="text" name="search_active"
+                                                value="{{ request('search_active') }}" class="form-control h-100"
                                                 placeholder="Cari nama anggota... (Tekan Enter)" />
                                         </div>
                                     </div>
@@ -162,7 +162,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Tidak ada pinjaman aktif yang sesuai filter.
+                                            <td colspan="5" class="text-center">Tidak ada pinjaman aktif yang sesuai
+                                                filter.
                                             </td>
                                         </tr>
                                     @endforelse
@@ -177,4 +178,4 @@
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
-@endsection
+    @endsection
