@@ -14,15 +14,15 @@
                         <div class="d-flex align-items-end row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <h3 class="card-title text-primary">MANAJEMEN PINJAMAN</h3>
+                                    <h3 class="card-title text-primary">RIWAYAT ANGSURAN</h3>
                                     <p class="mb-4">
                                         Welcome <span class="fw-bold fst-italic">Joe</span>, let's monitoring your user
                                         performance
                                         more closely!
                                     </p>
                                     <div class="d-flex gap-3">
-                                        <a href="\petugas\pinjaman\tambah-angsuran" class="btn btn-primary">Tambah
-                                            Angsuran</a>
+                                        {{-- <a href="\petugas\pinjaman\tambah-angsuran" class="btn btn-primary">Tambah
+                                            Angsuran</a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                 {{-- Pengajuan Pinjaman Baru  --}}
                 <div class="col-lg-12 mb-4">
                     <div class="card pb-3 border-0 border-bottom border-3 border-primary">
-                        <h5 class="card-header">Daftar Pengajuan Pinjaman Terbaru</h5>
+                        <h5 class="card-header">Daftar Riwayat Angsuran</h5>
 
                         <div class="card-body ps-4">
                             <div class="col-12 border border-secondary p-2 px-3 rounded mb-3 d-flex">

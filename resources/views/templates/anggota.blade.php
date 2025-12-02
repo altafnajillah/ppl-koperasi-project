@@ -249,7 +249,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , by Kelompok 4
+                , by Kelompok 2
             </div>
 
         </div>

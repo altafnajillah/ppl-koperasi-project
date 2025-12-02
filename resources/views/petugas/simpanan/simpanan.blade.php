@@ -70,8 +70,8 @@
                                 </div>
                                 <!-- Search (4 columns) -->
                                 <div class="col-lg-4 col-md-8 mt-2 mt-lg-0">
-                                    <div class="h-100 d-flex align-items-center">
-                                        <input type="text" class="form-control h-100" placeholder="Search..." />
+                                    <div class="h-100 d-flex align-items-end">
+                                        <input type="text" class="form-control" placeholder="Search..." />
                                     </div>
                                 </div>
                             </div>

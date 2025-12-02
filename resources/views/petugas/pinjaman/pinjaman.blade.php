@@ -23,8 +23,8 @@
                                     <div class="d-flex gap-3">
                                         <a href="\petugas\pinjaman\tambah-pinjaman" class="btn btn-primary">Tambah
                                             Pinjaman</a>
-                                        <a href="\petugas\pinjaman\tambah-angsuran" class="btn btn-primary">Tambah
-                                            Angsuran</a>
+                                        {{-- <a href="\petugas\pinjaman\tambah-angsuran" class="btn btn-primary">Tambah
+                                            Angsuran</a> --}}
                                     </div>
                                 </div>
                             </div>
