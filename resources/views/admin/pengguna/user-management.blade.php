@@ -48,9 +48,12 @@
                                         <div class="w-100 bg-secondary text-white rounded px-3 py-2">
                                             <span class="me-3 fw-semibold">Total Users: <span
                                                     class="fw-bold">{{ $totalUser }}</span></span>
-                                            <span class="badge bg-primary rounded-pill me-2">Admin: {{ $totalAdmin }}</span>
-                                            <span class="badge bg-warning text-dark rounded-pill">Petugas: {{ $totalPetugas }}</span>
-                                            <span class="badge bg-info text-dark rounded-pill me-2">Anggota: {{ $totalAnggota }}</span>
+                                            <span class="badge bg-primary rounded-pill me-2">Admin:
+                                                {{ $totalAdmin }}</span>
+                                            <span class="badge bg-warning text-dark rounded-pill">Petugas:
+                                                {{ $totalPetugas }}</span>
+                                            <span class="badge bg-info text-dark rounded-pill me-2">Anggota:
+                                                {{ $totalAnggota }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +114,8 @@
                                 </thead>
                                 <tbody class="table-border-bottom-0">
                                     @foreach ($users as $k => $user)
-                                        <form action="{{ route('user.delete', ['id' => $user->id]) }}" method="POST">
+                                        <form action="{{ route('user.delete', ['id' => $user->id]) }}" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <tr>
@@ -119,7 +123,8 @@
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
-                                                    <span class="badge me-1
+                                                    <span
+                                                        class="badge me-1
                                                         @if ($user->role == 'admin') bg-label-primary 
                                                         @elseif($user->role == 'petugas') bg-label-warning 
                                                         @elseif($user->role == 'anggota') bg-label-info 
@@ -128,14 +133,17 @@
                                                     </span>
                                                 </td>
                                                 @if ($user->biodata !== null)
-                                                    <td><span class="badge {{ $user->biodata->accepted_at == null ? "bg-label-danger" : "bg-label-success" }} me-1">{{ $user->biodata->accepted_at == null ? "Tertunda" : "Diterima" }}</span></td>
+                                                    <td><span
+                                                            class="badge {{ $user->biodata->accepted_at == null ? 'bg-label-danger' : 'bg-label-success' }} me-1">{{ $user->biodata->accepted_at == null ? 'Tertunda' : 'Diterima' }}</span>
+                                                    </td>
                                                 @elseif ($user->role === 'anggota')
                                                     <td><span class="badge bg-label-warning me-1">Menunggu</span></td>
                                                 @else
                                                     <td><span class="badge bg-label-secondary me-1"></span></td>
                                                 @endif
                                                 <td>
-                                                    <a href="{{ route('admin.user.profile', $user->id) }}" class="btn btn-primary py-1">
+                                                    <a href="{{ route('admin.user.profile', $user->id) }}"
+                                                        class="btn btn-primary py-1">
                                                         Lihat Profile
                                                     </a>
                                                     <a href="/admin/pengguna/edit-user" class="btn btn-warning py-1">
